@@ -1,4 +1,7 @@
+"use client";
+
 import { AdvancedBadgeCarousel } from "@/components/ui/advanced-badge-carousel";
+import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
@@ -8,9 +11,16 @@ export function HeroSection() {
           Alex Hardman
         </h1>
         <AdvancedBadgeCarousel />
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Engineering Leader. Systems Thinker. Platform Builder.
-        </p>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="mt-6 text-center space-y-2 text-xl md:text-2xl font-medium text-muted-foreground"
+        >
+          <p>Building with purpose.</p>
+          <p>Leading with trust.</p>
+          <p>Scaling with intention.</p>
+        </motion.div>
       </div>
     </section>
   );

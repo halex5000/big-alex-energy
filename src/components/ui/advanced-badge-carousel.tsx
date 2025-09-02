@@ -21,7 +21,7 @@ export function AdvancedBadgeCarousel() {
     
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % badges.length);
-    }, 1800); // Rotate every 1.8 seconds
+    }, 2200); // Rotate every 2.2 seconds
 
     return () => clearInterval(interval);
   }, [isHovered]);
@@ -62,7 +62,7 @@ export function AdvancedBadgeCarousel() {
         <motion.div
           className="absolute inset-0 rounded-full bg-primary/10 blur-xl"
           animate={{ opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
     </div>
