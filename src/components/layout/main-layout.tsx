@@ -13,12 +13,26 @@ export function MainLayout() {
         <ThemeToggle />
       </div>
 
-      {/* Main Content */}
-      <HeroSection />
-      <SummarySection />
-      <CareerHighlightsSection />
-      <QuoteSection />
-      <FooterSection />
+      {/* Main Content with Scroll Snap */}
+      <div className="scroll-snap-section">
+        <HeroSection />
+      </div>
+      
+      <div className="scroll-snap-section">
+        <SummarySection />
+      </div>
+      
+      <div className="scroll-snap-section">
+        <CareerHighlightsSection />
+      </div>
+      
+      <div className="scroll-snap-section">
+        <QuoteSection />
+      </div>
+      
+      <div className="scroll-snap-section">
+        <FooterSection />
+      </div>
     </div>
   );
 }

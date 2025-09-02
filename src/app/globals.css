@@ -116,8 +116,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100%;
+  }
   body {
     @apply bg-background text-foreground;
+    height: 100%;
   }
 }
 
@@ -128,5 +135,15 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Scroll Snap Utilities */
+  .scroll-snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

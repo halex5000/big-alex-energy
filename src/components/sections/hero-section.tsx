@@ -1,11 +1,12 @@
 "use client";
 
 import { AdvancedBadgeCarousel } from "@/components/ui/advanced-badge-carousel";
+import { ScrollIndicator } from "@/components/ui/scroll-indicator";
 import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6">
+    <section className="min-h-screen flex items-center justify-center px-6 relative">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
           Alex Hardman
@@ -22,6 +23,7 @@ export function HeroSection() {
           <p>Scaling with intention.</p>
         </motion.div>
       </div>
+      <ScrollIndicator />
     </section>
   );
 }

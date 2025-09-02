@@ -7,7 +7,7 @@ export function FooterSection() {
 
 
   return (
-    <footer className="py-12 px-6">
+    <footer className="px-6">
       <div className="max-w-6xl mx-auto">
         <Separator className="mb-12" />
         
