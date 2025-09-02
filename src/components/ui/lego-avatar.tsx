@@ -8,14 +8,15 @@ interface LegoAvatarProps {
   src: string;
   alt: string;
   className?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   animated?: boolean;
 }
 
 const sizeClasses = {
   sm: "w-16 h-16",
   md: "w-24 h-24", 
-  lg: "w-32 h-32"
+  lg: "w-32 h-32",
+  xl: "w-48 h-48"
 };
 
 export function LegoAvatar({ 

@@ -23,7 +23,8 @@ import {
   ShieldCheck,
   Workflow, 
   Users,
-  CircuitBoard
+  CircuitBoard,
+  X
 } from "lucide-react";
 
 interface CareerHighlight {
@@ -223,6 +224,7 @@ const getIconForCard = (title: string, bulletIndex: number) => {
 
 export function CareerHighlightsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToCard = (index: number) => {
@@ -243,6 +245,14 @@ export function CareerHighlightsSection() {
       const newIndex = Math.round(scrollLeft / cardWidth);
       setCurrentIndex(newIndex);
     }
+  };
+
+  const handleCardClick = (index: number) => {
+    setExpandedCard(index);
+  };
+
+  const closeExpandedCard = () => {
+    setExpandedCard(null);
   };
 
   useEffect(() => {
@@ -298,7 +308,10 @@ export function CareerHighlightsSection() {
                 key={index}
                 className="flex-shrink-0 w-full max-w-4xl snap-center"
               >
-                <Card className="border-2 h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <Card 
+                  onClick={() => handleCardClick(index)}
+                  className="border-2 h-full shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer hover:scale-[1.02] hover:border-primary/50"
+                >
                   <CardContent className="p-8 h-full flex flex-col">
                     <div className="space-y-6 flex-1">
                       {/* Logo + Title row */}
@@ -397,6 +410,120 @@ export function CareerHighlightsSection() {
           </p>
         </div>
       </div>
+
+      {/* Expanded Card Modal */}
+      {expandedCard !== null && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={closeExpandedCard}
+        >
+          <div 
+            className="bg-background border-2 border-primary/20 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-8">
+              <button
+                onClick={closeExpandedCard}
+                className="absolute top-4 right-4 p-2 hover:bg-muted rounded-full transition-colors duration-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              {(() => {
+                const highlight = highlights[expandedCard];
+                return (
+                  <div className="space-y-6">
+                    {/* Logo + Title row */}
+                    <div className="flex items-center space-x-4">
+                      <Image
+                        src={highlight.logo}
+                        alt={`${highlight.company} logo`}
+                        width={64}
+                        height={64}
+                        className="w-16 h-16 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                      />
+                      <h2 className="text-3xl md:text-4xl font-bold">
+                        {highlight.title}
+                      </h2>
+                    </div>
+
+                    {/* Company with @ symbol */}
+                    <p className="text-xl text-muted-foreground">
+                      @ {highlight.company}
+                    </p>
+
+                    {/* Tagline */}
+                    <p className="text-xl font-medium text-primary">
+                      {highlight.tagline}
+                    </p>
+
+                    {/* Description blocks */}
+                    <div className="space-y-4">
+                      {highlight.descriptionBullets.map((bullet, bulletIndex) => {
+                        const IconComponent = getIconForCard(highlight.title, bulletIndex);
+                        
+                        return (
+                          <div key={bulletIndex} className="group relative">
+                            <div className="flex items-start space-x-4 p-4 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                              <IconComponent className="inline w-5 h-5 text-muted-foreground mt-1 flex-shrink-0 group-hover:scale-110 group-hover:text-foreground transition-all duration-200" />
+                              <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200 text-base">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Card Footer with Links */}
+                    {highlight.links && highlight.links.length > 0 && (
+                      <div className="mt-8 pt-6 border-t border-border/50">
+                        {highlight.links.length === 1 ? (
+                          // Single link - inline style
+                          <ExternalLink href={highlight.links[0].url} className="text-lg">
+                            {getLinkIcon(highlight.links[0].icon)}
+                            <span className="ml-2">{highlight.links[0].label}</span>
+                          </ExternalLink>
+                        ) : (
+                          // Multiple links - grid style
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {highlight.links.map((link, linkIndex) => (
+                              <ExternalLink
+                                key={linkIndex}
+                                href={link.url}
+                                className="group p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200 hover:scale-105"
+                                showIcon={false}
+                              >
+                                <div className="flex items-center space-x-2 mb-2">
+                                  {getLinkIcon(link.icon)}
+                                  <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200">
+                                    {link.icon === 'blog' ? 'Blog Posts' : 
+                                     link.icon === 'youtube' ? 'Video' : 
+                                     link.icon === 'linkedin' ? 'LinkedIn' : 
+                                     link.icon === 'patent' ? 'Patent' : 'External'}
+                                  </span>
+                                </div>
+                                <p className="text-base text-foreground group-hover:text-primary transition-colors duration-200">
+                                  {link.label}
+                                </p>
+                              </ExternalLink>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Close instruction */}
+                    <div className="text-center text-sm text-muted-foreground pt-4">
+                      <p>Click anywhere outside to close</p>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
