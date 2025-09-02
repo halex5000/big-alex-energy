@@ -1,0 +1,19 @@
+# LEGO Avatar Images
+
+Please replace these placeholder files with your actual LEGO Alex photos:
+
+- chef-alex.jpg (Chef Alex with steak + knife)
+- laptop-alex.jpg (Laptop + Coffee Alex in checked shirt)  
+- host-alex.jpg (Host Alex with wine shelf + pans)
+
+Recommended specs:
+- Square crop (1:1 aspect ratio)
+- 400x400px minimum
+- Optimized for web (compressed)
+- Transparent background preferred (PNG) or clean background
+
+The avatars will appear:
+1. On hover over career highlight cards
+2. In the summary section (Laptop Alex)
+3. In the footer as mini-avatars
+4. On the 404 page (Chef Alex)

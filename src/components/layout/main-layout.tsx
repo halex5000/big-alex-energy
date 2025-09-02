@@ -3,7 +3,6 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { SummarySection } from "@/components/sections/summary-section";
 import { QuoteSection } from "@/components/sections/quote-section";
 import { CareerHighlightsSection } from "@/components/sections/career-highlights-section";
-import { ContactSection } from "@/components/sections/contact-section";
 import { FooterSection } from "@/components/sections/footer-section";
 
 export function MainLayout() {
@@ -19,7 +18,6 @@ export function MainLayout() {
       <SummarySection />
       <QuoteSection />
       <CareerHighlightsSection />
-      <ContactSection />
       <FooterSection />
     </div>
   );

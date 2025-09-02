@@ -5,10 +5,9 @@ import { useState, useEffect } from "react";
 
 const badges = [
   "🧠 Engineering Leader",
-  "🧱 Infra Architect", 
+  "☁️ Cloud Architect", 
   "🏆 Hackathon Champ",
   "📝 Patent Holder",
-  "📈 Experimentation Powerhouse",
   "🤓 Optimization Nerd",
   "⚡ Startup Speed × 🏢 Enterprise Scale"
 ];
