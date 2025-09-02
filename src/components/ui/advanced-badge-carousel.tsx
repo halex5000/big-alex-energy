@@ -27,61 +27,44 @@ export function AdvancedBadgeCarousel() {
   }, [isHovered]);
 
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <div 
-        className="flex justify-center items-center min-h-[4rem] relative overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="relative w-full max-w-md">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 30, rotateX: 90 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              exit={{ opacity: 0, y: -30, rotateX: -90 }}
-              transition={{ 
-                duration: 0.6,
-                ease: "easeInOut"
-              }}
-              className="text-lg md:text-xl font-medium text-muted-foreground text-center px-6 py-3 rounded-full bg-gradient-to-r from-muted/30 to-muted/60 border border-border/50 backdrop-blur-sm shadow-lg cursor-pointer"
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-              onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % badges.length)}
-            >
-              <motion.span
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
-              >
-                {badges[currentIndex]}
-              </motion.span>
-            </motion.div>
-          </AnimatePresence>
-          
-          {/* Subtle glow effect */}
+    <div 
+      className="flex justify-center items-center min-h-[4rem] relative overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative w-full max-w-md">
+        <AnimatePresence mode="wait">
           <motion.div
-            className="absolute inset-0 rounded-full bg-primary/10 blur-xl"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </div>
-      </div>
-      
-      {/* Navigation dots */}
-      <div className="flex space-x-2">
-        {badges.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentIndex
-                ? 'bg-primary w-6'
-                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-            }`}
-          />
-        ))}
+            key={currentIndex}
+            initial={{ opacity: 0, y: 30, rotateX: 90 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            exit={{ opacity: 0, y: -30, rotateX: -90 }}
+            transition={{ 
+              duration: 0.6,
+              ease: "easeInOut"
+            }}
+            className="text-lg md:text-xl font-medium text-muted-foreground text-center px-6 py-3 rounded-full bg-gradient-to-r from-muted/30 to-muted/60 border border-border/50 backdrop-blur-sm shadow-lg cursor-pointer"
+            style={{
+              transformStyle: "preserve-3d",
+            }}
+            onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % badges.length)}
+          >
+            <motion.span
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+            >
+              {badges[currentIndex]}
+            </motion.span>
+          </motion.div>
+        </AnimatePresence>
+        
+        {/* Subtle glow effect */}
+        <motion.div
+          className="absolute inset-0 rounded-full bg-primary/10 blur-xl"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
       </div>
     </div>
   );
