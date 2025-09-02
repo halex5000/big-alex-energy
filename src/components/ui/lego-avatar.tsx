@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface LegoAvatarProps {
   src: string;
@@ -36,11 +37,12 @@ export function LegoAvatar({
       transition={animated ? { duration: 0.3, ease: "easeOut" } : undefined}
       whileHover={animated ? { scale: 1.05 } : undefined}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
-        className="w-full h-full object-contain"
-        loading="lazy"
+        fill
+        className="object-contain"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
       {/* Subtle glow effect */}
       <div className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />

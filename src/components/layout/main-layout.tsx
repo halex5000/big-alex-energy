@@ -16,8 +16,8 @@ export function MainLayout() {
       {/* Main Content */}
       <HeroSection />
       <SummarySection />
-      <QuoteSection />
       <CareerHighlightsSection />
+      <QuoteSection />
       <FooterSection />
     </div>
   );

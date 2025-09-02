@@ -7,7 +7,7 @@ export function SummarySection() {
         <Card className="border-2">
           <CardContent className="p-8 text-center">
             <p className="text-lg md:text-xl leading-relaxed text-muted-foreground mb-6">
-              I've built systems that power billions of customer interactions, and led teams that scale them with clarity, trust, and resilience.
+              I build cloud-native systems that power billions of customer interactions, and I lead the teams that scale them with clarity, trust, and resilience.
             </p>
             <p className="text-lg font-medium">
               I design for failure. I lead for velocity.
