@@ -27,7 +27,7 @@ export const careerHighlights: CareerHighlight[] = [
     links: [
       {
         label: "Read the full story on LinkedIn",
-        url: "https://www.linkedin.com/posts/blakeschuller_winning-the-klaviyo-ai-hackathon-was-not-activity-7366538099549548546-QxwG?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAKjousBsyMCThwNnWkiEYv7OYIcBJU2x7Q",
+        url: "/hackathons/klaviyo-ai-onboarding",
         icon: "linkedin"
       }
     ]
@@ -65,17 +65,17 @@ export const careerHighlights: CareerHighlight[] = [
     links: [
       {
         label: "LaunchDarkly blog posts",
-        url: "https://launchdarkly.com/blog/author/alex-hardman-hehim-is-an-inventor-technologist/",
+        url: "/blogs/launchdarkly",
         icon: "blog"
       },
       {
         label: "AWS re:Invent 2022",
-        url: "https://youtu.be/6vZiq6HJA9s",
+        url: "/talks/reinvent-22",
         icon: "youtube"
       },
       {
         label: "Migration Talk",
-        url: "https://www.youtube.com/watch?v=pVM6gdGKcNc",
+        url: "/talks/migration-webinar",
         icon: "youtube"
       }
     ]
@@ -93,7 +93,7 @@ export const careerHighlights: CareerHighlight[] = [
     links: [
       {
         label: "View patent details",
-        url: "https://patents.google.com/patent/US11562416B1/en",
+        url: "/patents/realtime-gift-card",
         icon: "patent"
       }
     ]
@@ -133,7 +133,7 @@ export const careerHighlights: CareerHighlight[] = [
     links: [
       {
         label: "Watch the demo video",
-        url: "https://www.youtube.com/watch?v=hJ1IKW4-0Fw",
+        url: "/hackathons/liberty-mutual",
         icon: "youtube"
       }
     ]
