@@ -2,15 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-
-const badges = [
-  "🧠 Engineering Leader",
-  "☁️ Cloud Architect", 
-  "🏆 Hackathon Champ",
-  "📝 Patent Holder",
-  "🤓 Optimization Nerd",
-  "⚡ Startup Speed × 🏢 Enterprise Scale"
-];
+import { heroBadges } from "@/data/hero-badges";
 
 export function AdvancedBadgeCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,7 +12,7 @@ export function AdvancedBadgeCarousel() {
     if (isHovered) return; // Pause on hover
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % badges.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % heroBadges.length);
     }, 2200); // Rotate every 2.2 seconds
 
     return () => clearInterval(interval);
@@ -47,14 +39,14 @@ export function AdvancedBadgeCarousel() {
             style={{
               transformStyle: "preserve-3d",
             }}
-            onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % badges.length)}
+            onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % heroBadges.length)}
           >
             <motion.span
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
             >
-              {badges[currentIndex]}
+              {heroBadges[currentIndex]}
             </motion.span>
           </motion.div>
         </AnimatePresence>

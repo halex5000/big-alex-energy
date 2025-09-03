@@ -1,0 +1,68 @@
+---
+alwaysApply: true
+description: Testing and quality assurance workflow
+---
+
+# Test Before Commit Rule
+
+## 🧪 **Always Test Before Committing**
+
+Before committing any changes, we must run tests to ensure code quality and functionality:
+
+### **Required Testing Steps:**
+
+1. **Build Test**: Run `npm run build` to ensure the project compiles successfully
+2. **Lint Check**: Verify no linting errors are introduced
+3. **Type Check**: Ensure TypeScript types are correct
+4. **Functionality Test**: Verify the changes work as expected
+
+### **Testing Commands:**
+
+```bash
+# Full build and type check
+npm run build
+
+# Lint check (if available)
+npm run lint
+
+# Development server test (if needed)
+npm run dev
+```
+
+### **What to Check:**
+
+- ✅ **Build passes** without errors
+- ✅ **No TypeScript errors** 
+- ✅ **No linting warnings** (unless explicitly acceptable)
+- ✅ **Components render correctly**
+- ✅ **No console errors** in browser
+- ✅ **Responsive design** still works
+- ✅ **All existing functionality** preserved
+
+### **Commit Message Format:**
+
+Use conventional commits with descriptive messages:
+
+```bash
+git commit -m "feat: add new feature description"
+git commit -m "fix: resolve specific issue"
+git commit -m "refactor: improve code structure"
+git commit -m "style: update styling and layout"
+```
+
+### **Exception Cases:**
+
+Only skip testing if:
+- Making minor documentation changes
+- Updating comments only
+- Fixing obvious typos in strings
+
+### **Quality Gates:**
+
+- **Never commit** if build fails
+- **Never commit** if TypeScript errors exist
+- **Never commit** if linting shows new errors
+- **Always test** refactoring changes thoroughly
+- **Always verify** UI changes visually
+
+This ensures we maintain a stable, working codebase at all times.

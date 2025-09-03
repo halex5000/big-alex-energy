@@ -1,0 +1,84 @@
+---
+description: Component refactoring and code organization guidelines
+globs: src/components/**/*.tsx,src/lib/**/*.ts,src/data/**/*.ts
+---
+
+# Refactoring Workflow Rule
+
+## 🔧 **Component Refactoring Guidelines**
+
+When refactoring components, follow this systematic approach:
+
+### **Refactoring Priority Order:**
+
+1. **Extract Data Layer** - Move static data to `src/data/` files
+2. **Extract Utilities** - Move reusable logic to `src/lib/` files  
+3. **Create Reusable Components** - Break down large components
+4. **Implement Custom Hooks** - For shared logic and state
+5. **Add External Libraries** - For complex functionality (carousels, etc.)
+
+### **File Organization:**
+
+```
+src/
+├── data/           # Static data and constants
+│   ├── career-highlights.ts
+│   └── hero-badges.ts
+├── lib/            # Utility functions and helpers
+│   ├── career-icons.tsx
+│   └── utils.ts
+├── components/
+│   ├── ui/         # Reusable UI components
+│   └── sections/   # Page sections
+└── hooks/          # Custom React hooks
+```
+
+### **Component Size Limits:**
+
+- **Maximum 200 lines** for section components
+- **Maximum 100 lines** for UI components
+- **Extract when exceeding** these limits
+
+### **Refactoring Checklist:**
+
+- [ ] **Data extracted** to separate files
+- [ ] **Utilities moved** to lib directory
+- [ ] **Components broken down** into smaller pieces
+- [ ] **Props interfaces** defined clearly
+- [ ] **TypeScript types** properly exported
+- [ ] **Build passes** after refactoring
+- [ ] **Functionality preserved** exactly
+- [ ] **No performance regressions**
+
+### **Component Creation Pattern:**
+
+```typescript
+// 1. Define interface
+interface ComponentProps {
+  // props here
+}
+
+// 2. Create component
+export function ComponentName({ ...props }: ComponentProps) {
+  // implementation
+}
+
+// 3. Export from index if needed
+```
+
+### **Testing Refactored Components:**
+
+- **Build test** after each extraction
+- **Visual verification** of UI changes
+- **Functionality test** of all features
+- **Responsive test** on different screen sizes
+
+### **Library Integration:**
+
+When adding external libraries:
+- **Research alternatives** (Embla vs Swiper)
+- **Check bundle size** impact
+- **Verify TypeScript support**
+- **Test thoroughly** before committing
+
+This ensures clean, maintainable, and scalable code architecture.
