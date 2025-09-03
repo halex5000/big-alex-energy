@@ -1,62 +1,60 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { heroBadges } from "@/data/hero-badges";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 export function AdvancedBadgeCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (isHovered) return; // Pause on hover
+    if (isHovered || !api) return; // Pause on hover
     
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % heroBadges.length);
+      api.scrollNext();
     }, 2200); // Rotate every 2.2 seconds
 
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isHovered, api]);
+
+
 
   return (
     <div 
-      className="flex justify-center items-center min-h-[4rem] relative overflow-hidden"
+      className="flex justify-center items-center min-h-[4rem] relative py-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative w-full max-w-md">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, y: 30, rotateX: 90 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            exit={{ opacity: 0, y: -30, rotateX: -90 }}
-            transition={{ 
-              duration: 0.6,
-              ease: "easeInOut"
-            }}
-            className="text-lg md:text-xl font-medium text-muted-foreground text-center px-6 py-3 rounded-full bg-gradient-to-r from-muted/30 to-muted/60 border border-border/50 backdrop-blur-sm shadow-lg cursor-pointer"
-            style={{
-              transformStyle: "preserve-3d",
-            }}
-            onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % heroBadges.length)}
-          >
-            <motion.span
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-            >
-              {heroBadges[currentIndex]}
-            </motion.span>
-          </motion.div>
-        </AnimatePresence>
-        
-        {/* Subtle glow effect */}
-        <motion.div
-          className="absolute inset-0 rounded-full bg-primary/10 blur-xl"
-          animate={{ opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        />
+      <div className="flex items-center">
+        <Carousel
+          setApi={setApi}
+          className="w-full max-w-md"
+          orientation="vertical"
+          opts={{
+            loop: true,
+            align: "start",
+          }}
+        >
+          <CarouselContent className="-mt-1 h-[4rem]">
+            {heroBadges.map((badge, index) => (
+              <CarouselItem key={index} className="pt-1 basis-full">
+                <div className="p-1">
+                  <div className="text-lg md:text-xl font-medium text-muted-foreground text-center px-6 py-3 rounded-full bg-gradient-to-r from-muted/30 to-muted/60 border border-border/50 backdrop-blur-sm shadow-lg cursor-pointer hover:shadow-xl transition-all duration-300 h-full flex items-center justify-center">
+                    {badge}
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselNext className="size-6 -right-4 opacity-0 hover:opacity-100 transition-opacity duration-200" />
+        </Carousel>
       </div>
     </div>
   );

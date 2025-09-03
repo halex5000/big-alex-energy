@@ -1,8 +1,10 @@
 export const heroBadges = [
   "🧠 Engineering Leader",
   "☁️ Cloud Architect", 
-  "🏆 Hackathon Champ",
+  "🏆 Hackathon Winner x2",
   "📝 Patent Holder",
   "🤓 Optimization Nerd",
-  "⚡ Startup Speed × 🏢 Enterprise Scale"
+  "🚀 Startup Speed × 🏢 Enterprise Scale",
+  "📈 Data-Driven Decision-Maker",
+  "💡 Innovation Catalyst",
 ];
