@@ -1,20 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Copy, Mail, Linkedin, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import { contactInfo } from "@/data/contact";
+import { ContactButton, LinkedInButton } from "@/components/ui/contact-button";
 
 export function ContactCtaSection() {
   const [emailCopied, setEmailCopied] = useState(false);
 
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText("alex@halex9000.dev");
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy email:', err);
-    }
+  const handleEmailCopied = () => {
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
   };
 
   return (
@@ -25,29 +20,15 @@ export function ContactCtaSection() {
       
       {/* Contact CTAs */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={copyEmail}
-          className="group hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-        >
-          <Mail className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" />
-          alex@halex9000.dev
-          <Copy className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform duration-200" />
-        </Button>
+        <ContactButton
+          email={contactInfo.email}
+          onEmailCopied={handleEmailCopied}
+        />
         
-        <Button
-          variant="outline"
-          size="lg"
-          asChild
-          className="group hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-        >
-          <a href="https://linkedin.com/in/halex9000" target="_blank" rel="noopener noreferrer">
-            <Linkedin className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-200" />
-            LinkedIn
-            <ExternalLink className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform duration-200" />
-          </a>
-        </Button>
+        <LinkedInButton
+          url={contactInfo.linkedinUrl}
+          label={contactInfo.linkedinLabel}
+        />
       </div>
       
       {emailCopied && (
