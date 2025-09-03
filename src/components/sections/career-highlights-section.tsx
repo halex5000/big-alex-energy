@@ -1,11 +1,10 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { CarouselNavigation } from "@/components/ui/carousel-navigation";
-import { Icon } from "@/components/ui/icon";
 import { ExternalLink } from "@/components/ui/external-link";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { X } from "lucide-react";
 import {
   Server,
   Gauge,
@@ -14,17 +13,11 @@ import {
   Zap,
   Bot,
   BrainCircuit,
-  Settings2,
   PiggyBank,
   TrendingDown,
   Trophy,
-  Mic,
-  Presentation,
-  ShieldCheck,
-  Workflow, 
   Users,
-  CircuitBoard,
-  X
+  CircuitBoard
 } from "lucide-react";
 
 interface CareerHighlight {
@@ -93,17 +86,17 @@ const highlights: CareerHighlight[] = [
     ],
     links: [
       {
-        label: "LaunchDarkly content",
+        label: "LaunchDarkly blog posts",
         url: "https://launchdarkly.com/blog/author/alex-hardman-hehim-is-an-inventor-technologist/",
         icon: "blog"
       },
       {
-        label: "AWS re:Invent 2022 - Security incident monitoring, mitigation & metrics using feature flags",
+        label: "AWS re:Invent 2022",
         url: "https://youtu.be/6vZiq6HJA9s",
         icon: "youtube"
       },
       {
-        label: "Talking Migration with LaunchDarkly How to Ship Platforms as Features",
+        label: "Migration Talk",
         url: "https://www.youtube.com/watch?v=pVM6gdGKcNc",
         icon: "youtube"
       }
@@ -147,9 +140,7 @@ const highlights: CareerHighlight[] = [
     descriptionBullets: [
       "Architected a serverless, event-driven backbone for Liberty's specialty insurance platform using API Gateway, DynamoDB, Lambda, EventBridge, SNS, and SQS, enabling faster, loosely coupled integrations across underwriting, policy engines, and systems of record.",
       "Shaped data and integration strategy across DynamoDB, MongoDB Atlas, and RDS, aligning engineering and product priorities across squads at enterprise scale.",
-      "Built reusable CDK modules, serverless patterns, and CLI tools that reduced onboarding from weeks to days and accelerated serverless adoption org-wide.",
-      "Designed secure, high-throughput APIs using Lambda, API Gateway, and S3, balancing performance, compliance, and reliability.",
-      "Modernized testing workflows with Playwright and Jest, shrinking test cycles from days to minutes and paving the path to continuous delivery."
+      "Delivered a unified data platform that reduced integration time from weeks to hours, enabling rapid product experimentation and faster time-to-market for new insurance products."
     ]
   },
   {
@@ -171,159 +162,227 @@ const highlights: CareerHighlight[] = [
   }
 ];
 
-const getLinkIcon = (iconType: string) => {
-  return <Icon name={iconType as 'linkedin' | 'youtube' | 'patent' | 'blog' | 'external'} />;
-};
-
 const getIconForCard = (title: string, bulletIndex: number) => {
-  // Klaviyo AI Hackathon Winner (2025)
-  if (title.includes("Klaviyo AI Hackathon")) {
-    const icons = [Trophy, BrainCircuit, Zap, Settings2, Sparkles];
-    return icons[bulletIndex] || Trophy;
-  }
-
   // Head of Experimentation & Optimization
   if (title.includes("Head of Experimentation")) {
-    const icons = [Workflow, Sparkles, Rocket, PiggyBank];
-    return icons[bulletIndex] || Workflow;
+    const icons = [Gauge, Sparkles, Zap, PiggyBank];
+    return icons[bulletIndex % icons.length];
+  }
+  
+  // Senior Engineering Manager
+  if (title.includes("Senior Engineering Manager")) {
+    const icons = [Server, Users, Trophy];
+    return icons[bulletIndex % icons.length];
+  }
+  
+  // Platform & Cloud Architect
+  if (title.includes("Platform & Cloud Architect")) {
+    const icons = [CircuitBoard, BrainCircuit, Rocket];
+    return icons[bulletIndex % icons.length];
+  }
+  
+  // Klaviyo AI Hackathon Winner
+  if (title.includes("AI Hackathon Winner")) {
+    const icons = [Trophy, Bot, Sparkles, Zap, TrendingDown];
+    return icons[bulletIndex % icons.length];
+  }
+  
+  // Liberty Mutual Hackathon Winner
+  if (title.includes("Liberty Mutual Hackathon")) {
+    const icons = [Trophy, Bot];
+    return icons[bulletIndex % icons.length];
   }
   
   // Conference Speaker
   if (title.includes("Conference Speaker")) {
-    const icons = [Mic, Presentation, Users, CircuitBoard];
-    return icons[bulletIndex] || Mic;
+    const icons = [Trophy, Users, Sparkles, Rocket];
+    return icons[bulletIndex % icons.length];
   }
   
-  // Patent
+  // Patent Inventor
   if (title.includes("Inventor on U.S. Patent")) {
-    const icons = [ShieldCheck, TrendingDown, Gauge];
-    return icons[bulletIndex] || ShieldCheck;
+    const icons = [Trophy, Bot, Sparkles];
+    return icons[bulletIndex % icons.length];
   }
-
-  // Senior Engineering Manager
-  if (title.includes("Senior Engineering Manager")) {
-    const icons = [Users, Server, Rocket, ShieldCheck];
-    return icons[bulletIndex] || Users;
-  }
-
-  // Platform & Cloud Architect
-  if (title.includes("Platform & Cloud Architect")) {
-    const icons = [CircuitBoard, Workflow, Settings2, ShieldCheck, Zap];
-    return icons[bulletIndex] || CircuitBoard;
-  }
-
-  // Liberty Mutual Hackathon
-  if (title.includes("Liberty Mutual Hackathon")) {
-    const icons = [Bot, Trophy];
-    return icons[bulletIndex] || Bot;
-  }
-
+  
   // Default fallback
   return Sparkles;
 };
 
+const getLinkIcon = (iconType: string) => {
+  switch (iconType) {
+    case 'linkedin':
+      return (
+        <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      );
+    case 'youtube':
+      return (
+        <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      );
+    case 'patent':
+      return (
+        <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+      );
+    case 'blog':
+      return (
+        <svg className="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+      );
+    case 'external':
+      return (
+        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      );
+    default:
+      return (
+        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      );
+  }
+};
+
 export function CareerHighlightsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const scrollToCard = (index: number) => {
-    if (scrollContainerRef.current) {
-      const cardWidth = scrollContainerRef.current.offsetWidth;
-      scrollContainerRef.current.scrollTo({
-        left: index * cardWidth,
-        behavior: 'smooth'
-      });
-    }
-    setCurrentIndex(index);
-  };
-
-  const handleScroll = () => {
-    if (scrollContainerRef.current) {
-      const scrollLeft = scrollContainerRef.current.scrollLeft;
-      const cardWidth = scrollContainerRef.current.offsetWidth;
-      const newIndex = Math.round(scrollLeft / cardWidth);
-      setCurrentIndex(newIndex);
-    }
-  };
 
   const handleCardClick = (index: number) => {
-    setExpandedCard(index);
+    // Only expand on mobile (screen width < 768px)
+    if (window.innerWidth < 768) {
+      setExpandedCard(expandedCard === index ? null : index);
+    }
   };
 
   const closeExpandedCard = () => {
     setExpandedCard(null);
   };
 
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
-
   return (
     <section className="px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm pb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+        {/* Header */}
+        <div className="pb-8">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-4">
             Career Highlights
           </h2>
-          
-          {/* Progress Indicators */}
-          <div className="flex justify-center space-x-2 mb-6">
-            {highlights.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollToCard(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? 'bg-primary w-8' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                }`}
-              />
+        </div>
+
+        {/* Mobile: Horizontal Swipe, Desktop: Horizontal Scrolling */}
+        <div className="md:hidden">
+          {/* Mobile Horizontal Swipe */}
+          <div className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+            {highlights.map((highlight, index) => (
+              <div key={index} className="flex-shrink-0 w-80 snap-center">
+                <Card
+                  onClick={() => handleCardClick(index)}
+                  className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/50 h-[60vh]"
+                >
+                  <CardContent className="p-6 h-full flex flex-col">
+                    <div className="space-y-4 flex-1">
+                      {/* Logo + Title row */}
+                      <div className="flex items-center space-x-3">
+                        <Image
+                          src={highlight.logo}
+                          alt={`${highlight.company} logo`}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                        />
+                        <h3 className="text-lg font-bold text-foreground leading-tight">
+                          {highlight.title}
+                        </h3>
+                      </div>
+                      
+                      {/* Company + Tagline */}
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-muted-foreground">
+                          {highlight.company}
+                        </p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {highlight.tagline}
+                        </p>
+                      </div>
+
+                      {/* Description Bullets - Show first 2 on mobile */}
+                      <div className="space-y-3">
+                        {highlight.descriptionBullets.slice(0, 2).map((bullet, bulletIndex) => {
+                          const IconComponent = getIconForCard(highlight.title, bulletIndex);
+                          return (
+                            <div key={bulletIndex} className="group relative">
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                                <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
+                                <p className="text-xs text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
+                                  {bullet}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {highlight.descriptionBullets.length > 2 && (
+                          <p className="text-xs text-muted-foreground italic">
+                            +{highlight.descriptionBullets.length - 2} more details
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Links Section - Always show HR, content if links exist */}
+                    <div className="mt-auto pt-6 border-t border-border h-[80px] flex flex-col justify-center">
+                      {highlight.links && highlight.links.length > 0 ? (
+                        <div className="flex gap-2 justify-center items-center overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                          {highlight.links.map((link, linkIndex) => (
+                            <div
+                              key={linkIndex}
+                              className="p-2 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/50 transition-all duration-200 flex-shrink-0 min-w-0"
+                            >
+                              <ExternalLink
+                                href={link.url}
+                                className="text-xs flex items-center whitespace-nowrap"
+                              >
+                                {getLinkIcon(link.icon)}
+                                <span className="ml-1 truncate">{link.label}</span>
+                              </ExternalLink>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center h-full">
+                          <div className="text-xs text-muted-foreground/50 italic">No additional resources</div>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Card Deck Container */}
-        <div className="relative">
-          <CarouselNavigation
-            currentIndex={currentIndex}
-            totalItems={highlights.length}
-            onPrevious={() => scrollToCard(Math.max(0, currentIndex - 1))}
-            onNext={() => scrollToCard(Math.min(highlights.length - 1, currentIndex + 1))}
-          />
-
-          {/* Scrollable Card Deck */}
-          <div
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-6 pb-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+        {/* Desktop: Horizontal Scrolling Carousel */}
+        <div className="hidden md:block">
+          <div className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-6 pb-4 items-stretch" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {highlights.map((highlight, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-full max-w-4xl snap-center"
-              >
-                <Card 
-                  onClick={() => handleCardClick(index)}
-                  className="border-2 h-full shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer hover:border-primary/50"
-                >
+              <div key={index} className="flex-shrink-0 w-full max-w-4xl flex snap-center">
+                <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/50 flex-1">
                   <CardContent className="p-8 h-full flex flex-col">
                     <div className="space-y-6 flex-1">
                       {/* Logo + Title row */}
                       <div className="flex items-center space-x-4">
-                                              <Image
-                        src={highlight.logo}
-                        alt={`${highlight.company} logo`}
-                        width={48}
-                        height={48}
-                        className="w-[1.2em] h-[1.2em] object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                      />
-                        <h3 className="text-2xl md:text-3xl font-bold">
+                        <Image
+                          src={highlight.logo}
+                          alt={`${highlight.company} logo`}
+                          width={48}
+                          height={48}
+                          className="w-[1.2em] h-[1.2em] object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                        />
+                        <h3 className="text-2xl lg:text-3xl font-bold">
                           {highlight.title}
                         </h3>
                       </div>
@@ -338,7 +397,7 @@ export function CareerHighlightsSection() {
                         {highlight.tagline}
                       </p>
 
-                      {/* Description blocks */}
+                      {/* Description blocks - ALL bullets */}
                       <div className="space-y-4 flex-1">
                         {highlight.descriptionBullets.map((bullet, bulletIndex) => {
                           const IconComponent = getIconForCard(highlight.title, bulletIndex);
@@ -347,7 +406,7 @@ export function CareerHighlightsSection() {
                             <div key={bulletIndex} className="group relative">
                               <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
                                 <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
-                                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
+                                <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
                                   {bullet}
                                 </p>
                               </div>
@@ -355,167 +414,125 @@ export function CareerHighlightsSection() {
                           );
                         })}
                       </div>
-
-
                     </div>
 
-                    {/* Card Footer with Links */}
-                    {highlight.links && highlight.links.length > 0 && (
-                      <div className="mt-6 pt-4 border-t border-border/50">
-                        {highlight.links.length === 1 ? (
-                          // Single link - inline style
-                          <ExternalLink href={highlight.links[0].url}>
-                            {getLinkIcon(highlight.links[0].icon)}
-                            <span className="ml-2">{highlight.links[0].label}</span>
-                          </ExternalLink>
-                        ) : (
-                          // Multiple links - grid style
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {highlight.links.map((link, linkIndex) => (
+                    {/* Links Section - Always show HR, content if links exist */}
+                    <div className="mt-auto pt-6 border-t border-border h-[80px] flex flex-col justify-center">
+                      {highlight.links && highlight.links.length > 0 ? (
+                        <div className="flex gap-3 justify-center items-center overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                          {highlight.links.map((link, linkIndex) => (
+                            <div
+                              key={linkIndex}
+                              className="p-3 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/50 transition-all duration-200 flex-shrink-0 min-w-0"
+                            >
                               <ExternalLink
-                                key={linkIndex}
                                 href={link.url}
-                                className="group p-3 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200"
-                                showIcon={false}
+                                className="text-sm flex items-center whitespace-nowrap"
                               >
-                                <div className="flex items-center space-x-2 mb-1">
-                                  {getLinkIcon(link.icon)}
-                                  <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200">
-                                    {link.icon === 'blog' ? 'Blog Posts' : 
-                                     link.icon === 'youtube' ? 'Video' : 
-                                     link.icon === 'linkedin' ? 'LinkedIn' : 
-                                     link.icon === 'patent' ? 'Patent' : 'External'}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-foreground group-hover:text-primary transition-colors duration-200">
-                                  {link.label}
-                                </p>
+                                {getLinkIcon(link.icon)}
+                                <span className="ml-2 truncate">{link.label}</span>
                               </ExternalLink>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center h-full">
+                          <div className="text-sm text-muted-foreground/50 italic">No additional resources</div>
+                        </div>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Mobile Swipe Indicator */}
-        <div className="text-center mt-6 md:hidden">
-          <p className="text-sm text-muted-foreground">
-            ← Swipe to explore →
-          </p>
-        </div>
       </div>
 
-      {/* Expanded Card Modal */}
+      {/* Mobile Expanded Card Modal */}
       {expandedCard !== null && (
-        <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={closeExpandedCard}
-        >
-          <div 
-            className="bg-background border-2 border-primary/20 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8">
+        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm md:hidden">
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <h3 className="text-lg font-semibold">Career Highlight</h3>
               <button
                 onClick={closeExpandedCard}
-                className="absolute top-4 right-4 p-2 hover:bg-muted rounded-full transition-colors duration-200"
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
-              
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4">
               {(() => {
                 const highlight = highlights[expandedCard];
                 return (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {/* Logo + Title row */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-3">
                       <Image
                         src={highlight.logo}
                         alt={`${highlight.company} logo`}
-                        width={64}
-                        height={64}
-                        className="w-16 h-16 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                       />
-                      <h2 className="text-3xl md:text-4xl font-bold">
+                      <h3 className="text-xl font-bold text-foreground leading-tight">
                         {highlight.title}
-                      </h2>
+                      </h3>
+                    </div>
+                    
+                    {/* Company + Tagline */}
+                    <div className="space-y-2">
+                      <p className="text-base font-medium text-muted-foreground">
+                        {highlight.company}
+                      </p>
+                      <p className="text-base text-muted-foreground leading-relaxed">
+                        {highlight.tagline}
+                      </p>
                     </div>
 
-                    {/* Company with @ symbol */}
-                    <p className="text-xl text-muted-foreground">
-                      @ {highlight.company}
-                    </p>
-
-                    {/* Tagline */}
-                    <p className="text-xl font-medium text-primary">
-                      {highlight.tagline}
-                    </p>
-
-                    {/* Description blocks */}
+                    {/* Description Bullets */}
                     <div className="space-y-4">
                       {highlight.descriptionBullets.map((bullet, bulletIndex) => {
                         const IconComponent = getIconForCard(highlight.title, bulletIndex);
-                        
                         return (
-                          <div key={bulletIndex} className="group relative">
-                            <div className="flex items-start space-x-4 p-4 rounded-lg hover:bg-muted/50 transition-all duration-200">
-                              <IconComponent className="inline w-5 h-5 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
-                              <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200 text-base">
-                                {bullet}
-                              </p>
-                            </div>
+                          <div key={bulletIndex} className="flex items-start space-x-3 p-2 rounded-lg">
+                            <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              {bullet}
+                            </p>
                           </div>
                         );
                       })}
                     </div>
 
-                    {/* Card Footer with Links */}
-                    {highlight.links && highlight.links.length > 0 && (
-                      <div className="mt-8 pt-6 border-t border-border/50">
-                        {highlight.links.length === 1 ? (
-                          // Single link - inline style
-                          <ExternalLink href={highlight.links[0].url} className="text-lg">
-                            {getLinkIcon(highlight.links[0].icon)}
-                            <span className="ml-2">{highlight.links[0].label}</span>
-                          </ExternalLink>
-                        ) : (
-                          // Multiple links - grid style
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {highlight.links.map((link, linkIndex) => (
+                    {/* Links Section */}
+                    <div className="mt-6 pt-6 border-t border-border h-[80px] flex flex-col justify-center">
+                      {highlight.links && highlight.links.length > 0 ? (
+                        <div className="flex gap-3 justify-center items-center overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                          {highlight.links.map((link, linkIndex) => (
+                            <div
+                              key={linkIndex}
+                              className="p-3 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/50 transition-all duration-200 flex-shrink-0 min-w-0"
+                            >
                               <ExternalLink
-                                key={linkIndex}
                                 href={link.url}
-                                className="group p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200"
-                                showIcon={false}
+                                className="text-sm flex items-center whitespace-nowrap"
                               >
-                                <div className="flex items-center space-x-2 mb-2">
-                                  {getLinkIcon(link.icon)}
-                                  <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200">
-                                    {link.icon === 'blog' ? 'Blog Posts' : 
-                                     link.icon === 'youtube' ? 'Video' : 
-                                     link.icon === 'linkedin' ? 'LinkedIn' : 
-                                     link.icon === 'patent' ? 'Patent' : 'External'}
-                                  </span>
-                                </div>
-                                <p className="text-base text-foreground group-hover:text-primary transition-colors duration-200">
-                                  {link.label}
-                                </p>
+                                {getLinkIcon(link.icon)}
+                                <span className="ml-2 truncate">{link.label}</span>
                               </ExternalLink>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Close instruction */}
-                    <div className="text-center text-sm text-muted-foreground pt-4">
-                      <p>Click anywhere outside to close</p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center h-full">
+                          <div className="text-sm text-muted-foreground/50 italic">No additional resources</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
