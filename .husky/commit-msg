@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "📝 Validating commit message..."
+
+# Validate commit message format
+npx --no -- commitlint --edit $1
+
+if [ $? -ne 0 ]; then
+  echo "❌ Commit message validation failed!"
+  echo "💡 Use conventional commit format: type(scope): description"
+  echo "   Examples:"
+  echo "   - feat: add new carousel feature"
+  echo "   - fix: resolve mobile layout issue"
+  echo "   - docs: update testing documentation"
+  echo "   - test: add carousel navigation tests"
+  exit 1
+fi
+
+echo "✅ Commit message is valid!"
