@@ -63,7 +63,7 @@ const highlights: CareerHighlight[] = [
   },
   {
     logo: "/images/logos/klaviyo-logo.jpeg",
-    title: "Head of Experimentation & Optimization",
+    title: "🗺️ Head of Experimentation & Optimization",
     company: "Klaviyo",
     tagline: "Built to Scale. Architected to Last.",
     descriptionBullets: [
@@ -129,7 +129,7 @@ const highlights: CareerHighlight[] = [
   },
   {
     logo: "/images/logos/capitalone-logo.jpeg",
-    title: "Senior Engineering Manager",
+    title: "🗺️ Senior Engineering Manager",
     company: "Capital One",
     tagline: "Patented Performance at Scale.",
     descriptionBullets: [
@@ -141,7 +141,7 @@ const highlights: CareerHighlight[] = [
   },
   {
     logo: "/images/logos/libertymutual-logo.jpeg",
-    title: "Platform & Cloud Architect (Director Level)",
+    title: "🗺️ Platform & Cloud Architect (Director Level)",
     company: "Liberty Mutual",
     tagline: "Architecting Scale. Accelerating Delivery.",
     descriptionBullets: [
@@ -310,7 +310,7 @@ export function CareerHighlightsSection() {
               >
                 <Card 
                   onClick={() => handleCardClick(index)}
-                  className="border-2 h-full shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer hover:scale-[1.02] hover:border-primary/50"
+                  className="border-2 h-full shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer hover:border-primary/50"
                 >
                   <CardContent className="p-8 h-full flex flex-col">
                     <div className="space-y-6 flex-1">
@@ -345,8 +345,8 @@ export function CareerHighlightsSection() {
                           
                           return (
                             <div key={bulletIndex} className="group relative">
-                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200 hover:scale-[1.02]">
-                                <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:scale-110 group-hover:text-foreground transition-all duration-200" />
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                                <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
                                 <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
                                   {bullet}
                                 </p>
@@ -375,7 +375,7 @@ export function CareerHighlightsSection() {
                               <ExternalLink
                                 key={linkIndex}
                                 href={link.url}
-                                className="group p-3 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200 hover:scale-105"
+                                className="group p-3 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200"
                                 showIcon={false}
                               >
                                 <div className="flex items-center space-x-2 mb-1">
@@ -465,7 +465,7 @@ export function CareerHighlightsSection() {
                         return (
                           <div key={bulletIndex} className="group relative">
                             <div className="flex items-start space-x-4 p-4 rounded-lg hover:bg-muted/50 transition-all duration-200">
-                              <IconComponent className="inline w-5 h-5 text-muted-foreground mt-1 flex-shrink-0 group-hover:scale-110 group-hover:text-foreground transition-all duration-200" />
+                              <IconComponent className="inline w-5 h-5 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
                               <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200 text-base">
                                 {bullet}
                               </p>
@@ -491,7 +491,7 @@ export function CareerHighlightsSection() {
                               <ExternalLink
                                 key={linkIndex}
                                 href={link.url}
-                                className="group p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200 hover:scale-105"
+                                className="group p-4 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-muted/30 transition-all duration-200"
                                 showIcon={false}
                               >
                                 <div className="flex items-center space-x-2 mb-2">
