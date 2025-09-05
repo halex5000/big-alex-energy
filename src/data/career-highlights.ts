@@ -45,7 +45,7 @@ export const careerHighlights: CareerHighlight[] = [
     ],
     links: [
       {
-        label: 'Klaviyo optimization performance guide',
+        label: 'Klaviyo optimization guide',
         url: 'https://www.klaviyo.com/customer-resources/optimize-performance',
         icon: 'external',
       },
@@ -63,11 +63,6 @@ export const careerHighlights: CareerHighlight[] = [
       'Created high-impact enablement content and redesigned the architecture page to help technical buyers evaluate LaunchDarkly with clarity and speed.',
     ],
     links: [
-      {
-        label: 'LaunchDarkly blog posts',
-        url: '/blogs/launchdarkly',
-        icon: 'blog',
-      },
       {
         label: 'AWS re:Invent 2022',
         url: '/talks/reinvent-22',

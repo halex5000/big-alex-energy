@@ -124,56 +124,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'experimentation-platform',
-    title: 'Experimentation Platform',
-    tagline: '50B+ user experiences optimized with Bayesian algorithms',
-    description:
-      "Directed strategy and architecture for Klaviyo's experimentation platform, enabling massive-scale A/B testing across email, SMS, push, WhatsApp, and onsite channels with real-time optimization.",
-    image: '/images/logos/klaviyo-logo.jpeg',
-    href: '/career-highlights',
-    tags: ['Platform', 'AI', 'Scale', 'Optimization', 'Go'],
-    year: '2023-2024',
-    company: 'Klaviyo',
-    status: 'completed',
-
-    fullTitle: 'Self-Optimizing Experimentation Platform',
-    subtitle: '50B+ user experiences optimized with Bayesian algorithms',
-    duration: '18 months',
-    teamSize: '8 engineers',
-
-    role: 'Head of Experimentation & Optimization',
-    roleDescription:
-      "Directed strategy and architecture for Klaviyo's experimentation platform, enabling 50B+ user experiences annually across email, SMS, push, WhatsApp, and onsite.",
-
-    impact:
-      'Led design and delivery of self-optimizing features using Bayesian optimization and personalization, driving measurable conversion gains at scale. Replaced Python bottlenecks with a blazing-fast Go prototype (40× faster), assigning hundreds of millions of recipients in under a second with 80% less memory and single-digit nanosecond latency per assignment.',
-
-    features: [
-      'Bayesian optimization and personalization algorithms',
-      '40× performance improvement with Go implementation',
-      'Single-digit nanosecond latency per assignment',
-      '80% memory reduction vs Python implementation',
-      'Unlocked five-figure infrastructure savings annually',
-    ],
-
-    images: {
-      hero: '/images/logos/klaviyo-logo.jpeg',
-    },
-
-    stats: {
-      duration: '18 months',
-      teamSize: '8 engineers',
-    },
-
-    links: [
-      {
-        label: 'Klaviyo optimization guide',
-        url: 'https://www.klaviyo.com/customer-resources/optimize-performance',
-        icon: 'external',
-      },
-    ],
-  },
-  {
     id: 'gift-card-patent',
     title: 'Real-Time Gift Card System',
     tagline: 'U.S. Patent 11,562,416 - Automated fulfillment at scale',
