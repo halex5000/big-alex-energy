@@ -6,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from '@/components/ui/external-link';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { projects } from '@/data/projects';
+
+const viyoProject = projects.find(p => p.id === 'viyo')!;
 import {
   ArrowLeft,
   Bot,
@@ -51,19 +54,20 @@ export default function ViyoPage() {
             <div className="flex items-center justify-center gap-2 mb-4">
               <Bot className="w-8 h-8 text-primary" />
               <Badge variant="secondary" className="text-sm">
-                Internal Tool @ Klaviyo
+                {viyoProject.company}
               </Badge>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              Viyo: AI-Accelerated Onboarding Assistant
+              {viyoProject.fullTitle}
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-medium">
-              Built in 72 hours. Shipped Day 4 PRs. Saved $974K/year.
+              {viyoProject.subtitle}
             </p>
-            <p className="text-sm text-muted-foreground/70">
-              This was an internal-only tool built for Klaviyo&apos;s 2025 AI
-              Hackathon and is not publicly available.
-            </p>
+            {viyoProject.isInternal && viyoProject.internalNote && (
+              <p className="text-sm text-muted-foreground/70">
+                {viyoProject.internalNote}
+              </p>
+            )}
           </motion.div>
 
           <motion.div
@@ -74,15 +78,15 @@ export default function ViyoPage() {
           >
             <Badge variant="outline" className="text-sm px-4 py-2">
               <Trophy className="w-4 h-4 mr-2" />
-              1st Place (55 teams)
+              {viyoProject.achievement}
             </Badge>
             <Badge variant="outline" className="text-sm px-4 py-2">
               <Clock className="w-4 h-4 mr-2" />
-              72 hours
+              {viyoProject.duration}
             </Badge>
             <Badge variant="outline" className="text-sm px-4 py-2">
               <DollarSign className="w-4 h-4 mr-2" />
-              $974K saved/year
+              {viyoProject.savings}
             </Badge>
           </motion.div>
         </div>
@@ -112,12 +116,7 @@ export default function ViyoPage() {
                     Vision & Direction
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    The seed of the idea came from our People team, a big and
-                    ambitious vision for AI-accelerated onboarding. I helped
-                    translate that into a focused, executable plan we could
-                    realistically build in 72 hours. I defined the architecture,
-                    scoped the work, and led a fast-moving, highly collaborative
-                    build cycle.
+                    {viyoProject.roleDescription}
                   </p>
                 </CardContent>
               </Card>
@@ -128,12 +127,7 @@ export default function ViyoPage() {
                     Technical Execution
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    I built the Slackbot using Cursor, the orchestration layer,
-                    and the AI-powered Q&A assistant. I stitched together user
-                    flows, prompt logic, and thousands of lines of
-                    production-grade code to deliver a seamless experience. From
-                    backend logic to user interaction, I helped turn the spark
-                    of an idea into a working system.
+                    {viyoProject.impact}
                   </p>
                 </CardContent>
               </Card>
@@ -291,7 +285,7 @@ export default function ViyoPage() {
               <Card className="border-2 overflow-hidden">
                 <CardContent className="p-0">
                   <Image
-                    src="/images/hackathons/viyo/happy-viyo.jpeg"
+                    src={viyoProject.images.happy || viyoProject.images.hero}
                     alt="Happy Viyo"
                     width={300}
                     height={300}
@@ -659,6 +653,26 @@ export default function ViyoPage() {
         </div>
       </section>
 
+      {/* Back to Projects */}
+      <section className="px-6 py-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <ExternalLink
+              href="/projects"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+            >
+              ← Back to Projects
+            </ExternalLink>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Footer */}
       <section className="scroll-snap-section min-h-[50vh] flex items-center justify-center px-6">
         <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -683,7 +697,7 @@ export default function ViyoPage() {
                 View Resume
               </ExternalLink>
               <ExternalLink
-                href="/#contact"
+                href="mailto:alex@bigalexenergy.com?subject=Let's%20Build%20Something%20Amazing&body=Hi%20Alex,%0A%0AI'd%20love%20to%20connect%20and%20discuss%20opportunities%20to%20work%20together.%0A%0ABest%20regards,"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
               >
                 Get In Touch

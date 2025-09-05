@@ -1,0 +1,266 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - button "Toggle theme" [ref=e4]:
+    - img [ref=e5]
+    - generic [ref=e7]: Toggle theme
+  - generic [ref=e9]:
+    - generic [ref=e10]:
+      - heading "Alex Hardman" [level=1] [ref=e11]
+      - region [ref=e14]:
+        - generic [ref=e16]:
+          - group [ref=e17]:
+            - generic [ref=e19] [cursor=pointer]: 🧠 Engineering Leader
+          - group [ref=e20]:
+            - generic [ref=e22] [cursor=pointer]: ☁️ Cloud Architect
+          - group [ref=e23]:
+            - generic [ref=e25] [cursor=pointer]: 🏆 Hackathon Winner x2
+          - group [ref=e26]:
+            - generic [ref=e28] [cursor=pointer]: 📝 Patent Holder
+          - group [ref=e29]:
+            - generic [ref=e31] [cursor=pointer]: 🤓 Optimization Nerd
+          - group [ref=e32]:
+            - generic [ref=e34] [cursor=pointer]: 🚀 Startup Speed × 🏢 Enterprise Scale
+          - group [ref=e35]:
+            - generic [ref=e37] [cursor=pointer]: 📈 Data-Driven Decision-Maker
+          - group [ref=e38]:
+            - generic [ref=e40] [cursor=pointer]: 💡 Innovation Catalyst
+        - button "Next slide" [disabled]:
+          - img
+          - generic: Next slide
+      - generic [ref=e41]:
+        - paragraph [ref=e42]: Building with purpose.
+        - paragraph [ref=e43]: Leading with trust.
+        - paragraph [ref=e44]: Scaling with intention.
+    - generic [ref=e46]:
+      - generic [ref=e47]: Scroll to explore
+      - img [ref=e48]
+  - generic [ref=e54]:
+    - paragraph [ref=e55]: I architect systems that power billions of customer interactions, and lead the teams that scale them with clarity, trust, and resilience.
+    - paragraph [ref=e56]: I design for failure. I lead for velocity.
+  - generic [ref=e59]:
+    - heading "Career Highlights" [level=2] [ref=e61]
+    - region [ref=e63]:
+      - generic [ref=e65]:
+        - group [ref=e66]:
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - generic [ref=e70]:
+                - img "Klaviyo logo" [ref=e71]
+                - heading "🏆 Klaviyo AI Hackathon Winner (2025)" [level=3] [ref=e72]
+              - generic [ref=e73]:
+                - paragraph [ref=e74]: "@ Klaviyo"
+                - paragraph [ref=e75]: "Viyo: AI Onboarding That Ships Code by Day 4. Built in 72 Hours."
+              - generic [ref=e76]:
+                - generic [ref=e78]:
+                  - img [ref=e79]
+                  - paragraph [ref=e85]: Built and led the top-ranked AI project out of 55 teams, architected for speed, clarity, and impact
+                - generic [ref=e87]:
+                  - img [ref=e88]
+                  - paragraph [ref=e91]: Delivered Viyo, an onboarding assistant that gets engineers from day zero to first PR in 4 days, slashing ramp time by 85%
+                - generic [ref=e93]:
+                  - img [ref=e94]
+                  - paragraph [ref=e97]: Automated manager prep, ticket assignment, and personalized onboarding using GPT-4o, Slack, and n8n workflow automation
+                - generic [ref=e99]:
+                  - img [ref=e100]
+                  - paragraph [ref=e102]: Shipped AI-powered Q&A with live integration to Klaviyo's internal troubleshooting bot just hours before judging
+                - generic [ref=e104]:
+                  - img [ref=e105]
+                  - paragraph [ref=e108]: Projected $1M+ annual impact through earlier contributions, faster product delivery, and reduced manager lift
+            - link "Read the full story on LinkedIn" [ref=e112] [cursor=pointer]:
+              - /url: /hackathons/klaviyo-ai-onboarding
+              - img [ref=e113] [cursor=pointer]
+              - generic [ref=e115] [cursor=pointer]: Read the full story on LinkedIn
+              - img [ref=e116] [cursor=pointer]
+        - group [ref=e118]:
+          - generic [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - img "Klaviyo logo" [ref=e123]
+                - heading "🗺️ Head of Experimentation & Optimization" [level=3] [ref=e124]
+              - generic [ref=e125]:
+                - paragraph [ref=e126]: "@ Klaviyo"
+                - paragraph [ref=e127]: Built to Scale. Architected to Last.
+              - generic [ref=e128]:
+                - generic [ref=e130]:
+                  - img [ref=e131]
+                  - paragraph [ref=e134]: Directed strategy and architecture for Klaviyo's experimentation platform, enabling 50B+ user experiences annually across email, SMS, push, WhatsApp, and onsite.
+                - generic [ref=e136]:
+                  - img [ref=e137]
+                  - paragraph [ref=e140]: Led design and delivery of self-optimizing features using Bayesian optimization and personalization, driving measurable conversion gains at scale.
+                - generic [ref=e142]:
+                  - img [ref=e143]
+                  - paragraph [ref=e145]: Replaced Python bottlenecks with a blazing-fast Go prototype (40× faster), assigning hundreds of millions of recipients in under a second with 80% less memory and single-digit nanosecond latency per assignment.
+                - generic [ref=e147]:
+                  - img [ref=e148]
+                  - paragraph [ref=e151]: Unlocked five-figure infrastructure savings annually by migrating from self-hosted Redis to ElastiCache Serverless and creating a drop-in adoption playbook.
+            - link "Klaviyo optimization performance guide" [ref=e155] [cursor=pointer]:
+              - /url: https://www.klaviyo.com/customer-resources/optimize-performance
+              - img [ref=e156] [cursor=pointer]
+              - generic [ref=e158] [cursor=pointer]: Klaviyo optimization performance guide
+              - img [ref=e159] [cursor=pointer]
+        - group [ref=e161]:
+          - generic [ref=e163]:
+            - generic [ref=e164]:
+              - generic [ref=e165]:
+                - img "LaunchDarkly logo" [ref=e166]
+                - heading "🎤 Conference Speaker" [level=3] [ref=e167]
+              - generic [ref=e168]:
+                - paragraph [ref=e169]: "@ LaunchDarkly"
+                - paragraph [ref=e170]: Live Demos. Real Code. Global Reach.
+              - generic [ref=e171]:
+                - generic [ref=e173]:
+                  - img [ref=e174]
+                  - paragraph [ref=e180]: Took the stage at AWS re:Invent, QCon London, and LaunchDarkly Galaxy to demo real-world use cases with live code, storytelling, and dark-launch drama.
+                - generic [ref=e182]:
+                  - img [ref=e183]
+                  - paragraph [ref=e188]: Reached audiences globally and Fortune 100 leaders, inspiring confidence in feature management and enabling safer, faster delivery at scale.
+                - generic [ref=e190]:
+                  - img [ref=e191]
+                  - paragraph [ref=e194]: Served as a technical storyteller and educator, breaking down complex systems through live talks, webinars, blogs, and YouTube demos that made capabilities click.
+                - generic [ref=e196]:
+                  - img [ref=e197]
+                  - paragraph [ref=e202]: Created high-impact enablement content and redesigned the architecture page to help technical buyers evaluate LaunchDarkly with clarity and speed.
+            - generic [ref=e204]:
+              - link "LaunchDarkly blog posts" [ref=e206] [cursor=pointer]:
+                - /url: /blogs/launchdarkly
+                - img [ref=e207] [cursor=pointer]
+                - generic [ref=e209] [cursor=pointer]: LaunchDarkly blog posts
+                - img [ref=e210] [cursor=pointer]
+              - link "AWS re:Invent 2022" [ref=e213] [cursor=pointer]:
+                - /url: /talks/reinvent-22
+                - img [ref=e214] [cursor=pointer]
+                - generic [ref=e216] [cursor=pointer]: AWS re:Invent 2022
+                - img [ref=e217] [cursor=pointer]
+              - link "Migration Talk" [ref=e220] [cursor=pointer]:
+                - /url: /talks/migration-webinar
+                - img [ref=e221] [cursor=pointer]
+                - generic [ref=e223] [cursor=pointer]: Migration Talk
+                - img [ref=e224] [cursor=pointer]
+        - group [ref=e226]:
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - generic [ref=e230]:
+                - img "Capital One logo" [ref=e231]
+                - heading "🧠 Inventor on U.S. Patent 11,562,416" [level=3] [ref=e232]
+              - generic [ref=e233]:
+                - paragraph [ref=e234]: "@ Capital One"
+                - paragraph [ref=e235]: Innovation at Scale. Fulfillment at Speed.
+              - generic [ref=e236]:
+                - generic [ref=e238]:
+                  - img [ref=e239]
+                  - paragraph [ref=e245]: Inventor on a patented system that automates digital gift card issuance and redemption across high-volume enterprise rewards platforms
+                - generic [ref=e247]:
+                  - img [ref=e248]
+                  - paragraph [ref=e251]: Re-architected fulfillment flow for speed and reliability, enabling real-time delivery across thousands of vendors and millions of users
+                - generic [ref=e253]:
+                  - img [ref=e254]
+                  - paragraph [ref=e257]: Boosted transaction velocity, reduced third-party errors, and improved the end-to-end customer experience across Capital One's largest-scale rewards programs
+            - link "View patent details" [ref=e261] [cursor=pointer]:
+              - /url: /patents/realtime-gift-card
+              - img [ref=e262] [cursor=pointer]
+              - generic [ref=e264] [cursor=pointer]: View patent details
+              - img [ref=e265] [cursor=pointer]
+        - group [ref=e267]:
+          - generic [ref=e269]:
+            - generic [ref=e270]:
+              - generic [ref=e271]:
+                - img "Capital One logo" [ref=e272]
+                - heading "🗺️ Senior Engineering Manager" [level=3] [ref=e273]
+              - generic [ref=e274]:
+                - paragraph [ref=e275]: "@ Capital One"
+                - paragraph [ref=e276]: Patented Performance at Scale.
+              - generic [ref=e277]:
+                - generic [ref=e279]:
+                  - img [ref=e280]
+                  - paragraph [ref=e283]: Led the team behind Capital One Shopping's real-time price comparison engine, powering 50M+ daily lookups and billions of transactions.
+                - generic [ref=e285]:
+                  - img [ref=e286]
+                  - paragraph [ref=e291]: Architected and scaled systems using Docker, Node.js, PostgreSQL, Redis, and Cassandra to serve millions of active users.
+                - generic [ref=e293]:
+                  - img [ref=e294]
+                  - paragraph [ref=e300]: Launched a real-time geospatial hotel search engine with Docker, Redis, React, and PostGIS. Cut load times by 320× (8 hours → 90 seconds), eliminated weekly downtime, and ended stale data for good.
+                - generic [ref=e302]:
+                  - img [ref=e303]
+                  - paragraph [ref=e306]: Named inventor on U.S. Patent 11,562,416 for automating gift card acquisition and redemption to enable real-time fulfillment and improve customer experience.
+            - generic [ref=e309]: No additional resources
+        - group [ref=e310]:
+          - generic [ref=e312]:
+            - generic [ref=e313]:
+              - generic [ref=e314]:
+                - img "Liberty Mutual logo" [ref=e315]
+                - heading "🗺️ Platform & Cloud Architect (Director Level)" [level=3] [ref=e316]
+              - generic [ref=e317]:
+                - paragraph [ref=e318]: "@ Liberty Mutual"
+                - paragraph [ref=e319]: Architecting Scale. Accelerating Delivery.
+              - generic [ref=e320]:
+                - generic [ref=e322]:
+                  - img [ref=e323]
+                  - paragraph [ref=e329]: Architected a serverless, event-driven backbone for Liberty's specialty insurance platform using API Gateway, DynamoDB, Lambda, EventBridge, SNS, and SQS, enabling faster, loosely coupled integrations across underwriting, policy engines, and systems of record.
+                - generic [ref=e331]:
+                  - img [ref=e332]
+                  - paragraph [ref=e344]: Shaped data and integration strategy across DynamoDB, MongoDB Atlas, and RDS, aligning engineering and product priorities across squads at enterprise scale.
+                - generic [ref=e346]:
+                  - img [ref=e347]
+                  - paragraph [ref=e352]: Delivered a unified data platform that reduced integration time from weeks to hours, enabling rapid product experimentation and faster time-to-market for new insurance products.
+            - generic [ref=e355]: No additional resources
+        - group [ref=e356]:
+          - generic [ref=e358]:
+            - generic [ref=e359]:
+              - generic [ref=e360]:
+                - img "Liberty Mutual logo" [ref=e361]
+                - heading "🏆 Winner - Liberty Mutual Hackathon (2013)" [level=3] [ref=e362]
+              - generic [ref=e363]:
+                - paragraph [ref=e364]: "@ Liberty Mutual"
+                - paragraph [ref=e365]: Before ChatGPT. Before LLMs. Still Shipping Smarter Systems.
+              - generic [ref=e366]:
+                - generic [ref=e368]:
+                  - img [ref=e369]
+                  - paragraph [ref=e375]: Created a crash-detection Android app using voice + sensors to auto-trigger FNOL claims.
+                - generic [ref=e377]:
+                  - img [ref=e378]
+                  - paragraph [ref=e381]: Won top prize for tech innovation and real-world customer impact.
+            - link "Watch the demo video" [ref=e385] [cursor=pointer]:
+              - /url: /hackathons/liberty-mutual
+              - img [ref=e386] [cursor=pointer]
+              - generic [ref=e388] [cursor=pointer]: Watch the demo video
+              - img [ref=e389] [cursor=pointer]
+      - button "Previous slide" [disabled]:
+        - img
+        - generic: Previous slide
+      - button "Next slide" [disabled]:
+        - img
+        - generic: Next slide
+  - generic [ref=e396]:
+    - img [ref=e397]
+    - blockquote [ref=e400]: I don't just set a high bar for resilience, low-latency delivery, and debuggability at scale, I blaze the trail alongside the team. Great engineering isn't just about uptime and performance. It's about how systems respond when things go wrong.
+  - contentinfo [ref=e402]:
+    - generic [ref=e403]:
+      - generic [ref=e404]:
+        - heading "Let's Go Build." [level=2] [ref=e405]
+        - generic [ref=e406]:
+          - button "alex@bigalexenergy.com" [ref=e407]:
+            - img [ref=e408]
+            - text: alex@bigalexenergy.com
+            - img [ref=e411]
+          - link "LinkedIn" [ref=e414] [cursor=pointer]:
+            - /url: https://linkedin.com/in/halex9000
+            - img [ref=e415] [cursor=pointer]
+            - text: LinkedIn
+            - img [ref=e419] [cursor=pointer]
+      - generic [ref=e423]:
+        - generic [ref=e425]:
+          - img "Chef Alex" [ref=e428]
+          - heading "🥩 Chef Alex" [level=3] [ref=e430]
+          - paragraph [ref=e431]: Slow is smooth. Smooth is fast.
+        - generic [ref=e433]:
+          - img "Office Alex" [ref=e436]
+          - heading "👨‍💻 Office Alex" [level=3] [ref=e438]
+          - paragraph [ref=e439]: Lead with clarity. Build with care. Empower without ego.
+        - generic [ref=e441]:
+          - img "Mixologist Alex" [ref=e444]
+          - heading "🍸 Mixologist Alex" [level=3] [ref=e446]
+          - paragraph [ref=e447]: Shaking cocktails and debugging prod. (Not in that order.)
+      - paragraph [ref=e449]: © 2024 Alex Hardman. Engineered with Go, brisket, and Big Alex Energy.
+```
