@@ -166,7 +166,7 @@ export const resumeData: ResumeData = {
         title: 'B.S., Business Management',
         company: 'Granite State College',
         location: 'Concord, NH',
-        duration: '2010 - 2014',
+        duration: '2002 - 2006',
         description:
           'Focused on business management with emphasis on technology and systems thinking. Graduated Summa Cum Laude with highest honors.',
       },

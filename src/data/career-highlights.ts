@@ -64,6 +64,11 @@ export const careerHighlights: CareerHighlight[] = [
     ],
     links: [
       {
+        label: 'View all blog posts',
+        url: '/blogs',
+        icon: 'blog',
+      },
+      {
         label: 'AWS re:Invent 2022',
         url: '/talks/reinvent-22',
         icon: 'youtube',
