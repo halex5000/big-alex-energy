@@ -87,6 +87,25 @@ export default function RootLayout({
         <Script id="plausible-init">
           {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
         </Script>
+
+        {/* UTM Parameter Tracking */}
+        <Script id="utm-tracking">
+          {`
+            // Track UTM parameters on page load
+            (function() {
+              const urlParams = new URLSearchParams(window.location.search);
+              const utmParams = {};
+              ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+                const value = urlParams.get(param);
+                if (value) utmParams[param] = value;
+              });
+              
+              if (Object.keys(utmParams).length > 0 && window.plausible) {
+                window.plausible('UTM Parameters Detected', { props: utmParams });
+              }
+            })();
+          `}
+        </Script>
       </body>
     </html>
   );

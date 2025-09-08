@@ -1,24 +1,27 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { careerHighlights } from "@/data/career-highlights";
-import { Card, CardContent } from "@/components/ui/card";
-import { ExternalLink } from "@/components/ui/external-link";
-import Image from "next/image";
-import { getIconForCard, getLinkIcon } from "@/lib/career-icons";
-import { CareerHighlightModal } from "@/components/ui/career-highlight-modal";
+import { useState } from 'react';
+import { careerHighlights } from '@/data/career-highlights';
+import { Card, CardContent } from '@/components/ui/card';
+import { ExternalLink } from '@/components/ui/external-link';
+import Image from 'next/image';
+import { getIconForCard, getLinkIcon } from '@/lib/career-icons';
+import { CareerHighlightModal } from '@/components/ui/career-highlight-modal';
+import { trackCareerHighlightClick } from '@/lib/analytics';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from '@/components/ui/carousel';
 
 export function CareerHighlightsSection() {
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const handleCardClick = (index: number) => {
+    const highlight = careerHighlights[index];
+    trackCareerHighlightClick(highlight.title);
     setExpandedCard(expandedCard === index ? null : index);
   };
 
@@ -60,7 +63,7 @@ export function CareerHighlightsSection() {
                       {highlight.title}
                     </h3>
                   </div>
-                  
+
                   {/* Company + Tagline */}
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">
@@ -74,7 +77,10 @@ export function CareerHighlightsSection() {
                   {/* Description Bullets */}
                   <div className="space-y-2">
                     {highlight.descriptionBullets.map((bullet, bulletIndex) => {
-                      const IconComponent = getIconForCard(highlight.title, bulletIndex);
+                      const IconComponent = getIconForCard(
+                        highlight.title,
+                        bulletIndex
+                      );
                       return (
                         <div key={bulletIndex} className="group relative">
                           <div className="flex items-start space-x-2 p-1 rounded-lg hover:bg-muted/50 transition-all duration-200">
@@ -103,14 +109,18 @@ export function CareerHighlightsSection() {
                             className="text-xs flex items-center justify-center w-full h-full"
                           >
                             {getLinkIcon(link.icon)}
-                            <span className="ml-1 text-center font-medium">{link.label}</span>
+                            <span className="ml-1 text-center font-medium">
+                              {link.label}
+                            </span>
                           </ExternalLink>
                         </div>
                       ))}
                     </div>
                   ) : (
                     <div className="flex justify-center items-center h-full">
-                      <div className="text-xs text-muted-foreground/50 italic">No additional resources</div>
+                      <div className="text-xs text-muted-foreground/50 italic">
+                        No additional resources
+                      </div>
                     </div>
                   )}
                 </div>
@@ -124,16 +134,14 @@ export function CareerHighlightsSection() {
           <Carousel
             className="w-full max-w-2xl mx-auto"
             opts={{
-              align: "start",
+              align: 'start',
               loop: false,
             }}
           >
             <CarouselContent className="-ml-6">
               {careerHighlights.map((highlight, index) => (
                 <CarouselItem key={index} className="pl-6 basis-full">
-                  <Card
-                    className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/50 min-h-[70vh] lg:min-h-[65vh] xl:min-h-[60vh] h-full"
-                  >
+                  <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/50 min-h-[70vh] lg:min-h-[65vh] xl:min-h-[60vh] h-full">
                     <CardContent className="p-6 lg:p-8 h-full flex flex-col">
                       <div className="space-y-4 lg:space-y-6 flex-1">
                         {/* Logo + Title row */}
@@ -149,7 +157,7 @@ export function CareerHighlightsSection() {
                             {highlight.title}
                           </h3>
                         </div>
-                        
+
                         {/* Company + Tagline */}
                         <div className="space-y-2">
                           <p className="text-base lg:text-lg font-medium text-muted-foreground">
@@ -162,19 +170,27 @@ export function CareerHighlightsSection() {
 
                         {/* Description Bullets */}
                         <div className="space-y-3 lg:space-y-4">
-                          {highlight.descriptionBullets.map((bullet, bulletIndex) => {
-                            const IconComponent = getIconForCard(highlight.title, bulletIndex);
-                            return (
-                              <div key={bulletIndex} className="group relative">
-                                <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
-                                  <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
-                                  <p className="text-sm lg:text-base text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
-                                    {bullet}
-                                  </p>
+                          {highlight.descriptionBullets.map(
+                            (bullet, bulletIndex) => {
+                              const IconComponent = getIconForCard(
+                                highlight.title,
+                                bulletIndex
+                              );
+                              return (
+                                <div
+                                  key={bulletIndex}
+                                  className="group relative"
+                                >
+                                  <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                                    <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
+                                    <p className="text-sm lg:text-base text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
+                                      {bullet}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            }
+                          )}
                         </div>
                       </div>
 
@@ -192,14 +208,18 @@ export function CareerHighlightsSection() {
                                   className="text-sm lg:text-base flex items-center justify-center w-full h-full"
                                 >
                                   {getLinkIcon(link.icon)}
-                                  <span className="ml-2 lg:ml-3 text-center font-medium">{link.label}</span>
+                                  <span className="ml-2 lg:ml-3 text-center font-medium">
+                                    {link.label}
+                                  </span>
                                 </ExternalLink>
                               </div>
                             ))}
                           </div>
                         ) : (
                           <div className="flex justify-center items-center h-full">
-                            <div className="text-sm text-muted-foreground/50 italic">No additional resources</div>
+                            <div className="text-sm text-muted-foreground/50 italic">
+                              No additional resources
+                            </div>
                           </div>
                         )}
                       </div>

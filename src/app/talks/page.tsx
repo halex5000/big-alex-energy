@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { talks } from '@/data/talks';
+import { getIconForTalk } from '@/lib/career-icons';
 
 export default function TalksPage() {
   return (
@@ -31,7 +32,7 @@ export default function TalksPage() {
 
       {/* Talks Grid */}
       <section className="px-4 pb-12">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {talks.map((talk, index) => (
             <motion.div
               key={talk.id}
@@ -61,17 +62,22 @@ export default function TalksPage() {
                   </p>
 
                   <div className="space-y-3 mb-4">
-                    {talk.achievements.map((achievement, achievementIndex) => (
-                      <div
-                        key={achievementIndex}
-                        className="flex items-start space-x-2"
-                      >
-                        <span className="text-primary mt-1 text-xs">•</span>
-                        <span className="text-xs text-muted-foreground">
-                          {achievement}
-                        </span>
-                      </div>
-                    ))}
+                    {talk.achievements.map((achievement, achievementIndex) => {
+                      const IconComponent = getIconForTalk(
+                        talk.id,
+                        achievementIndex
+                      );
+                      return (
+                        <div key={achievementIndex} className="group relative">
+                          <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                            <IconComponent className="inline w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
+                            <span className="text-xs text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
+                              {achievement}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   <div className="flex flex-wrap gap-2 mb-4">

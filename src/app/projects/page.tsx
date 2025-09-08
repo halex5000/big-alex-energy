@@ -5,6 +5,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ExternalLink } from '@/components/ui/external-link';
 import Image from 'next/image';
 import { projects } from '@/data/projects';
+import {
+  trackHackathonsClick,
+  trackExternalLink,
+  trackCLIClick,
+} from '@/lib/analytics';
 
 export default function ProjectsPage() {
   return (
@@ -149,6 +154,14 @@ export default function ProjectsPage() {
                         <ExternalLink
                           href={project.href}
                           className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                          onClick={() => {
+                            // Track hackathon clicks specifically
+                            if (project.tags.includes('Hackathon')) {
+                              trackHackathonsClick();
+                            }
+                            // Track all external links
+                            trackExternalLink(project.href, project.title);
+                          }}
                         >
                           View Project →
                         </ExternalLink>
@@ -178,6 +191,7 @@ export default function ProjectsPage() {
             <ExternalLink
               href="/cli"
               className="inline-flex items-center gap-2 px-4 py-2 bg-green-900 text-green-400 border border-green-600 rounded-md hover:bg-green-800 transition-colors duration-200 font-mono text-sm"
+              onClick={trackCLIClick}
             >
               <span>⚡</span>
               <span>halex9000 CLI</span>

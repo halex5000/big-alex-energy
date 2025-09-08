@@ -19,6 +19,13 @@ import {
   Clock,
   Building2,
   Wrench,
+  Database,
+  Settings,
+  Shield,
+  Target,
+  Lightbulb,
+  CheckCircle,
+  ArrowRight,
 } from 'lucide-react';
 
 export const getIconForCard = (title: string, bulletIndex: number) => {
@@ -152,4 +159,28 @@ export const getLinkIcon = (iconType: string) => {
         </svg>
       );
   }
+};
+
+export const getIconForTalk = (talkId: string, bulletIndex: number) => {
+  // AWS re:Invent 2022 - Security incident monitoring
+  if (talkId === 'aws-reinvent-2022') {
+    const icons = [Shield, Gauge, Database, Users];
+    return icons[bulletIndex % icons.length];
+  }
+
+  // QCon London 2023 - Building Resilient Systems
+  if (talkId === 'qcon-london-2023') {
+    const icons = [CircuitBoard, Shield, Zap, Globe];
+    return icons[bulletIndex % icons.length];
+  }
+
+  // LaunchDarkly Galaxy 2023 - Migration Strategies
+  if (talkId === 'launchdarkly-galaxy-2023') {
+    const icons = [Database, Settings, Target, Lightbulb];
+    return icons[bulletIndex % icons.length];
+  }
+
+  // Default fallback
+  const defaultIcons = [CheckCircle, ArrowRight, Lightbulb, Target];
+  return defaultIcons[bulletIndex % defaultIcons.length];
 };

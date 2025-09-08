@@ -9,9 +9,11 @@ import { Download, Mail, MapPin, Linkedin, Github } from 'lucide-react';
 import Image from 'next/image';
 import { resumeData } from '@/data/resume';
 import { getIconForCard } from '@/lib/career-icons';
+import { trackDownloadClick, trackExternalLink } from '@/lib/analytics';
 
 export default function ResumePage() {
   const handleDownloadPDF = () => {
+    trackDownloadClick('alex-hardman-resume.pdf');
     // Open PDF in new tab for download
     window.open('/alex-hardman-resume.pdf', '_blank');
   };
@@ -48,6 +50,12 @@ export default function ResumePage() {
               <ExternalLink
                 href={`mailto:${resumeData.personalInfo.email}`}
                 className="hover:text-indigo-400 transition-colors duration-300"
+                onClick={() =>
+                  trackExternalLink(
+                    `mailto:${resumeData.personalInfo.email}`,
+                    'Email'
+                  )
+                }
               >
                 {resumeData.personalInfo.email}
               </ExternalLink>
@@ -61,6 +69,12 @@ export default function ResumePage() {
               <ExternalLink
                 href={resumeData.personalInfo.linkedin}
                 className="hover:text-indigo-400 transition-colors duration-300"
+                onClick={() =>
+                  trackExternalLink(
+                    resumeData.personalInfo.linkedin,
+                    'LinkedIn'
+                  )
+                }
               >
                 LinkedIn
               </ExternalLink>
@@ -71,6 +85,9 @@ export default function ResumePage() {
                 <ExternalLink
                   href={resumeData.personalInfo.github}
                   className="hover:text-indigo-400 transition-colors duration-300"
+                  onClick={() =>
+                    trackExternalLink(resumeData.personalInfo.github!, 'GitHub')
+                  }
                 >
                   GitHub
                 </ExternalLink>

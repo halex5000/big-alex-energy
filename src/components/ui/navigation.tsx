@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { trackNavigationClick } from '@/lib/analytics';
 
 export function Navigation() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,24 +40,28 @@ export function Navigation() {
         <Link
           href="/projects"
           className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"
+          onClick={() => trackNavigationClick('projects')}
         >
           Projects
         </Link>
         <Link
           href="/talks"
           className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"
+          onClick={() => trackNavigationClick('talks')}
         >
           Talks
         </Link>
         <Link
           href="/blogs"
           className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"
+          onClick={() => trackNavigationClick('blogs')}
         >
           Blog
         </Link>
         <Link
           href="/resume"
           className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"
+          onClick={() => trackNavigationClick('resume')}
         >
           Resume
         </Link>

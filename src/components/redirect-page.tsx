@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { trackRedirectLink } from '@/lib/analytics';
 
 interface RedirectPageProps {
   title: string;
@@ -11,11 +12,7 @@ interface RedirectPageProps {
 export function RedirectPage({ title, href, label }: RedirectPageProps) {
   useEffect(() => {
     // Fire Plausible analytics event
-    if (typeof window !== "undefined" && (window as unknown as { plausible?: (event: string, options?: { props: Record<string, string> }) => void }).plausible) {
-      (window as unknown as { plausible: (event: string, options?: { props: Record<string, string> }) => void }).plausible("Outbound Redirect", { 
-        props: { destination: label } 
-      });
-    }
+    trackRedirectLink(label);
 
     // Redirect after a short delay to ensure analytics fires
     const timer = setTimeout(() => {
@@ -33,16 +30,14 @@ export function RedirectPage({ title, href, label }: RedirectPageProps) {
           <h1 className="text-2xl font-bold text-foreground mb-2">
             Redirecting...
           </h1>
-          <p className="text-muted-foreground">
-            {title}
-          </p>
+          <p className="text-muted-foreground">{title}</p>
         </div>
-        
+
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
             If you&apos;re not redirected automatically,
           </p>
-          <a 
+          <a
             href={href}
             className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
           >

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from '@/components/ui/external-link';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { projects } from '@/data/projects';
+import { trackViyoCardClick, trackExternalLink } from '@/lib/analytics';
 
 const viyoProject = projects.find(p => p.id === 'viyo')!;
 import {
@@ -23,6 +25,11 @@ import {
 } from 'lucide-react';
 
 export default function ViyoPage() {
+  // Track Viyo page view
+  React.useEffect(() => {
+    trackViyoCardClick();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Theme Toggle */}
@@ -171,6 +178,12 @@ export default function ViyoPage() {
                       <ExternalLink
                         href="https://www.linkedin.com/posts/blakeschuller_winning-the-klaviyo-ai-hackathon-was-not-activity-7366538099549548546-QxwG?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAKjousBsyMCThwNnWkiEYv7OYIcBJU2x7Q"
                         className="text-xs text-primary hover:text-primary/80 transition-colors"
+                        onClick={() =>
+                          trackExternalLink(
+                            'https://www.linkedin.com/posts/blakeschuller_winning-the-klaviyo-ai-hackathon-was-not-activity-7366538099549548546-QxwG',
+                            'Blake LinkedIn Post'
+                          )
+                        }
                       >
                         Read the full post on LinkedIn →
                       </ExternalLink>
@@ -607,6 +620,12 @@ export default function ViyoPage() {
               <ExternalLink
                 href="https://www.linkedin.com/posts/halex9000_after-two-years-at-the-end-of-august-i-activity-7369723662968569857-0P5r?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAKjousBsyMCThwNnWkiEYv7OYIcBJU2x7Q"
                 className="text-sm text-primary hover:text-primary/80 transition-colors"
+                onClick={() =>
+                  trackExternalLink(
+                    'https://www.linkedin.com/posts/halex9000_after-two-years-at-the-end-of-august-i-activity-7369723662968569857-0P5r',
+                    'Alex LinkedIn Post'
+                  )
+                }
               >
                 Read my full LinkedIn post about the win →
               </ExternalLink>
