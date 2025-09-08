@@ -8,6 +8,8 @@ export interface BlogPost {
   href: string;
   external?: boolean;
   company?: string;
+  heroImage?: string;
+  heroGradient?: string;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -22,6 +24,8 @@ export const blogPosts: BlogPost[] = [
     href: 'https://launchdarkly.com/blog/introducing-the-launchdarkly-vue-sdk/',
     external: true,
     company: 'LaunchDarkly',
+    heroImage: '/images/logos/LaunchDarkly-logo.jpg',
+    heroGradient: 'from-purple-500/30 via-violet-500/20 to-indigo-500/30',
   },
   {
     id: 'database-migration',
@@ -40,6 +44,8 @@ export const blogPosts: BlogPost[] = [
     href: 'https://launchdarkly.com/blog/how-to-migrate-a-database/',
     external: true,
     company: 'LaunchDarkly',
+    heroImage: '/images/logos/LaunchDarkly-logo.jpg',
+    heroGradient: 'from-blue-500/30 via-cyan-500/20 to-teal-500/30',
   },
   {
     id: 'aws-reinvent-2022',
@@ -52,5 +58,7 @@ export const blogPosts: BlogPost[] = [
     href: 'https://launchdarkly.com/blog/aws-reinvent-2022-recapped/',
     external: true,
     company: 'LaunchDarkly',
+    heroImage: '/images/logos/aws-reinvent-2022-logo.jpg',
+    heroGradient: 'from-orange-500/30 via-red-500/20 to-yellow-500/30',
   },
 ];

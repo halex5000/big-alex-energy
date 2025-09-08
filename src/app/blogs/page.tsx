@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { blogPosts } from '@/data/blogs';
+import Image from 'next/image';
 
 export default function BlogsPage() {
   return (
@@ -41,6 +42,25 @@ export default function BlogsPage() {
               className="group"
             >
               <Card className="h-full flex flex-col overflow-hidden group hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer">
+                {/* Hero Image Section */}
+                {post.heroImage && (
+                  <div className="relative h-32 overflow-hidden">
+                    <Image
+                      src={post.heroImage}
+                      alt={`${post.title} hero image`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    {post.heroGradient && (
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${post.heroGradient}`}
+                      />
+                    )}
+                    {/* Overlay for better text readability */}
+                    <div className="absolute inset-0 bg-black/20" />
+                  </div>
+                )}
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-4">
                     <Badge className="bg-primary/80 text-primary-foreground">

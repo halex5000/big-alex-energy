@@ -11,6 +11,11 @@ export interface Talk {
   link?: string;
   videoUrl?: string;
   slidesUrl?: string;
+  logos?: string[];
+  hasVideo?: boolean;
+  ctaText?: string;
+  heroImage?: string;
+  heroGradient?: string;
 }
 
 export const talks: Talk[] = [
@@ -37,6 +42,16 @@ export const talks: Talk[] = [
     ],
     year: 2022,
     link: '/talks/aws-22',
+    videoUrl: 'https://youtu.be/6vZiq6HJA9s',
+    logos: [
+      '/images/logos/aws-reinvent-2022-logo.jpg',
+      '/images/logos/LaunchDarkly-logo.jpg',
+      '/images/logos/datadog-logo.avif',
+    ],
+    hasVideo: true,
+    ctaText: 'Watch on YouTube',
+    heroImage: '/images/logos/aws-reinvent-2022-logo.jpg',
+    heroGradient: 'from-orange-500/30 via-red-500/20 to-yellow-500/30',
   },
   {
     id: 'qcon-london-2023',
@@ -61,6 +76,14 @@ export const talks: Talk[] = [
     ],
     year: 2023,
     link: '/talks/qcon-london-23',
+    logos: [
+      '/images/logos/qcon-logo.svg',
+      '/images/logos/LaunchDarkly-logo.jpg',
+    ],
+    hasVideo: false,
+    ctaText: 'Read the full abstract',
+    heroImage: '/images/logos/qcon-logo.svg',
+    heroGradient: 'from-green-500/30 via-emerald-500/20 to-teal-500/30',
   },
   {
     id: 'launchdarkly-galaxy-2023',
@@ -85,5 +108,11 @@ export const talks: Talk[] = [
     ],
     year: 2023,
     link: '/talks/migration-webinar',
+    videoUrl: 'https://www.youtube.com/watch?v=pVM6gdGKcNc',
+    logos: ['/images/logos/LaunchDarkly-logo.jpg'],
+    hasVideo: true,
+    ctaText: 'Watch on YouTube',
+    heroImage: 'https://img.youtube.com/vi/pVM6gdGKcNc/hqdefault.jpg',
+    heroGradient: 'from-purple-500/30 via-violet-500/20 to-indigo-500/30',
   },
 ];
