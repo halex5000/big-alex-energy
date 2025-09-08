@@ -162,6 +162,30 @@ export default function ProjectsPage() {
         </div>
       </section>
 
+      {/* CLI CTA */}
+      <section className="px-4 py-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="space-y-4"
+          >
+            <p className="text-sm text-muted-foreground">
+              Prefer the terminal?
+            </p>
+            <ExternalLink
+              href="/cli"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-green-900 text-green-400 border border-green-600 rounded-md hover:bg-green-800 transition-colors duration-200 font-mono text-sm"
+            >
+              <span>⚡</span>
+              <span>halex9000 CLI</span>
+            </ExternalLink>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Back to Home */}
       <section className="px-4 py-8">
         <div className="max-w-6xl mx-auto text-center">

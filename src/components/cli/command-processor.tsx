@@ -19,7 +19,24 @@ export class CommandProcessor {
   async processCommand(command: string, currentPath: string): Promise<void> {
     const [cmd, ...args] = command.trim().split(' ');
 
-    switch (cmd.toLowerCase()) {
+    // Handle command aliases
+    const aliases: Record<string, string> = {
+      open: 'cat',
+      view: 'cat',
+      show: 'cat',
+      list: 'ls',
+      dir: 'ls',
+      home: 'cd ~',
+      root: 'cd /',
+      up: 'cd ..',
+      back: 'cd ..',
+    };
+
+    const normalizedCmd = aliases[cmd.toLowerCase()] || cmd;
+    const [resolvedCmd, ...resolvedArgs] = normalizedCmd.split(' ');
+    const finalArgs = [...resolvedArgs, ...args];
+
+    switch (resolvedCmd.toLowerCase()) {
       case 'help':
       case 'man':
         this.showHelp();
@@ -30,7 +47,7 @@ export class CommandProcessor {
         break;
 
       case 'cd':
-        this.changeDirectory(args[0] || '/', currentPath);
+        this.changeDirectory(finalArgs[0] || '/', currentPath);
         break;
 
       case 'pwd':
@@ -38,7 +55,7 @@ export class CommandProcessor {
         break;
 
       case 'cat':
-        this.catFile(args[0], currentPath);
+        this.catFile(finalArgs[0], currentPath);
         break;
 
       case 'resume':
@@ -46,7 +63,7 @@ export class CommandProcessor {
         break;
 
       case 'download':
-        if (args[0] === 'resume') {
+        if (finalArgs[0] === 'resume') {
           this.downloadResume();
         } else {
           this.setOutput(prev => [
@@ -65,11 +82,11 @@ export class CommandProcessor {
         break;
 
       case 'sudo':
-        this.handleSudo(args.join(' '));
+        this.handleSudo();
         break;
 
       case 'theme':
-        this.handleThemeChange(args[0]);
+        this.handleThemeChange(finalArgs[0]);
         break;
 
       case 'whoami':
@@ -332,18 +349,23 @@ Type "download resume" to get PDF version`;
     }, 1000);
   }
 
-  private handleSudo(command: string): void {
-    if (command.includes('cat resume')) {
-      this.setOutput(prev => [
-        ...prev,
-        { type: 'output', content: "Nice try. You're already root." },
-      ]);
-    } else {
-      this.setOutput(prev => [
-        ...prev,
-        { type: 'error', content: 'Permission denied. Try without sudo.' },
-      ]);
-    }
+  private handleSudo(): void {
+    const denialMessages = [
+      'Denied. Only I am root here.',
+      'Access denied. This shell already belongs to me.',
+      'sudo privileges are reserved for halex9000.',
+      'Permission denied. I am the only root in this terminal.',
+      'Access denied. This is my domain.',
+      'sudo: command not found (because I said so).',
+      'Permission denied. The terminal belongs to halex9000.',
+    ];
+
+    const randomMessage =
+      denialMessages[Math.floor(Math.random() * denialMessages.length)];
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'error', content: randomMessage },
+    ]);
   }
 
   private showWhoami(): void {
@@ -395,6 +417,9 @@ Type "download resume" to get PDF version`;
       red: 'Red-on-black (Alert)',
       purple: 'Purple-on-black (Royal)',
       white: 'White-on-black (Clean)',
+      crt: 'Green-on-black (CRT Monitor)',
+      powershell: 'White-on-navy (PowerShell)',
+      atari: 'Cyan/Magenta (Atari 8-bit)',
       list: 'Show available themes',
     };
 

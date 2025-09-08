@@ -12,7 +12,10 @@ export type Theme =
   | 'blue'
   | 'red'
   | 'purple'
-  | 'white';
+  | 'white'
+  | 'crt'
+  | 'powershell'
+  | 'atari';
 
 export interface ThemeColors {
   background: string;
@@ -115,6 +118,33 @@ const themes: Record<Theme, ThemeColors> = {
     cursor: 'text-white',
     prompt: 'text-gray-300',
   },
+  crt: {
+    background: 'bg-black',
+    text: 'text-green-400',
+    textSecondary: 'text-green-300',
+    textError: 'text-red-400',
+    border: 'border-green-600',
+    cursor: 'text-green-400',
+    prompt: 'text-green-300',
+  },
+  powershell: {
+    background: 'bg-slate-900',
+    text: 'text-white',
+    textSecondary: 'text-gray-300',
+    textError: 'text-red-400',
+    border: 'border-blue-600',
+    cursor: 'text-white',
+    prompt: 'text-blue-300',
+  },
+  atari: {
+    background: 'bg-black',
+    text: 'text-cyan-400',
+    textSecondary: 'text-magenta-400',
+    textError: 'text-red-400',
+    border: 'border-cyan-600',
+    cursor: 'text-cyan-400',
+    prompt: 'text-magenta-300',
+  },
 };
 
 interface ThemeContextType {
@@ -142,11 +172,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState<Theme>('retro');
 
   useEffect(() => {
-    // Load theme from localStorage on mount
-    const savedTheme = localStorage.getItem('halex9000-theme') as Theme;
-    if (savedTheme && themes[savedTheme]) {
-      setCurrentTheme(savedTheme);
-    }
+    // Always start with retro theme (classic green-on-black) for CLI
+    setCurrentTheme('retro');
   }, []);
 
   const setTheme = (theme: Theme) => {

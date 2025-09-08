@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { CommandProcessor } from './command-processor';
 import { VirtualFileSystem } from './virtual-file-system';
 import { TerminalOutput } from './terminal-output';
+import { BootSequence } from './boot-sequence';
 import { useTheme } from '@/contexts/theme-context';
 
 export function Terminal() {
@@ -15,14 +16,9 @@ export function Terminal() {
   const [currentCommand, setCurrentCommand] = useState('');
   const [output, setOutput] = useState<
     Array<{ type: 'command' | 'output' | 'error'; content: string }>
-  >([
-    {
-      type: 'output',
-      content: 'halex9000 CLI v1.0.0 - Type "help" for available commands',
-    },
-    { type: 'output', content: '' },
-  ]);
+  >([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showBootSequence, setShowBootSequence] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -38,16 +34,35 @@ export function Terminal() {
   );
 
   useEffect(() => {
-    if (inputRef.current) {
+    if (inputRef.current && !showBootSequence) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [showBootSequence]);
 
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [output]);
+
+  const handleBootComplete = () => {
+    setShowBootSequence(false);
+    setOutput([
+      { type: 'output', content: 'halex9000 boot sequence initiated…' },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: 'Loading core modules: resume, projects, ego, flair…',
+      },
+      { type: 'output', content: 'Loading bigalexenergy… ██████████████ 100%' },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: 'CLI ready. Type help for available commands.',
+      },
+      { type: 'output', content: '' },
+    ]);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -187,6 +202,36 @@ export function Terminal() {
       setOutput(prev => [...prev, { type: 'output', content: '' }]);
     }
   };
+
+  if (showBootSequence) {
+    return (
+      <div
+        className={`h-screen flex flex-col ${colors.background} ${colors.text} font-mono overflow-hidden`}
+      >
+        {/* Terminal Header */}
+        <div
+          className={`px-4 py-2 border-b ${colors.border}`}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+        >
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <span className={`text-sm ${colors.prompt}`}>
+              halex9000@terminal
+            </span>
+          </div>
+        </div>
+
+        {/* Boot Sequence */}
+        <div className="flex-1 overflow-y-auto">
+          <BootSequence onComplete={handleBootComplete} colors={colors} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

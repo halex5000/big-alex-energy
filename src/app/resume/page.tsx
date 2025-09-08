@@ -382,6 +382,23 @@ export default function ResumePage() {
           </div>
         </motion.div>
 
+        {/* CLI CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="text-center pt-8 space-y-4"
+        >
+          <p className="text-sm text-muted-foreground">View in CLI Mode</p>
+          <ExternalLink
+            href="/cli"
+            className="inline-flex items-center gap-2 px-3 py-1 bg-green-900 text-green-400 border border-green-600 rounded-md hover:bg-green-800 transition-colors duration-200 font-mono text-xs"
+          >
+            <span>⚡</span>
+            <span>halex9000 CLI</span>
+          </ExternalLink>
+        </motion.div>
+
         {/* Back to Home */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
