@@ -57,7 +57,6 @@ export default function BlogsPage() {
                         className={`absolute inset-0 bg-gradient-to-br ${post.heroGradient}`}
                       />
                     )}
-                    {/* Overlay for better text readability */}
                     <div className="absolute inset-0 bg-black/20" />
                   </div>
                 )}

@@ -46,23 +46,32 @@ export function CareerHighlightsSection() {
             <Card
               key={index}
               onClick={() => handleCardClick(index)}
-              className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/50 min-h-[65vh]"
+              className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/50 h-full flex flex-col overflow-hidden"
             >
-              <CardContent className="p-4 h-full flex flex-col">
-                <div className="space-y-3 flex-1">
-                  {/* Logo + Title row */}
-                  <div className="flex items-center space-x-3">
-                    <Image
-                      src={highlight.logo}
-                      alt={`${highlight.company} logo`}
-                      width={32}
-                      height={32}
-                      className="w-6 h-6 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+              {/* Hero Image Section */}
+              {highlight.heroImage && (
+                <div className="relative h-32 overflow-hidden">
+                  {highlight.heroBackgroundColor && (
+                    <div
+                      className="absolute inset-0"
+                      style={{ backgroundColor: highlight.heroBackgroundColor }}
                     />
-                    <h3 className="text-base font-bold text-foreground leading-tight">
-                      {highlight.title}
-                    </h3>
-                  </div>
+                  )}
+                  <Image
+                    src={highlight.heroImage}
+                    alt={`${highlight.title} hero image`}
+                    fill
+                    className={`object-contain ${highlight.heroPadding || 'p-6'}`}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+              )}
+              <CardContent className="p-4 flex-1 flex flex-col">
+                <div className="space-y-3 flex-1">
+                  {/* Title */}
+                  <h3 className="text-base font-bold text-foreground leading-tight">
+                    {highlight.title}
+                  </h3>
 
                   {/* Company + Tagline */}
                   <div className="space-y-1">
@@ -95,29 +104,23 @@ export function CareerHighlightsSection() {
                   </div>
                 </div>
 
-                {/* Links Section */}
-                <div className="mt-auto pt-4 border-t border-border min-h-[60px] flex flex-col justify-center">
+                {/* Links Section - OUTSIDE the flex-1 div so it's always at bottom */}
+                <div className="pt-4 border-t border-border">
                   {highlight.links && highlight.links.length > 0 ? (
-                    <div className="flex gap-2 justify-center items-center w-full">
+                    <div className="flex gap-2 justify-center">
                       {highlight.links.map((link, linkIndex) => (
-                        <div
+                        <a
                           key={linkIndex}
-                          className="flex-1 h-10 p-2 border border-border rounded-lg hover:border-primary/50 hover:bg-muted/50 transition-all duration-200 flex items-center justify-center"
+                          href={link.url}
+                          className="px-4 py-2 bg-primary text-primary-foreground text-sm rounded-lg hover:bg-primary/90 transition-colors duration-200 flex items-center gap-2"
                         >
-                          <ExternalLink
-                            href={link.url}
-                            className="text-xs flex items-center justify-center w-full h-full"
-                          >
-                            {getLinkIcon(link.icon)}
-                            <span className="ml-1 text-center font-medium">
-                              {link.label}
-                            </span>
-                          </ExternalLink>
-                        </div>
+                          {getLinkIcon(link.icon)}
+                          {link.label}
+                        </a>
                       ))}
                     </div>
                   ) : (
-                    <div className="flex justify-center items-center h-full">
+                    <div className="flex justify-center items-center">
                       <div className="text-xs text-muted-foreground/50 italic">
                         No additional resources
                       </div>
@@ -141,22 +144,33 @@ export function CareerHighlightsSection() {
             <CarouselContent className="-ml-6">
               {careerHighlights.map((highlight, index) => (
                 <CarouselItem key={index} className="pl-6 basis-full">
-                  <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/50 min-h-[70vh] lg:min-h-[65vh] xl:min-h-[60vh] h-full">
-                    <CardContent className="p-6 lg:p-8 h-full flex flex-col">
-                      <div className="space-y-4 lg:space-y-6 flex-1">
-                        {/* Logo + Title row */}
-                        <div className="flex items-center space-x-4">
-                          <Image
-                            src={highlight.logo}
-                            alt={`${highlight.company} logo`}
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 lg:w-[1.2em] lg:h-[1.2em] object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/50 h-full flex flex-col overflow-hidden">
+                    {/* Hero Image Section */}
+                    {highlight.heroImage && (
+                      <div className="relative h-32 overflow-hidden">
+                        {highlight.heroBackgroundColor && (
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              backgroundColor: highlight.heroBackgroundColor,
+                            }}
                           />
-                          <h3 className="text-sm lg:text-lg xl:text-xl font-bold text-foreground leading-tight">
-                            {highlight.title}
-                          </h3>
-                        </div>
+                        )}
+                        <Image
+                          src={highlight.heroImage}
+                          alt={`${highlight.title} hero image`}
+                          fill
+                          className={`object-contain ${highlight.heroPadding || 'p-6'}`}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                    )}
+                    <CardContent className="p-6 lg:p-8 flex-1 flex flex-col">
+                      <div className="space-y-4 lg:space-y-6 flex-1">
+                        {/* Title */}
+                        <h3 className="text-sm lg:text-lg xl:text-xl font-bold text-foreground leading-tight">
+                          {highlight.title}
+                        </h3>
 
                         {/* Company + Tagline */}
                         <div className="space-y-2">
@@ -195,7 +209,7 @@ export function CareerHighlightsSection() {
                       </div>
 
                       {/* Links Section */}
-                      <div className="mt-auto pt-6 border-t border-border min-h-[80px] flex flex-col justify-center">
+                      <div className="pt-6 border-t border-border">
                         {highlight.links && highlight.links.length > 0 ? (
                           <div className="flex gap-3 lg:gap-4 justify-center items-center w-full">
                             {highlight.links.map((link, linkIndex) => (

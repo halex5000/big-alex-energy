@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import { ExternalLink } from "@/components/ui/external-link";
-import Image from "next/image";
-import { getIconForCard, getLinkIcon } from "@/lib/career-icons";
-import { type CareerHighlight } from "@/data/career-highlights";
+import { ExternalLink } from '@/components/ui/external-link';
+import { getIconForCard, getLinkIcon } from '@/lib/career-icons';
+import { type CareerHighlight } from '@/data/career-highlights';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface CareerHighlightModalProps {
   highlight: CareerHighlight;
@@ -17,33 +16,26 @@ interface CareerHighlightModalProps {
   onClose: () => void;
 }
 
-export function CareerHighlightModal({ 
-  highlight, 
-  isOpen, 
-  onClose 
+export function CareerHighlightModal({
+  highlight,
+  isOpen,
+  onClose,
 }: CareerHighlightModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto md:hidden">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">Career Highlight</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">
+            Career Highlight
+          </DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-4">
-          {/* Logo + Title row */}
-          <div className="flex items-center space-x-3">
-            <Image
-              src={highlight.logo}
-              alt={`${highlight.company} logo`}
-              width={32}
-              height={32}
-              className="w-8 h-8 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-            />
-            <h3 className="text-xl font-bold text-foreground leading-tight">
-              {highlight.title}
-            </h3>
-          </div>
-          
+          {/* Title */}
+          <h3 className="text-xl font-bold text-foreground leading-tight">
+            {highlight.title}
+          </h3>
+
           {/* Company + Tagline */}
           <div className="space-y-2">
             <p className="text-base font-medium text-muted-foreground">
@@ -57,9 +49,15 @@ export function CareerHighlightModal({
           {/* Description Bullets */}
           <div className="space-y-4">
             {highlight.descriptionBullets.map((bullet, bulletIndex) => {
-              const IconComponent = getIconForCard(highlight.title, bulletIndex);
+              const IconComponent = getIconForCard(
+                highlight.title,
+                bulletIndex
+              );
               return (
-                <div key={bulletIndex} className="flex items-start space-x-3 p-2 rounded-lg">
+                <div
+                  key={bulletIndex}
+                  className="flex items-start space-x-3 p-2 rounded-lg"
+                >
                   <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {bullet}
@@ -83,14 +81,15 @@ export function CareerHighlightModal({
                       className="text-base flex items-center justify-center w-full h-full"
                     >
                       {getLinkIcon(link.icon)}
-                      <span className="ml-3 text-center font-medium">{link.label}</span>
+                      <span className="ml-3 text-center font-medium">
+                        {link.label}
+                      </span>
                     </ExternalLink>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="flex justify-center items-center h-full">
-              </div>
+              <div className="flex justify-center items-center h-full"></div>
             )}
           </div>
         </div>

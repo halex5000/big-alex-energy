@@ -1,9 +1,11 @@
 export interface CareerHighlight {
-  logo: string;
   title: string;
   company: string;
   tagline: string;
   descriptionBullets: string[];
+  heroImage?: string;
+  heroBackgroundColor?: string;
+  heroPadding?: string;
   links?: Array<{
     label: string;
     url: string;
@@ -13,10 +15,11 @@ export interface CareerHighlight {
 
 export const careerHighlights: CareerHighlight[] = [
   {
-    logo: '/images/logos/klaviyo-logo.jpeg',
     title: '🏆 Klaviyo AI Hackathon Winner (2025)',
     company: 'Klaviyo',
     tagline: 'Viyo: AI Onboarding That Ships Code by Day 4. Built in 72 Hours.',
+    heroImage: '/images/logos/klaviyo-hero.png',
+    heroBackgroundColor: '#EF6351',
     descriptionBullets: [
       'Built and led the top-ranked AI project out of 55 teams, architected for speed, clarity, and impact',
       'Delivered Viyo, an onboarding assistant that gets engineers from day zero to first PR in 4 days, slashing ramp time by 85%',
@@ -33,10 +36,11 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/klaviyo-logo.jpeg',
     title: '🗺️ Head of Experimentation & Optimization',
     company: 'Klaviyo',
     tagline: 'Built to Scale. Architected to Last.',
+    heroImage: '/images/logos/klaviyo-hero.png',
+    heroBackgroundColor: '#EF6351',
     descriptionBullets: [
       "Directed strategy and architecture for Klaviyo's experimentation platform, enabling 50B+ user experiences annually across email, SMS, push, WhatsApp, and onsite.",
       'Led design and delivery of self-optimizing features using Bayesian optimization and personalization, driving measurable conversion gains at scale.',
@@ -52,10 +56,11 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/launchdarkly-logo.jpeg',
     title: '🎤 Conference Speaker',
     company: 'LaunchDarkly',
     tagline: 'Live Demos. Real Code. Global Reach.',
+    heroImage: '/images/logos/LaunchDarkly-hero.png',
+    heroBackgroundColor: '#F8F9FA',
     descriptionBullets: [
       'Took the stage at AWS re:Invent, QCon London, and LaunchDarkly Galaxy to demo real-world use cases with live code, storytelling, and dark-launch drama.',
       'Reached audiences globally and Fortune 100 leaders, inspiring confidence in feature management and enabling safer, faster delivery at scale.',
@@ -81,10 +86,11 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/capitalone-logo.jpeg',
     title: '🧠 Inventor on U.S. Patent 11,562,416',
     company: 'Capital One',
     tagline: 'Innovation at Scale. Fulfillment at Speed.',
+    heroImage: '/images/logos/capitalone-hero.png',
+    heroBackgroundColor: '#F8F9FA',
     descriptionBullets: [
       'Inventor on a patented system that automates digital gift card issuance and redemption across high-volume enterprise rewards platforms',
       'Re-architected fulfillment flow for speed and reliability, enabling real-time delivery across thousands of vendors and millions of users',
@@ -99,10 +105,11 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/capitalone-logo.jpeg',
     title: '🗺️ Senior Engineering Manager',
     company: 'Capital One',
     tagline: 'Patented Performance at Scale.',
+    heroImage: '/images/logos/capitalone-hero.png',
+    heroBackgroundColor: '#F8F9FA',
     descriptionBullets: [
       "Led the team behind Capital One Shopping's real-time price comparison engine, powering 50M+ daily lookups and billions of transactions.",
       'Architected and scaled systems using Docker, Node.js, PostgreSQL, Redis, and Cassandra to serve millions of active users.',
@@ -111,10 +118,12 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/libertymutual-logo.jpeg',
     title: '🗺️ Platform & Cloud Architect (Director Level)',
     company: 'Liberty Mutual',
     tagline: 'Architecting Scale. Accelerating Delivery.',
+    heroImage: '/images/logos/liberty-hero-logo.svg',
+    heroBackgroundColor: '#F9DD5F',
+    heroPadding: 'p-1',
     descriptionBullets: [
       "Architected a serverless, event-driven backbone for Liberty's specialty insurance platform using API Gateway, DynamoDB, Lambda, EventBridge, SNS, and SQS, enabling faster, loosely coupled integrations across underwriting, policy engines, and systems of record.",
       'Shaped data and integration strategy across DynamoDB, MongoDB Atlas, and RDS, aligning engineering and product priorities across squads at enterprise scale.',
@@ -122,10 +131,12 @@ export const careerHighlights: CareerHighlight[] = [
     ],
   },
   {
-    logo: '/images/logos/libertymutual-logo.jpeg',
     title: '🏆 Winner - Liberty Mutual Hackathon (2013)',
     company: 'Liberty Mutual',
     tagline: 'Before ChatGPT. Before LLMs. Still Shipping Smarter Systems.',
+    heroImage: '/images/logos/liberty-hero-logo.svg',
+    heroBackgroundColor: '#F9DD5F',
+    heroPadding: 'p-1',
     descriptionBullets: [
       'Created a crash-detection Android app using voice + sensors to auto-trigger FNOL claims.',
       'Won top prize for tech innovation and real-world customer impact.',

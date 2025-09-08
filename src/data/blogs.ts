@@ -10,6 +10,7 @@ export interface BlogPost {
   company?: string;
   heroImage?: string;
   heroGradient?: string;
+  logos?: string[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -24,8 +25,9 @@ export const blogPosts: BlogPost[] = [
     href: 'https://launchdarkly.com/blog/introducing-the-launchdarkly-vue-sdk/',
     external: true,
     company: 'LaunchDarkly',
-    heroImage: '/images/logos/LaunchDarkly-logo.jpg',
+    heroImage: '/images/logos/vue_launchdarkly.webp',
     heroGradient: 'from-purple-500/30 via-violet-500/20 to-indigo-500/30',
+    logos: ['/images/logos/vue_launchdarkly.webp'],
   },
   {
     id: 'database-migration',
@@ -44,8 +46,9 @@ export const blogPosts: BlogPost[] = [
     href: 'https://launchdarkly.com/blog/how-to-migrate-a-database/',
     external: true,
     company: 'LaunchDarkly',
-    heroImage: '/images/logos/LaunchDarkly-logo.jpg',
+    heroImage: '/images/logos/LaunchDarkly_migration.webp',
     heroGradient: 'from-blue-500/30 via-cyan-500/20 to-teal-500/30',
+    logos: ['/images/logos/LaunchDarkly_migration.webp'],
   },
   {
     id: 'aws-reinvent-2022',
@@ -60,5 +63,9 @@ export const blogPosts: BlogPost[] = [
     company: 'LaunchDarkly',
     heroImage: '/images/logos/aws-reinvent-2022-logo.jpg',
     heroGradient: 'from-orange-500/30 via-red-500/20 to-yellow-500/30',
+    logos: [
+      '/images/logos/aws-reinvent-2022-logo.jpg',
+      '/images/logos/LaunchDarkly-logo.jpg',
+    ],
   },
 ];
