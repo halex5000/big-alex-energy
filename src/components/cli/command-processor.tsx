@@ -369,7 +369,39 @@ Type "download resume" to get PDF version`;
   }
 
   private showWhoami(): void {
-    this.setOutput(prev => [...prev, { type: 'output', content: 'halex9000' }]);
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: 'Name: Alex Hardman' },
+      { type: 'output', content: 'Alias: halex9000 | Big Alex Energy' },
+      {
+        type: 'output',
+        content: 'Role: Engineering Leader & Platform Architect',
+      },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'Known for:' },
+      {
+        type: 'output',
+        content: '• Building systems that scale — fast, clean, and confidently',
+      },
+      {
+        type: 'output',
+        content: '• Architecting enterprise-grade serverless backbones',
+      },
+      {
+        type: 'output',
+        content: '• Leading high-velocity teams that ship with intention',
+      },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'Experience:' },
+      { type: 'output', content: '• Liberty Mutual - enterprise-scale rigor' },
+      { type: 'output', content: '• Capital One - precision systems thinking' },
+      { type: 'output', content: '• Klaviyo - startup speed, platform vision' },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'Speaker at re:Invent & QCon' },
+      { type: 'output', content: 'Patented inventor & AI hackathon champ' },
+      { type: 'output', content: '' },
+      { type: 'output', content: "Try 'resume', 'projects', or 'clear'" },
+    ]);
   }
 
   private showDate(): void {

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://bigalexenergy.com'),
   title: 'Big Alex Energy – Alex Hardman',
   description:
-    'Engineering leader. Infra architect. CLI-powered personal site.',
+    'From serverless backbones to global experimentation platforms, I build systems that scale and teams that thrive.',
   authors: [{ name: 'Alex Hardman' }],
   keywords: [
     'Alex Hardman',
@@ -39,12 +39,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Big Alex Energy - Alex Hardman',
-    description: 'Architecting clarity, velocity, and resilience at scale.',
+    description:
+      'From serverless backbones to global experimentation platforms, I build systems that scale and teams that thrive.',
     type: 'website',
     url: 'https://bigalexenergy.com',
     images: [
       {
-        url: '/og-images/bae-og-v2.jpeg',
+        url: '/og-images/bae-og-v2.png',
         width: 1200,
         height: 630,
         alt: 'Screenshot of CLI terminal on bigalexenergy.com',
@@ -54,8 +55,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Big Alex Energy - Alex Hardman',
-    description: 'Architecting clarity, velocity, and resilience at scale.',
-    images: ['/og-images/bae-og-v2.jpeg'],
+    description:
+      'From serverless backbones to global experimentation platforms, I build systems that scale and teams that thrive.',
+    images: ['/og-images/bae-og-v2.png'],
   },
 };
 
