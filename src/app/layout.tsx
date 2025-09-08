@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     url: 'https://bigalexenergy.com',
     images: [
       {
-        url: '/og-images/bae-og-v2.png',
+        url: '/og-images/optimized-og.png',
         width: 1200,
         height: 630,
         alt: 'Screenshot of CLI terminal on bigalexenergy.com',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: 'Big Alex Energy - Alex Hardman',
     description:
       'From serverless backbones to global experimentation platforms, I build systems that scale and teams that thrive.',
-    images: ['/og-images/bae-og-v2.png'],
+    images: ['/og-images/optimized-og.png'],
   },
 };
 

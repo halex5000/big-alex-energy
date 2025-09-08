@@ -4,7 +4,7 @@ This directory contains the Open Graph image for social media sharing.
 
 ## Required File:
 
-- `bae-og-v2.png` - 1200x630px, optimized for web (~200-400KB)
+- `optimized-og.png` - 1200x630px, optimized for web (~200-400KB)
 
 ## Image Requirements:
 
