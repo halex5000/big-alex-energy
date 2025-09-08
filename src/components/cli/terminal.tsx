@@ -18,7 +18,7 @@ export function Terminal() {
     Array<{ type: 'command' | 'output' | 'error'; content: string }>
   >([]);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showBootSequence, setShowBootSequence] = useState(true);
+  const [bootSequenceComplete, setBootSequenceComplete] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -34,10 +34,10 @@ export function Terminal() {
   );
 
   useEffect(() => {
-    if (inputRef.current && !showBootSequence) {
+    if (inputRef.current && bootSequenceComplete) {
       inputRef.current.focus();
     }
-  }, [showBootSequence]);
+  }, [bootSequenceComplete]);
 
   useEffect(() => {
     if (outputRef.current) {
@@ -46,7 +46,7 @@ export function Terminal() {
   }, [output]);
 
   const handleBootComplete = () => {
-    setShowBootSequence(false);
+    setBootSequenceComplete(true);
     setOutput([
       { type: 'output', content: 'halex9000 boot sequence initiated…' },
       { type: 'output', content: '' },
@@ -203,36 +203,6 @@ export function Terminal() {
     }
   };
 
-  if (showBootSequence) {
-    return (
-      <div
-        className={`h-screen flex flex-col ${colors.background} ${colors.text} font-mono overflow-hidden`}
-      >
-        {/* Terminal Header */}
-        <div
-          className={`px-4 py-2 border-b ${colors.border}`}
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-        >
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            </div>
-            <span className={`text-sm ${colors.prompt}`}>
-              halex9000@terminal
-            </span>
-          </div>
-        </div>
-
-        {/* Boot Sequence */}
-        <div className="flex-1 overflow-y-auto">
-          <BootSequence onComplete={handleBootComplete} colors={colors} />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={`h-screen flex flex-col ${colors.background} ${colors.text} font-mono overflow-hidden`}
@@ -258,7 +228,13 @@ export function Terminal() {
         className={`flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-track-transparent`}
         style={{ scrollbarColor: `${colors.text} transparent` }}
       >
-        <TerminalOutput output={output} colors={colors} />
+        {/* Always show boot sequence at the top */}
+        {!bootSequenceComplete ? (
+          <BootSequence onComplete={handleBootComplete} colors={colors} />
+        ) : (
+          <TerminalOutput output={output} colors={colors} />
+        )}
+
         {isProcessing && (
           <div className={`flex items-center gap-1 ${colors.text}`}>
             <span className="animate-pulse">█</span>
@@ -267,27 +243,29 @@ export function Terminal() {
         )}
       </div>
 
-      {/* Command Input */}
-      <div
-        className={`border-t ${colors.border} p-4`}
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
-      >
-        <div className="flex items-center gap-2">
-          <span className={colors.prompt}>halex9000@{currentPath}$</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentCommand}
-            onChange={e => setCurrentCommand(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={`flex-1 bg-transparent ${colors.text} outline-none font-mono`}
-            placeholder="Enter command..."
-            autoComplete="off"
-            spellCheck="false"
-          />
-          <div className={`w-2 h-4 ${colors.cursor} animate-pulse`}></div>
+      {/* Command Input - only show after boot sequence completes */}
+      {bootSequenceComplete && (
+        <div
+          className={`border-t ${colors.border} p-4`}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+        >
+          <div className="flex items-center gap-2">
+            <span className={colors.prompt}>halex9000@{currentPath}$</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={currentCommand}
+              onChange={e => setCurrentCommand(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className={`flex-1 bg-transparent ${colors.text} outline-none font-mono`}
+              placeholder="Enter command..."
+              autoComplete="off"
+              spellCheck="false"
+            />
+            <div className={`w-2 h-4 ${colors.cursor} animate-pulse`}></div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -336,7 +336,29 @@ Type "download resume" to get PDF version`;
   }
 
   private clearTerminal(): void {
-    this.setOutput(() => []);
+    // Preserve the initial boot sequence content when clearing
+    const bootSequenceContent = [
+      {
+        type: 'output' as const,
+        content: 'halex9000 boot sequence initiated…',
+      },
+      { type: 'output' as const, content: '' },
+      {
+        type: 'output' as const,
+        content: 'Loading core modules: resume, projects, ego, flair…',
+      },
+      {
+        type: 'output' as const,
+        content: 'Loading bigalexenergy… ██████████████ 100%',
+      },
+      { type: 'output' as const, content: '' },
+      {
+        type: 'output' as const,
+        content: 'CLI ready. Type help for available commands.',
+      },
+      { type: 'output' as const, content: '' },
+    ];
+    this.setOutput(() => bootSequenceContent);
   }
 
   private exitCLI(): void {

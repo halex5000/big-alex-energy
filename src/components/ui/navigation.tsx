@@ -2,18 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { trackNavigationClick } from '@/lib/analytics';
 
 export function Navigation() {
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show navigation after scrolling down 100px on desktop
-      if (window.innerWidth >= 768) {
-        setIsVisible(window.scrollY > 100);
+      if (isHomePage) {
+        // On home page, show navigation after scrolling down 100px on desktop
+        if (window.innerWidth >= 768) {
+          setIsVisible(window.scrollY > 100);
+        } else {
+          // Always visible on mobile
+          setIsVisible(true);
+        }
       } else {
-        // Always visible on mobile
+        // On all other pages, always show navigation
         setIsVisible(true);
       }
     };
@@ -21,14 +29,19 @@ export function Navigation() {
     // Initial check
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
+    if (isHomePage) {
+      // Only listen to scroll events on home page
+      window.addEventListener('scroll', handleScroll);
+    }
     window.addEventListener('resize', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      if (isHomePage) {
+        window.removeEventListener('scroll', handleScroll);
+      }
       window.removeEventListener('resize', handleScroll);
     };
-  }, []);
+  }, [isHomePage]);
 
   return (
     <nav
@@ -37,6 +50,13 @@ export function Navigation() {
       }`}
     >
       <div className="flex items-center space-x-6 text-sm font-medium">
+        <Link
+          href="/"
+          className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"
+          onClick={() => trackNavigationClick('home')}
+        >
+          Home
+        </Link>
         <Link
           href="/projects"
           className="text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline"

@@ -1,7 +1,5 @@
 'use client';
 
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { Navigation } from '@/components/ui/navigation';
 import { HeroSection } from '@/components/sections/hero-section';
 import { SummarySection } from '@/components/sections/summary-section';
 import { QuoteSection } from '@/components/sections/quote-section';
@@ -13,14 +11,6 @@ import { trackCLIClick } from '@/lib/analytics';
 export function MainLayout() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <Navigation />
-
-      {/* Theme Toggle */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
-
       {/* CLI Mode Toggle */}
       <div className="fixed bottom-6 left-6 z-50">
         <a

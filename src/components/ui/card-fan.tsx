@@ -62,7 +62,7 @@ export function CardFan({
               const totalLogos = logos.length;
               const angle = (index - (totalLogos - 1) / 2) * 50; // MAXIMUM FAN SPREAD! 🃏
               const translateX = (index - (totalLogos - 1) / 2) * 66.125; // Another 15% more horizontal spread! 🎸
-              const zIndex = totalLogos - index; // Stacking order
+              const zIndex = index + 1; // Stacking order - non-hero logos in front
 
               return (
                 <motion.div
