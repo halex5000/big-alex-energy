@@ -38,14 +38,13 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Big Alex Energy – Alex Hardman',
-    description:
-      'I turned my resume into a terminal. Now you can run `cat resume`.',
+    title: 'Big Alex Energy - Alex Hardman',
+    description: 'Architecting clarity, velocity, and resilience at scale.',
     type: 'website',
     url: 'https://bigalexenergy.com',
     images: [
       {
-        url: '/og-images/bae-og-v2.png',
+        url: '/og-images/bae-og-v2.jpeg',
         width: 1200,
         height: 630,
         alt: 'Screenshot of CLI terminal on bigalexenergy.com',
@@ -54,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Big Alex Energy – Alex Hardman',
-    description: 'You can run `download resume` on my site. CLI mode is live.',
-    images: ['/og-images/bae-og-v2.png'],
+    title: 'Big Alex Energy - Alex Hardman',
+    description: 'Architecting clarity, velocity, and resilience at scale.',
+    images: ['/og-images/bae-og-v2.jpeg'],
   },
 };
 
