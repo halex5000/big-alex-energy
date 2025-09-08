@@ -17,6 +17,17 @@ export function MainLayout() {
         <ThemeToggle />
       </div>
 
+      {/* CLI Mode Toggle */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <a
+          href="/cli"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-green-900 text-green-400 border border-green-600 rounded-md hover:bg-green-800 transition-colors duration-200 font-mono text-sm"
+        >
+          <span>⚡</span>
+          <span>halex9000 CLI</span>
+        </a>
+      </div>
+
       {/* Main Content with Scroll Snap */}
       <div className="scroll-snap-section">
         <HeroSection />

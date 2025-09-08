@@ -45,7 +45,10 @@ export default function ResumePage() {
           <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Mail className="w-4 h-4" />
-              <ExternalLink href={`mailto:${resumeData.personalInfo.email}`}>
+              <ExternalLink
+                href={`mailto:${resumeData.personalInfo.email}`}
+                className="hover:text-indigo-400 transition-colors duration-300"
+              >
                 {resumeData.personalInfo.email}
               </ExternalLink>
             </div>
@@ -55,14 +58,20 @@ export default function ResumePage() {
             </div>
             <div className="flex items-center gap-1">
               <Linkedin className="w-4 h-4" />
-              <ExternalLink href={resumeData.personalInfo.linkedin}>
+              <ExternalLink
+                href={resumeData.personalInfo.linkedin}
+                className="hover:text-indigo-400 transition-colors duration-300"
+              >
                 LinkedIn
               </ExternalLink>
             </div>
             {resumeData.personalInfo.github && (
               <div className="flex items-center gap-1">
                 <Github className="w-4 h-4" />
-                <ExternalLink href={resumeData.personalInfo.github}>
+                <ExternalLink
+                  href={resumeData.personalInfo.github}
+                  className="hover:text-indigo-400 transition-colors duration-300"
+                >
                   GitHub
                 </ExternalLink>
               </div>
@@ -76,7 +85,7 @@ export default function ResumePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card>
+          <Card className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer">
             <CardHeader>
               <CardTitle>Summary</CardTitle>
             </CardHeader>
@@ -99,7 +108,10 @@ export default function ResumePage() {
           </h2>
           <div className="space-y-6">
             {resumeData.experience.items.map((job, index) => (
-              <Card key={index}>
+              <Card
+                key={index}
+                className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer"
+              >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
@@ -187,7 +199,10 @@ export default function ResumePage() {
           <h2 className="text-3xl font-bold mb-6">Skills & Tools</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {Object.entries(resumeData.skills).map(([category, skills]) => (
-              <Card key={category}>
+              <Card
+                key={category}
+                className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer"
+              >
                 <CardHeader>
                   <CardTitle className="text-lg">{category}</CardTitle>
                 </CardHeader>
@@ -218,7 +233,10 @@ export default function ResumePage() {
             <h2 className="text-3xl font-bold mb-6">Awards & Recognition</h2>
             <div className="space-y-4">
               {resumeData.awards.map((award, index) => (
-                <Card key={index}>
+                <Card
+                  key={index}
+                  className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer"
+                >
                   <CardContent className="pt-6">
                     <h3 className="font-semibold text-lg">{award.title}</h3>
                     <p className="text-muted-foreground">{award.company}</p>
@@ -270,7 +288,10 @@ export default function ResumePage() {
             <h2 className="text-3xl font-bold mb-6">Patents</h2>
             <div className="space-y-4">
               {resumeData.patents.map((patent, index) => (
-                <Card key={index}>
+                <Card
+                  key={index}
+                  className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer"
+                >
                   <CardContent className="pt-6">
                     <h3 className="font-semibold text-lg">{patent.title}</h3>
                     <p className="text-muted-foreground">{patent.company}</p>
@@ -323,7 +344,10 @@ export default function ResumePage() {
           </h2>
           <div className="space-y-4">
             {resumeData.education.items.map((edu, index) => (
-              <Card key={index}>
+              <Card
+                key={index}
+                className="hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer"
+              >
                 <CardContent className="pt-6">
                   <div className="flex justify-between items-start">
                     <div>
@@ -367,7 +391,7 @@ export default function ResumePage() {
         >
           <ExternalLink
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-indigo-400 hover:underline transition-colors duration-300"
           >
             ← Back to Home
           </ExternalLink>

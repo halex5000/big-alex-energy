@@ -38,9 +38,9 @@ export default function TalksPage() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              className="group"
             >
-              <Card className="h-full flex flex-col overflow-hidden group">
+              <Card className="h-full flex flex-col overflow-hidden group hover:scale-105 hover:shadow-lg transition-transform duration-300 cursor-pointer">
                 <CardContent className="p-6 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-4">
                     <Badge className="bg-primary/80 text-primary-foreground">
@@ -89,7 +89,7 @@ export default function TalksPage() {
                   {talk.link && (
                     <Link
                       href={talk.link}
-                      className="text-primary hover:underline inline-flex items-center text-sm"
+                      className="text-primary hover:text-indigo-400 hover:underline inline-flex items-center text-sm transition-colors duration-300"
                     >
                       View Talk Details →
                     </Link>
@@ -106,7 +106,7 @@ export default function TalksPage() {
         <div className="max-w-6xl mx-auto text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-indigo-400 hover:underline transition-colors duration-300"
           >
             ← Back to Home
           </Link>

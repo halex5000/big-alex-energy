@@ -41,7 +41,7 @@ export default function ProjectsPage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/50 h-full">
+                <Card className="border-2 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/50 h-full hover:scale-105 transform">
                   <CardContent className="p-0 h-full flex flex-col">
                     {/* Project Image */}
                     <div className="relative h-48 overflow-hidden rounded-t-lg">
@@ -62,7 +62,21 @@ export default function ProjectsPage() {
                     <div className="p-6 flex-1 flex flex-col">
                       <div className="space-y-3 flex-1">
                         <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                          {project.title}
+                          {project.title.split(' ').map((word, wordIndex) => {
+                            // Check if word is an emoji (simple check for non-alphanumeric characters)
+                            const isEmoji =
+                              /^[^\w\s]+$/.test(word) && word.length <= 4;
+                            return isEmoji ? (
+                              <span
+                                key={wordIndex}
+                                className="animate-pulse inline-block"
+                              >
+                                {word}
+                              </span>
+                            ) : (
+                              <span key={wordIndex}>{word} </span>
+                            );
+                          })}
                         </h3>
                         <p className="text-sm font-medium text-muted-foreground">
                           {project.tagline}
@@ -70,6 +84,52 @@ export default function ProjectsPage() {
                         <p className="text-sm text-muted-foreground leading-relaxed">
                           {project.description}
                         </p>
+
+                        {/* Impact Stats */}
+                        <div className="space-y-1 mt-3">
+                          {project.id === 'viyo' && (
+                            <>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>🧠</span>
+                                <span>4x faster onboarding (Day 4 PRs)</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>💰</span>
+                                <span>$974K+ projected annual savings</span>
+                              </div>
+                            </>
+                          )}
+                          {project.id === 'gift-card-patent' && (
+                            <>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>⚡</span>
+                                <span>
+                                  Real-time delivery across thousands of vendors
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>🏆</span>
+                                <span>U.S. Patent 11,562,416 awarded</span>
+                              </div>
+                            </>
+                          )}
+                          {project.id === 'crash-detection-app' && (
+                            <>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>🏆</span>
+                                <span>
+                                  1st Place at Liberty Mutual hackathon
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>🚗</span>
+                                <span>
+                                  Auto FNOL claims with voice + sensors
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </div>
                       </div>
 
                       {/* Tags */}
