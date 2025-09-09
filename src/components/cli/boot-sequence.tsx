@@ -11,6 +11,7 @@ interface BootSequenceProps {
 export function BootSequence({ onComplete, colors }: BootSequenceProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
 
   const bootSteps = [
     'halex9000 boot sequence initiated…',
@@ -35,38 +36,50 @@ export function BootSequence({ onComplete, colors }: BootSequenceProps) {
       });
     }, 800);
 
-    // Progress bar animation
-    const progressTimer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(progressTimer);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 50);
-
     return () => {
       clearInterval(timer);
-      clearInterval(progressTimer);
     };
   }, [onComplete, bootSteps.length]);
+
+  // Separate effect for progress animation
+  useEffect(() => {
+    if (showProgress) {
+      const progressTimer = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(progressTimer);
+            return 100;
+          }
+          return prev + 3; // Faster animation
+        });
+      }, 50);
+
+      return () => {
+        clearInterval(progressTimer);
+      };
+    }
+  }, [showProgress]);
+
+  // Start progress when we reach the loading step
+  useEffect(() => {
+    if (currentStep === 3) {
+      // "Loading bigalexenergy…" step
+      setShowProgress(true);
+    }
+  }, [currentStep]);
 
   return (
     <div className={`${colors.background} ${colors.text} font-mono p-4`}>
       {bootSteps.slice(0, currentStep + 1).map((step, index) => (
         <div key={index} className="mb-1">
-          {step === 'Loading bigalexenergy…' ? (
-            <div>
-              <span>{step}</span>
-              <div className="mt-2 w-64 bg-gray-800 rounded-full h-2">
-                <div
-                  className="bg-green-400 h-2 rounded-full transition-all duration-100"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              <span className="text-sm text-gray-400">{progress}%</span>
-            </div>
+          {step === 'Loading bigalexenergy…' && showProgress ? (
+            <span>
+              {step}{' '}
+              {Array.from({ length: 16 }, (_, i) =>
+                i < Math.floor(progress / 6.25) ? '█' : '░'
+              ).join('')}{' '}
+              {progress}%
+            </span>
           ) : (
             <span>{step}</span>
           )}

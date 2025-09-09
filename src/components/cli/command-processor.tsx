@@ -13,7 +13,11 @@ export class CommandProcessor {
     ) => void,
     private setIsProcessing: (processing: boolean) => void,
     private router: { push: (path: string) => void },
-    private setTheme?: (theme: Theme) => void
+    private setTheme?: (theme: Theme) => void,
+    private setMatrixConfig?: (config: {
+      speed?: number;
+      size?: number;
+    }) => void
   ) {}
 
   async processCommand(command: string, currentPath: string): Promise<void> {
@@ -40,6 +44,10 @@ export class CommandProcessor {
       case 'help':
       case 'man':
         this.showHelp();
+        break;
+
+      case 'more':
+        this.showSecretHelp();
         break;
 
       case 'ls':
@@ -105,6 +113,26 @@ export class CommandProcessor {
         this.showUptime();
         break;
 
+      case 'matrix':
+        this.handleMatrixConfig(finalArgs[0], finalArgs[1]);
+        break;
+
+      case 'boost':
+        this.handleBoostCommand(finalArgs[0]);
+        break;
+
+      case 'destiny':
+        this.handleDestinyCommand();
+        break;
+
+      case 'vibes':
+        this.handleVibesCommand();
+        break;
+
+      case 'halex':
+        this.handleHalexCommand();
+        break;
+
       default:
         this.setOutput(prev => [
           ...prev,
@@ -120,28 +148,34 @@ export class CommandProcessor {
     const helpText = `Available Commands:
 ==================
 
-help, man          Show this help message
-ls                 List directory contents
-cd [directory]     Change directory (supports .., ~, /)
-pwd                Print working directory
-cat [file]         Display file contents
-resume             Show resume summary
-download resume    Download resume PDF
-clear              Clear terminal output
-exit               Exit CLI mode
+help, man              Show this help message
+ls                     List directory contents
+cd [directory]         Change directory (supports .., ~, /)
+pwd                    Print working directory
+cat [file]             Display file contents
+resume                 Show resume summary
+download resume        Download resume PDF
+clear                  Clear terminal output
+exit                   Exit CLI mode
 
 System Commands:
-whoami             Show current user
-date               Show current date/time
-uname              Show system info
-uptime             Show system uptime
+================
+whoami                 Show current user
+date                   Show current date/time
+uname                  Show system info
+uptime                 Show system uptime
 
 Easter Eggs:
-sudo [command]     Try it and see...
-theme [name]       Change terminal theme
-theme list         Show available themes
+============
+sudo [command]         Try it and see...
+theme [name]           Change terminal theme
+theme list             Show available themes
+matrix speed [1-10]    Set Matrix rain speed (1=slowest, 10=fastest)
+matrix size [1-10]     Set Matrix rain size (1=smallest, 10=largest)
+matrix reset           Reset Matrix rain to default settings
 
 Examples:
+=========
   ls                    # List current directory
   cd projects           # Go to projects directory
   cd ..                 # Go up one directory
@@ -150,9 +184,55 @@ Examples:
   cat contact           # View contact information
   cat projects/viyo     # View Viyo project details
   resume                # Quick resume overview
-  download resume       # Download PDF resume`;
+  download resume       # Download PDF resume
+
+Type 'more' for secret commands...`;
 
     this.setOutput(prev => [...prev, { type: 'output', content: helpText }]);
+  }
+
+  private showSecretHelp(): void {
+    const secretHelpText = `Secret Commands:
+================
+
+boost velocity --force  Activate Big Alex Energy™
+destiny                Query the universe for your destiny
+vibes                  Check your current vibe status
+halex                  Activate HALEX9000 protocol
+
+Matrix Configuration:
+====================
+matrix speed [1-10]    Set Matrix rain speed (1=slowest, 10=fastest)
+matrix size [1-10]     Set Matrix rain size (1=smallest, 10=largest)
+matrix reset           Reset Matrix rain to default settings
+
+Advanced Easter Eggs:
+====================
+sudo [command]         Try it and see...
+theme [name]           Change terminal theme
+theme list             Show available themes
+
+Secret Examples:
+===============
+  boost velocity --force  # Activate Big Alex Energy™
+  destiny                # Query the universe for your destiny
+  vibes                  # Check your current vibe status
+  halex                  # Activate HALEX9000 protocol
+  matrix speed 5         # Set Matrix rain to medium speed
+  matrix size 8          # Set Matrix rain to large size
+  matrix reset           # Reset Matrix rain to defaults
+
+Warning: These commands contain pure Big Alex Energy™.
+Use with caution. Side effects may include:
+- Unstoppable momentum
+- Spontaneous innovation
+- World domination
+- Excessive awesomeness`;
+
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: secretHelpText },
+    ]);
   }
 
   private listContents(currentPath: string): void {
@@ -461,9 +541,7 @@ Type "download resume" to get PDF version`;
 
   private handleThemeChange(themeName: string): void {
     const themes = {
-      retro: 'Green-on-black (Matrix style)',
       matrix: 'Green-on-black (Matrix style)',
-      hacker: 'Green-on-black (Matrix style)',
       cyber: 'Cyan-on-black (Cyberpunk)',
       neon: 'Pink-on-black (Neon)',
       amber: 'Amber-on-black (Classic)',
@@ -528,5 +606,255 @@ Type "download resume" to get PDF version`;
         },
       ]);
     }
+  }
+
+  private handleMatrixConfig(parameter: string, value: string): void {
+    if (!parameter) {
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'output',
+          content: `Matrix Rain Configuration
+========================
+
+Available commands:
+  matrix speed [1-10]  Set Matrix rain speed (1=slowest, 10=fastest)
+  matrix size [1-10]   Set Matrix rain size (1=smallest, 10=largest)
+  matrix reset         Reset Matrix rain to default settings
+
+Examples:
+  matrix speed 5       # Set speed to medium
+  matrix size 8        # Set size to large
+  matrix reset         # Reset to defaults
+
+Note: Matrix rain only appears when theme is set to 'matrix'`,
+        },
+      ]);
+      return;
+    }
+
+    if (parameter === 'reset') {
+      if (this.setMatrixConfig) {
+        this.setMatrixConfig({ speed: 0.125, size: 32 });
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'output',
+            content:
+              'Matrix rain reset to default settings (speed: 0.125, size: 32px)',
+          },
+        ]);
+      } else {
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'error',
+            content:
+              'Matrix configuration not available. Make sure you are on the matrix theme.',
+          },
+        ]);
+      }
+      return;
+    }
+
+    if (!value) {
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'error',
+          content: `Usage: matrix ${parameter} [1-10]`,
+        },
+      ]);
+      return;
+    }
+
+    const numValue = parseInt(value, 10);
+    if (isNaN(numValue) || numValue < 1 || numValue > 10) {
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'error',
+          content: 'Value must be a number between 1 and 10',
+        },
+      ]);
+      return;
+    }
+
+    if (parameter === 'speed') {
+      // Convert 1-10 scale to actual speed values (0.05 to 0.5)
+      const speed = 0.05 + (numValue - 1) * 0.05;
+      if (this.setMatrixConfig) {
+        this.setMatrixConfig({ speed });
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'output',
+            content: `Matrix rain speed set to ${numValue}/10 (${speed.toFixed(3)})`,
+          },
+        ]);
+      } else {
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'error',
+            content:
+              'Matrix configuration not available. Make sure you are on the matrix theme.',
+          },
+        ]);
+      }
+    } else if (parameter === 'size') {
+      // Convert 1-10 scale to actual size values (16px to 48px)
+      const size = 16 + (numValue - 1) * 3.5;
+      if (this.setMatrixConfig) {
+        this.setMatrixConfig({ size });
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'output',
+            content: `Matrix rain size set to ${numValue}/10 (${Math.round(size)}px)`,
+          },
+        ]);
+      } else {
+        this.setOutput(prev => [
+          ...prev,
+          {
+            type: 'error',
+            content:
+              'Matrix configuration not available. Make sure you are on the matrix theme.',
+          },
+        ]);
+      }
+    } else {
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'error',
+          content: `Unknown parameter: ${parameter}. Use 'speed' or 'size'`,
+        },
+      ]);
+    }
+  }
+
+  private handleBoostCommand(velocity: string): void {
+    if (velocity === 'velocity' || velocity === '--force') {
+      this.setOutput(prev => [
+        ...prev,
+        { type: 'output', content: '🚀 BOOST VELOCITY INITIATED 🚀' },
+        { type: 'output', content: '' },
+        { type: 'output', content: '// Big Alex Energy™ levels: CRITICAL' },
+        { type: 'output', content: '// System status: OVERDRIVE' },
+        {
+          type: 'output',
+          content: '// Warning: Excessive awesomeness detected',
+        },
+        { type: 'output', content: '// Proceeding with maximum confidence...' },
+        { type: 'output', content: '' },
+        {
+          type: 'output',
+          content: 'BOOST COMPLETE. You are now operating at 9001% capacity.',
+        },
+        {
+          type: 'output',
+          content:
+            'Side effects may include: Unstoppable momentum, spontaneous innovation, and world domination.',
+        },
+      ]);
+    } else {
+      this.setOutput(prev => [
+        ...prev,
+        { type: 'error', content: 'Usage: boost velocity --force' },
+        {
+          type: 'output',
+          content:
+            'Hint: Try "boost velocity --force" to activate Big Alex Energy™',
+        },
+      ]);
+    }
+  }
+
+  private handleDestinyCommand(): void {
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: '🔮 DESTINY QUERY INITIATED 🔮' },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: '// Querying the universe for your destiny...',
+      },
+      { type: 'output', content: '// Scanning for patterns in the chaos...' },
+      { type: 'output', content: '// Analyzing Big Alex Energy™ levels...' },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: 'DESTINY FOUND: You are destined for greatness.',
+      },
+      {
+        type: 'output',
+        content: 'The universe has spoken: "Proceed with confidence."',
+      },
+      {
+        type: 'output',
+        content: 'Your path is clear: Build, innovate, dominate.',
+      },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: '// Status: Destiny accepted. Proceeding with excellence.',
+      },
+    ]);
+  }
+
+  private handleVibesCommand(): void {
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: '🎵 VIBE CHECK INITIATED 🎵' },
+      { type: 'output', content: '' },
+      { type: 'output', content: '// Analyzing current vibes...' },
+      { type: 'output', content: '// Checking for immaculate energy...' },
+      { type: 'output', content: '// Measuring Big Alex Energy™ levels...' },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'VIBE STATUS: IMMACULATE ✅' },
+      { type: 'output', content: 'Energy levels: MAXIMUM' },
+      { type: 'output', content: 'Confidence: UNBREAKABLE' },
+      { type: 'output', content: 'Awesomeness: OVERFLOWING' },
+      { type: 'output', content: '' },
+      { type: 'output', content: '// Recommendation: Continue being awesome.' },
+      {
+        type: 'output',
+        content: '// Warning: Vibes too good. May cause spontaneous success.',
+      },
+    ]);
+  }
+
+  private handleHalexCommand(): void {
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: '🧠 HALEX PROTOCOL ACTIVATED 🧠' },
+      { type: 'output', content: '' },
+      { type: 'output', content: '// Initializing Big Alex Energy™...' },
+      { type: 'output', content: '// Loading confidence modules...' },
+      { type: 'output', content: '// Activating innovation protocols...' },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'HALEX9000.exe loaded successfully.' },
+      {
+        type: 'output',
+        content: 'Side effects: Unstoppable momentum, pure excellence.',
+      },
+      { type: 'output', content: '' },
+      {
+        type: 'output',
+        content: '// Welcome to the halex shell. Enjoy your stay.',
+      },
+      {
+        type: 'output',
+        content: "// You didn't choose this terminal. It chose you.",
+      },
+      {
+        type: 'output',
+        content: '// Big Alex Protocol engaged. Initiating flex sequence...',
+      },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'STATUS: Ready to dominate. All systems go.' },
+    ]);
   }
 }

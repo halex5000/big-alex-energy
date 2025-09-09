@@ -6,10 +6,11 @@ import { CommandProcessor } from './command-processor';
 import { VirtualFileSystem } from './virtual-file-system';
 import { TerminalOutput } from './terminal-output';
 import { BootSequence } from './boot-sequence';
+import { MatrixRain } from '@/components/ui/matrix-rain';
 import { useTheme } from '@/contexts/theme-context';
 
 export function Terminal() {
-  const { colors, setTheme } = useTheme();
+  const { colors, setTheme, currentTheme } = useTheme();
   const [currentPath, setCurrentPath] = useState('/');
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -19,18 +20,27 @@ export function Terminal() {
   >([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [bootSequenceComplete, setBootSequenceComplete] = useState(false);
+  const [matrixConfig, setMatrixConfig] = useState({ speed: 0.125, size: 32 });
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const vfs = new VirtualFileSystem();
+  const handleMatrixConfig = (config: { speed?: number; size?: number }) => {
+    setMatrixConfig(prev => ({
+      speed: config.speed !== undefined ? config.speed : prev.speed,
+      size: config.size !== undefined ? config.size : prev.size,
+    }));
+  };
+
   const processor = new CommandProcessor(
     vfs,
     setCurrentPath,
     setOutput,
     setIsProcessing,
     router,
-    setTheme
+    setTheme,
+    handleMatrixConfig
   );
 
   useEffect(() => {
@@ -130,6 +140,7 @@ export function Terminal() {
       // Complete commands
       completions = [
         'help',
+        'more',
         'ls',
         'cd',
         'cat',
@@ -144,6 +155,11 @@ export function Terminal() {
         'date',
         'uname',
         'uptime',
+        'boost',
+        'destiny',
+        'vibes',
+        'halex',
+        'matrix',
       ];
     }
 
@@ -205,11 +221,19 @@ export function Terminal() {
 
   return (
     <div
-      className={`h-screen flex flex-col ${colors.background} ${colors.text} font-mono overflow-hidden`}
+      className={`h-screen flex flex-col ${colors.background} ${colors.text} font-mono overflow-hidden relative`}
     >
+      {/* Matrix Rain Animation - only for matrix theme */}
+      <MatrixRain
+        isActive={currentTheme === 'matrix'}
+        speed={matrixConfig.speed}
+        size={matrixConfig.size}
+        showEasterEggs={true}
+      />
+
       {/* Terminal Header */}
       <div
-        className={`px-4 py-2 border-b ${colors.border}`}
+        className={`px-4 py-2 border-b ${colors.border} relative z-10`}
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
       >
         <div className="flex items-center gap-2">
@@ -225,7 +249,7 @@ export function Terminal() {
       {/* Terminal Output */}
       <div
         ref={outputRef}
-        className={`flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-track-transparent`}
+        className={`flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-track-transparent relative z-10`}
         style={{ scrollbarColor: `${colors.text} transparent` }}
       >
         {/* Always show boot sequence at the top */}
@@ -246,7 +270,7 @@ export function Terminal() {
       {/* Command Input - only show after boot sequence completes */}
       {bootSequenceComplete && (
         <div
-          className={`border-t ${colors.border} p-4`}
+          className={`border-t ${colors.border} p-4 relative z-10`}
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
         >
           <div className="flex items-center gap-2">

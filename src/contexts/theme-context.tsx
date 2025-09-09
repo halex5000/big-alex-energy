@@ -3,9 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export type Theme =
-  | 'retro'
   | 'matrix'
-  | 'hacker'
   | 'cyber'
   | 'neon'
   | 'amber'
@@ -28,25 +26,7 @@ export interface ThemeColors {
 }
 
 const themes: Record<Theme, ThemeColors> = {
-  retro: {
-    background: 'bg-black',
-    text: 'text-green-400',
-    textSecondary: 'text-green-300',
-    textError: 'text-red-400',
-    border: 'border-green-600',
-    cursor: 'text-green-400',
-    prompt: 'text-green-300',
-  },
   matrix: {
-    background: 'bg-black',
-    text: 'text-green-400',
-    textSecondary: 'text-green-300',
-    textError: 'text-red-400',
-    border: 'border-green-600',
-    cursor: 'text-green-400',
-    prompt: 'text-green-300',
-  },
-  hacker: {
     background: 'bg-black',
     text: 'text-green-400',
     textSecondary: 'text-green-300',
@@ -169,11 +149,11 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState<Theme>('retro');
+  const [currentTheme, setCurrentTheme] = useState<Theme>('crt');
 
   useEffect(() => {
-    // Always start with retro theme (classic green-on-black) for CLI
-    setCurrentTheme('retro');
+    // Always start with crt theme (classic green-on-black) for CLI
+    setCurrentTheme('crt');
   }, []);
 
   const setTheme = (theme: Theme) => {

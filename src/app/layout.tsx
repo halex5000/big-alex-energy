@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import { Navigation } from '@/components/ui/navigation';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { ConditionalThemeToggle } from '@/components/ui/conditional-theme-toggle';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -81,10 +81,8 @@ export default function RootLayout({
         {/* Global Navigation */}
         <Navigation />
 
-        {/* Global Theme Toggle */}
-        <div className="fixed top-6 right-6 z-50">
-          <ThemeToggle />
-        </div>
+        {/* Global Theme Toggle - hidden on CLI page */}
+        <ConditionalThemeToggle />
 
         {children}
 

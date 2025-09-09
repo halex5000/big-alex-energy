@@ -6,13 +6,17 @@ import { usePathname } from 'next/navigation';
 import { trackNavigationClick } from '@/lib/analytics';
 
 export function Navigation() {
-  const [isVisible, setIsVisible] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const isCLIPage = pathname === '/cli';
+  const [isVisible, setIsVisible] = useState(!isHomePage && !isCLIPage); // Start visible on non-home, non-CLI pages
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isHomePage) {
+      if (isCLIPage) {
+        // Never show navigation on CLI page
+        setIsVisible(false);
+      } else if (isHomePage) {
         // On home page, show navigation after scrolling down 100px on desktop
         if (window.innerWidth >= 768) {
           setIsVisible(window.scrollY > 100);
@@ -29,19 +33,19 @@ export function Navigation() {
     // Initial check
     handleScroll();
 
-    if (isHomePage) {
-      // Only listen to scroll events on home page
+    if (isHomePage && !isCLIPage) {
+      // Only listen to scroll events on home page (not CLI)
       window.addEventListener('scroll', handleScroll);
     }
     window.addEventListener('resize', handleScroll);
 
     return () => {
-      if (isHomePage) {
+      if (isHomePage && !isCLIPage) {
         window.removeEventListener('scroll', handleScroll);
       }
       window.removeEventListener('resize', handleScroll);
     };
-  }, [isHomePage]);
+  }, [isHomePage, isCLIPage]);
 
   return (
     <nav
