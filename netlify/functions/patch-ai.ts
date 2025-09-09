@@ -1,6 +1,7 @@
 import { Handler } from '@netlify/functions';
 import { patchSiteManifest } from '../../src/patch/patchSiteManifest';
 import { patchSystemPrompt } from '../../src/patch/patchSystemPrompt';
+import { StatsigClient } from '@statsig/js-client';
 
 interface PatchRequest {
   message: string;
@@ -557,6 +558,15 @@ export const handler: Handler = async event => {
 
     // Check if OpenAI API key is available
     const openaiApiKey = process.env.OPENAI_API_KEY;
+    const statsigServerSecret = process.env.STATSIG_SERVER_SECRET;
+
+    // Initialize Statsig client for server-side feature flag checks
+    let statsigClient: StatsigClient | null = null;
+    if (statsigServerSecret) {
+      statsigClient = new StatsigClient(statsigServerSecret, {
+        userID: 'server',
+      });
+    }
 
     if (!openaiApiKey) {
       // Fallback to mock response if no API key
@@ -642,7 +652,25 @@ CONVERSATION HISTORY: ${
 
     // Determine face and action based on response
     const face = getContextualFace(message, aiResponse);
-    const action = determineAction(message, aiResponse, currentPage);
+
+    // Check if navigation is enabled via feature flag
+    let action = undefined;
+    if (statsigClient) {
+      try {
+        await statsigClient.initializeAsync();
+        const navigationEnabled = statsigClient.checkGate('patch_navigation');
+        if (navigationEnabled) {
+          action = determineAction(message, aiResponse, currentPage);
+        }
+      } catch (error) {
+        console.error('Statsig navigation check failed:', error);
+        // Fallback to enabled if Statsig fails
+        action = determineAction(message, aiResponse, currentPage);
+      }
+    } else {
+      // No Statsig, use navigation by default
+      action = determineAction(message, aiResponse, currentPage);
+    }
 
     // Debug logging
     console.log('Message:', message);

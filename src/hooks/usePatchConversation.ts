@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ChatMessage } from '@/components/PatchOverlay';
+import { isPatchConversationMemoryEnabled } from '@/lib/statsig';
 
 const CONVERSATION_KEY = 'patch-conversation';
 
@@ -87,32 +88,43 @@ Let's explore.`,
   // Only save if there are actual user messages (not just the welcome message)
   useEffect(() => {
     if (isLoaded && typeof window !== 'undefined') {
-      try {
-        const hasUserMessages = messages.some(msg => msg.sender === 'user');
-        console.log(
-          'Messages:',
-          messages.map(m => ({
-            sender: m.sender,
-            text: m.text.substring(0, 50) + '...',
-          }))
-        );
-        console.log('Has user messages:', hasUserMessages);
+      const saveConversation = async () => {
+        try {
+          // Check if conversation memory is enabled
+          const memoryEnabled = await isPatchConversationMemoryEnabled();
+          if (!memoryEnabled) {
+            console.log('Conversation memory disabled by feature flag');
+            return;
+          }
 
-        if (hasUserMessages) {
+          const hasUserMessages = messages.some(msg => msg.sender === 'user');
           console.log(
-            'Saving conversation to sessionStorage:',
-            messages.length,
-            'messages'
+            'Messages:',
+            messages.map(m => ({
+              sender: m.sender,
+              text: m.text.substring(0, 50) + '...',
+            }))
           );
-          sessionStorage.setItem(CONVERSATION_KEY, JSON.stringify(messages));
-        } else {
-          console.log('No user messages yet, not saving to sessionStorage');
-          // Also clear any existing conversation if it's just the welcome message
-          sessionStorage.removeItem(CONVERSATION_KEY);
+          console.log('Has user messages:', hasUserMessages);
+
+          if (hasUserMessages) {
+            console.log(
+              'Saving conversation to sessionStorage:',
+              messages.length,
+              'messages'
+            );
+            sessionStorage.setItem(CONVERSATION_KEY, JSON.stringify(messages));
+          } else {
+            console.log('No user messages yet, not saving to sessionStorage');
+            // Also clear any existing conversation if it's just the welcome message
+            sessionStorage.removeItem(CONVERSATION_KEY);
+          }
+        } catch (error) {
+          console.error('Failed to save Patch conversation:', error);
         }
-      } catch (error) {
-        console.error('Failed to save Patch conversation:', error);
-      }
+      };
+
+      saveConversation();
     }
   }, [messages, isLoaded]);
 
