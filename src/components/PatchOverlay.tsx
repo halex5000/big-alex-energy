@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { X, Send, Trash2 } from 'lucide-react';
+import { X, Send, Trash2, Maximize2, Minimize2 } from 'lucide-react';
 import { callPatchAI, mockPatchResponse } from '@/lib/patch-api';
 import { dispatchPatchAction } from '@/lib/dispatchPatchAction';
 import { usePatchConversation } from '@/hooks/usePatchConversation';
@@ -23,24 +23,14 @@ interface PatchOverlayProps {
   onClose: () => void;
 }
 
-// Map ASCII faces to avatar images with fallback to smiling
-function getAvatarImage(asciiFace: string): string {
-  const faceMap: Record<string, string> = {
-    '(o_~)': '/images/avatars/patch-winking.png', // cheeky or clever
-    '(^_^)': '/images/avatars/patch-smiling.png', // encouraging
-    '(•‿•)': '/images/avatars/patch-smiling.png', // smugly satisfied
-    '(•_•)': '/images/avatars/patch-winking.png', // judging (wink for sass)
-    '(¬_¬)': '/images/avatars/patch-sus.png', // sus/suspicious
-    '(-_-)': '/images/avatars/patch-bored.png', // bored
-    '(>_<)': '/images/avatars/patch-frustrated.png', // frustrated
-    '(x_x)': '/images/avatars/patch-error.png', // error
-    '(O_O)': '/images/avatars/patch-surprised.png', // surprised
-    '(o_o)': '/images/avatars/patch-thinking.png', // thinking
-    '(★_★)': '/images/avatars/patch-excited.png', // excited
-  };
-
-  // Fallback to smiling avatar if specific emotion not found
-  return faceMap[asciiFace] || '/images/avatars/patch-smiling.png';
+// Simple avatar system - alternate between winking and smiling
+let avatarToggle = false;
+function getAvatarImage(): string {
+  // Toggle between winking and smiling for variety
+  avatarToggle = !avatarToggle;
+  return avatarToggle
+    ? '/images/avatars/patch-winking.png'
+    : '/images/avatars/patch-smiling.png';
 }
 
 export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
@@ -49,6 +39,7 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
     usePatchConversation();
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -78,20 +69,33 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
     setInputValue('');
     setIsTyping(true);
 
-    // Call Patch AI API
+    // Call Patch AI API with conversation history
     try {
-      const patchResponse = await callPatchAI(userMessage.text);
+      const conversationHistory = messages.map(msg => ({
+        sender: msg.sender,
+        text: msg.text,
+        timestamp: Date.now(),
+      }));
+
+      const patchResponse = await callPatchAI(
+        userMessage.text,
+        conversationHistory
+      );
       addMessage(patchResponse);
       setIsTyping(false);
 
       // Dispatch action if exists
       if (patchResponse.action) {
+        console.log('Patch action received:', patchResponse.action);
         if (patchResponse.action.type === 'navigate') {
           // Handle navigation with router
+          console.log('Navigating to:', patchResponse.action.payload);
           router.push(patchResponse.action.payload);
         } else {
           dispatchPatchAction(patchResponse.action);
         }
+      } else {
+        console.log('No action received from Patch');
       }
     } catch (error) {
       console.error('Patch AI error:', error);
@@ -120,7 +124,11 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 w-96 h-[500px] bg-black border-2 border-green-400 rounded-lg shadow-2xl font-mono z-50 flex flex-col">
+    <div
+      className={`fixed bottom-4 right-4 bg-black border-2 border-green-400 rounded-lg shadow-2xl font-mono z-50 flex flex-col transition-all duration-300 ${
+        isExpanded ? 'w-[600px] h-[700px]' : 'w-96 h-[500px]'
+      }`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between p-3 border-b border-green-400 bg-green-900/20">
         <div className="flex items-center gap-3">
@@ -129,8 +137,8 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
             <Image
               src="/images/avatars/patch-winking.png"
               alt="Patch"
-              width={32}
-              height={32}
+              width={48}
+              height={48}
               className="inline-block drop-shadow-lg"
             />
             <div className="absolute -inset-1 bg-green-400/20 rounded-full blur-sm -z-10"></div>
@@ -138,15 +146,23 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
         </div>
         <div className="flex items-center gap-2">
           <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="p-1 text-green-400 hover:text-green-300 hover:bg-green-800/30 rounded transition-colors"
+            title={isExpanded ? 'Collapse window' : 'Expand window'}
+          >
+            {isExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </button>
+          <button
             onClick={clearConversation}
-            className="text-green-400 hover:text-green-300 transition-colors"
+            className="p-1 text-green-400 hover:text-green-300 hover:bg-green-800/30 rounded transition-colors"
             title="Clear conversation"
           >
             <Trash2 size={16} />
           </button>
           <button
             onClick={onClose}
-            className="text-green-400 hover:text-green-300 transition-colors"
+            className="p-1 text-green-400 hover:text-green-300 hover:bg-green-800/30 rounded transition-colors"
+            title="Close Patch"
           >
             <X size={16} />
           </button>
@@ -182,10 +198,10 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
                       <span className="font-semibold">Patch</span>
                       <div className="relative">
                         <Image
-                          src={getAvatarImage(message.avatar)}
+                          src={getAvatarImage()}
                           alt="Patch avatar"
-                          width={24}
-                          height={24}
+                          width={36}
+                          height={36}
                           className="inline-block drop-shadow-md"
                         />
                         <div className="absolute -inset-0.5 bg-green-400/10 rounded-full blur-sm -z-10"></div>
@@ -193,7 +209,9 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
                       <span className="text-green-300">&gt;</span>
                     </div>
                   )}
-                  <div className="whitespace-pre-wrap">{message.text}</div>
+                  <div className="whitespace-pre-wrap text-sm">
+                    {message.text}
+                  </div>
                 </div>
               </div>
             ))}
@@ -209,8 +227,8 @@ export function PatchOverlay({ isOpen, onClose }: PatchOverlayProps) {
                   <Image
                     src="/images/avatars/patch-winking.png"
                     alt="Patch thinking"
-                    width={24}
-                    height={24}
+                    width={36}
+                    height={36}
                     className="inline-block drop-shadow-md"
                   />
                   <div className="absolute -inset-0.5 bg-green-400/10 rounded-full blur-sm -z-10"></div>

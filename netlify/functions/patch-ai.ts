@@ -9,6 +9,11 @@ interface PatchRequest {
   context?: {
     currentPage?: string;
     userAgent?: string;
+    conversationHistory?: Array<{
+      sender: 'user' | 'patch';
+      text: string;
+      timestamp: number;
+    }>;
   };
 }
 
@@ -188,7 +193,8 @@ function getContextualFace(message: string, response: string): PatchFace {
 
 function determineAction(
   message: string,
-  response: string
+  response: string,
+  currentPage: string = '/'
 ):
   | {
       type: 'scrollTo' | 'highlight' | 'revealEasterEgg' | 'navigate';
@@ -197,6 +203,60 @@ function determineAction(
   | undefined {
   const lower = message.toLowerCase();
   const responseLower = response.toLowerCase();
+
+  console.log('🔍 Determining action for message:', message);
+  console.log('📍 Current page:', currentPage);
+
+  // Simple keyword mapping - much cleaner!
+  const keywordMap: { [key: string]: string } = {
+    // Main pages
+    resume: '/resume',
+    cv: '/resume',
+    experience: '/resume',
+    'work history': '/resume',
+    projects: '/projects',
+    portfolio: '/projects',
+    work: '/projects',
+    talks: '/talks',
+    speaking: '/talks',
+    presentation: '/talks',
+    blog: '/blogs',
+    blogs: '/blogs',
+    article: '/blogs',
+    post: '/blogs',
+    patent: '/patents',
+    patents: '/patents',
+    invention: '/patents',
+    cli: '/cli',
+    terminal: '/cli',
+    command: '/cli',
+
+    // Specific projects
+    viyo: '/hackathons/viyo',
+    'liberty mutual': '/hackathons/liberty-mutual',
+    klaviyo: '/hackathons/klaviyo-ai-onboarding',
+    limu: '/hackathons/limu',
+
+    // Tour & Homepage
+    tour: '/',
+    'grand tour': '/',
+    'show me around': '/',
+    'walk me through': '/',
+    home: '/',
+    homepage: '/',
+    'main page': '/',
+    start: '/',
+  };
+
+  // Check for exact matches first
+  for (const [keyword, path] of Object.entries(keywordMap)) {
+    if (lower.includes(keyword)) {
+      console.log(`✅ Found keyword "${keyword}" -> navigating to ${path}`);
+      if (path !== currentPage) {
+        return { type: 'navigate', payload: path };
+      }
+    }
+  }
 
   // Check for tour requests first
   if (
@@ -208,6 +268,40 @@ function determineAction(
     lower.includes('walkthrough')
   ) {
     return { type: 'navigate', payload: '/' }; // Start tour from homepage
+  }
+
+  // Check for explicit navigation requests
+  if (
+    lower.includes('navigate to') ||
+    lower.includes('go to') ||
+    lower.includes('take me to') ||
+    lower.includes('yes') ||
+    lower.includes('sure')
+  ) {
+    // Extract the target from the message or use context
+    const target = lower
+      .replace(/(navigate to|go to|take me to|yes|sure)\s+/, '')
+      .trim();
+
+    // Find matching section
+    const matchingSections = patchSiteManifest.filter(
+      section =>
+        section.keywords?.some(keyword =>
+          target.includes(keyword.toLowerCase())
+        ) ||
+        section.title.toLowerCase().includes(target) ||
+        section.description?.toLowerCase().includes(target)
+    );
+
+    if (matchingSections.length > 0) {
+      const bestMatch = matchingSections[0];
+      if (bestMatch.path !== currentPage) {
+        return { type: 'navigate', payload: bestMatch.path };
+      } else if (bestMatch.scrollTarget) {
+        const targetId = bestMatch.scrollTarget.replace('#', '');
+        return { type: 'scrollTo', payload: targetId };
+      }
+    }
   }
 
   // Find matching sections from manifest
@@ -339,7 +433,7 @@ function determineAction(
   return undefined;
 }
 
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async event => {
   const origin = event.headers.origin || event.headers.Origin;
   const clientIP =
     event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown';
@@ -484,6 +578,23 @@ export const handler: Handler = async (event, context) => {
       };
     }
 
+    // Build conversation context
+    const conversationHistory = requestContext?.conversationHistory || [];
+    const currentPage = requestContext?.currentPage || '/';
+
+    // Create context-aware system prompt
+    const contextInfo = `
+CURRENT PAGE: ${currentPage}
+CONVERSATION HISTORY: ${
+      conversationHistory.length > 0
+        ? conversationHistory
+            .slice(-6)
+            .map(msg => `${msg.sender}: ${msg.text}`)
+            .join('\n')
+        : 'No previous conversation'
+    }
+`;
+
     // Call OpenAI API
     const openaiResponse = await fetch(
       'https://api.openai.com/v1/chat/completions',
@@ -498,10 +609,13 @@ export const handler: Handler = async (event, context) => {
           messages: [
             {
               role: 'system',
-              content: patchSystemPrompt.replace(
-                '{MANIFEST_PLACEHOLDER}',
-                JSON.stringify(patchSiteManifest, null, 2)
-              ),
+              content:
+                patchSystemPrompt.replace(
+                  '{MANIFEST_PLACEHOLDER}',
+                  JSON.stringify(patchSiteManifest, null, 2)
+                ) +
+                '\n\n' +
+                contextInfo,
             },
             {
               role: 'user',
@@ -528,7 +642,12 @@ export const handler: Handler = async (event, context) => {
 
     // Determine face and action based on response
     const face = getContextualFace(message, aiResponse);
-    const action = determineAction(message, aiResponse);
+    const action = determineAction(message, aiResponse, currentPage);
+
+    // Debug logging
+    console.log('Message:', message);
+    console.log('Current page:', currentPage);
+    console.log('Determined action:', action);
 
     const patchResponse: PatchResponse = {
       sender: 'patch',

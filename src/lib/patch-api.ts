@@ -15,12 +15,19 @@ interface PatchApiResponse {
   text: string;
   avatar: string;
   action?: {
-    type: 'scrollTo' | 'highlight' | 'revealEasterEgg';
+    type: 'scrollTo' | 'highlight' | 'revealEasterEgg' | 'navigate';
     payload: string;
   };
 }
 
-export async function callPatchAI(message: string): Promise<ChatMessage> {
+export async function callPatchAI(
+  message: string,
+  conversationHistory?: Array<{
+    sender: 'user' | 'patch';
+    text: string;
+    timestamp: number;
+  }>
+): Promise<ChatMessage> {
   try {
     const response = await fetch('/.netlify/functions/patch-ai', {
       method: 'POST',
@@ -38,6 +45,7 @@ export async function callPatchAI(message: string): Promise<ChatMessage> {
               : undefined,
           userAgent:
             typeof window !== 'undefined' ? navigator.userAgent : undefined,
+          conversationHistory: conversationHistory || [],
         },
       } as PatchApiRequest),
     });

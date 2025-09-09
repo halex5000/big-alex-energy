@@ -122,24 +122,6 @@ export const patchSiteManifest: PatchSiteSection[] = [
     ],
   },
 
-  // Hackathons
-  {
-    id: 'hackathons',
-    title: 'Hackathons',
-    path: '/hackathons',
-    category: 'hackathon',
-    description:
-      'Hackathon projects and competitions including Viyo, Liberty Mutual, and Klaviyo AI Onboarding challenges.',
-    keywords: [
-      'hackathons',
-      'competitions',
-      'viyo',
-      'liberty mutual',
-      'klaviyo',
-      'ai',
-      'challenges',
-    ],
-  },
   {
     id: 'viyo-hackathon',
     title: 'Viyo Hackathon',

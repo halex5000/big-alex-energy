@@ -7,7 +7,10 @@ import { usePatchStore } from '@/hooks/usePatchStore';
 export function PatchProvider() {
   const { isOpen, isInitialized, toggle, close } = usePatchStore();
 
-  if (!isInitialized) {
+  // Feature flag to disable Patch
+  const PATCH_ENABLED = false;
+
+  if (!isInitialized || !PATCH_ENABLED) {
     return null;
   }
 

@@ -14,29 +14,50 @@ export function usePatchConversation() {
     if (typeof window !== 'undefined') {
       try {
         const saved = sessionStorage.getItem(CONVERSATION_KEY);
+        console.log(
+          'Loading conversation from sessionStorage:',
+          saved ? 'found' : 'not found'
+        );
+
         if (saved) {
           const parsedMessages = JSON.parse(saved);
-          setMessages(parsedMessages);
+          console.log('Loaded messages:', parsedMessages.length);
+
+          // Check if this is just the welcome message (no user interaction)
+          const hasUserMessages = parsedMessages.some(
+            msg => msg.sender === 'user'
+          );
+          if (hasUserMessages) {
+            console.log('Found conversation with user messages, loading it');
+            setMessages(parsedMessages);
+          } else {
+            console.log(
+              'Found only welcome message, clearing and starting fresh'
+            );
+            sessionStorage.removeItem(CONVERSATION_KEY);
+            setMessages([
+              {
+                sender: 'patch',
+                text: `sup i'm Patch, alex's intern but like… with wifi for a brain
+wanna explore this site? i can jump to pages, give a tour, or spill tea on alex's resume.
+
+just say "show me around" or "resume plz"`,
+                avatar: '(o_~)',
+              },
+            ]);
+          }
         } else {
+          console.log(
+            'No saved conversation, initializing with welcome message'
+          );
           // Initialize with welcome message
           setMessages([
             {
               sender: 'patch',
-              text: `Hey, I'm Patch, Alex's digital apprentice and resident Site Tour Guide.
-Alex says I "have potential," which is either a compliment or a warning.
+              text: `sup i'm Patch, alex's intern but like… with wifi for a brain
+wanna explore this site? i can jump to pages, give a tour, or spill tea on alex's resume.
 
-I can:
-• Walk you through the site
-• Jump to key sections
-• Answer questions (with... varying accuracy)
-
-Just say things like:
-• "Give me the grand tour"
-• "Where's the resume?"
-• "What's up with Viyo?"
-
-I'll do my best to help - or at least look enthusiastic while failing.
-Let's explore this thing together.`,
+just say "show me around" or "resume plz"`,
               avatar: '(o_~)',
             },
           ]);
@@ -47,21 +68,13 @@ Let's explore this thing together.`,
         setMessages([
           {
             sender: 'patch',
-            text: `Hey, I'm Patch, Alex's digital apprentice and resident Site Tour Guide.
-Alex says I "have potential," which is either a compliment or a warning.
+            text: `Hey, I'm Patch - Alex's digital apprentice.
 
-I can:
-• Walk you through the site
-• Jump to key sections
-• Answer questions (with... varying accuracy)
+I can walk you through the site, jump to sections, or answer questions.
 
-Just say things like:
-• "Give me the grand tour"
-• "Where's the resume?"
-• "What's up with Viyo?"
+Try: "Give me the grand tour" or "Where's the resume?"
 
-I'll do my best to help - or at least look enthusiastic while failing.
-Let's explore this thing together.`,
+Let's explore.`,
             avatar: '(o_~)',
           },
         ]);
@@ -71,10 +84,32 @@ Let's explore this thing together.`,
   }, []);
 
   // Save conversation to sessionStorage whenever it changes (persists during navigation)
+  // Only save if there are actual user messages (not just the welcome message)
   useEffect(() => {
     if (isLoaded && typeof window !== 'undefined') {
       try {
-        sessionStorage.setItem(CONVERSATION_KEY, JSON.stringify(messages));
+        const hasUserMessages = messages.some(msg => msg.sender === 'user');
+        console.log(
+          'Messages:',
+          messages.map(m => ({
+            sender: m.sender,
+            text: m.text.substring(0, 50) + '...',
+          }))
+        );
+        console.log('Has user messages:', hasUserMessages);
+
+        if (hasUserMessages) {
+          console.log(
+            'Saving conversation to sessionStorage:',
+            messages.length,
+            'messages'
+          );
+          sessionStorage.setItem(CONVERSATION_KEY, JSON.stringify(messages));
+        } else {
+          console.log('No user messages yet, not saving to sessionStorage');
+          // Also clear any existing conversation if it's just the welcome message
+          sessionStorage.removeItem(CONVERSATION_KEY);
+        }
       } catch (error) {
         console.error('Failed to save Patch conversation:', error);
       }
@@ -86,14 +121,31 @@ Let's explore this thing together.`,
   };
 
   const clearConversation = () => {
+    // Clear from sessionStorage first
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(CONVERSATION_KEY);
+      console.log('Manually cleared conversation from sessionStorage');
+    }
+
     setMessages([
       {
         sender: 'patch',
-        text: 'Conversation cleared. Ready for a fresh start! What can I help you explore?',
+        text: 'sup i\'m Patch, alex\'s intern but like… with wifi for a brain\nwanna explore this site? i can jump to pages, give a tour, or spill tea on alex\'s resume.\n\njust say "show me around" or "resume plz"',
         avatar: '(o_~)',
       },
     ]);
   };
+
+  // Add a global clear function for debugging
+  if (typeof window !== 'undefined') {
+    (
+      window as Window & { clearPatchConversation?: () => void }
+    ).clearPatchConversation = () => {
+      sessionStorage.removeItem(CONVERSATION_KEY);
+      console.log('Force cleared Patch conversation');
+      window.location.reload();
+    };
+  }
 
   return {
     messages,
