@@ -21,12 +21,12 @@ export function usePatchConversation() {
         );
 
         if (saved) {
-          const parsedMessages = JSON.parse(saved);
+          const parsedMessages: ChatMessage[] = JSON.parse(saved);
           console.log('Loaded messages:', parsedMessages.length);
 
           // Check if this is just the welcome message (no user interaction)
           const hasUserMessages = parsedMessages.some(
-            msg => msg.sender === 'user'
+            (msg: ChatMessage) => msg.sender === 'user'
           );
           if (hasUserMessages) {
             console.log('Found conversation with user messages, loading it');
