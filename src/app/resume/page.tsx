@@ -31,7 +31,7 @@ export default function ResumePage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div id="resume" className="max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Personal Info */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

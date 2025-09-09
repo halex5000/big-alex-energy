@@ -24,23 +24,23 @@ export function MainLayout() {
       </div>
 
       {/* Main Content with Scroll Snap */}
-      <div className="scroll-snap-section">
+      <div id="hero" className="scroll-snap-section">
         <HeroSection />
       </div>
 
-      <div className="scroll-snap-section">
+      <div id="summary" className="scroll-snap-section">
         <SummarySection />
       </div>
 
-      <div className="scroll-snap-section">
+      <div id="career-highlights" className="scroll-snap-section">
         <CareerHighlightsSection />
       </div>
 
-      <div className="scroll-snap-section">
+      <div id="quote" className="scroll-snap-section">
         <QuoteSection />
       </div>
 
-      <div className="scroll-snap-section">
+      <div id="contact" className="scroll-snap-section">
         <FooterSection />
       </div>
 

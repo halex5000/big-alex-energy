@@ -15,7 +15,7 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <section className="px-4 py-16">
+      <section id="projects" className="px-4 py-16">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

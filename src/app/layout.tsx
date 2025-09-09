@@ -4,6 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import { Navigation } from '@/components/ui/navigation';
 import { ConditionalThemeToggle } from '@/components/ui/conditional-theme-toggle';
+import { PatchProvider } from '@/components/PatchProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -83,6 +84,9 @@ export default function RootLayout({
 
         {/* Global Theme Toggle - hidden on CLI page */}
         <ConditionalThemeToggle />
+
+        {/* Patch AI Assistant */}
+        <PatchProvider />
 
         {children}
 
