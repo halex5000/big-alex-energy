@@ -40,12 +40,12 @@ export default function ViyoPage() {
       {/* Back Navigation */}
       <div className="fixed top-6 left-6 z-50">
         <motion.a
-          href="/hackathons"
+          href="/projects"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           whileHover={{ x: -4 }}
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Hackathons
+          Back to Projects
         </motion.a>
       </div>
 
