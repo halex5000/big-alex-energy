@@ -21,7 +21,7 @@ export default function ResumePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header with Download Button */}
-      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-sm border-b border-border">
+      <div className="sticky top-0 z-30 bg-background/80 backdrop-blur-sm border-b border-border">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Resume</h1>
           <Button onClick={handleDownloadPDF} className="gap-2">
