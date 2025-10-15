@@ -9,7 +9,7 @@ export interface ResumeItem {
   location: string;
   duration: string;
   description?: string;
-  achievements?: string[];
+  achievements?: (string | { main: string; sub: string[] })[];
   technologies?: string[];
   logo?: string;
 }
@@ -56,12 +56,15 @@ export const resumeData: ResumeData = {
         location: 'Boston, MA',
         duration: '2023 - 2025',
         achievements: [
-          "Directed strategy and architecture for Klaviyo's experimentation platform, enabling 50B+ user experiences annually across email, SMS, push, WhatsApp, and onsite",
-          'Led design and delivery of self-optimizing features using Bayesian optimization and personalization, driving measurable conversion gains at scale',
-          'Delivered a deterministic Go prototype that replaced Python bottlenecks, enabling assignment of hundreds of millions of recipients in seconds with lower memory footprint',
-          'Unlocked tens of thousands in infrastructure savings annually by migrating from self-hosted Redis to ElastiCache Serverless and creating a drop-in adoption playbook',
-          'Leveraged Athena and Snowflake for forecasting, anomaly detection, defect identification, and improved data accuracy to support enterprise growth',
-          'Supported a hybrid stack (EC2, Istio, Docker, MySQL, DynamoDB, Pulsar) built for extensibility, observability, and resilience',
+          "Directed strategy and re-architecture of Klaviyo's experimentation platform, powering 50B+ user experiences annually across email, SMS, and onsite",
+          'Delivered a Go-based prototype that replaced Python bottlenecks, enabling hundreds of millions of assignments in seconds: a 40x performance improvement',
+          'Led design and launch of ML-driven features leveraging Bayesian optimization and personalization, driving measurable conversion gains',
+          'Launched GenAI-powered subject line A/B testing, boosting adoption by 50%+, with users selecting AI suggestions in 82% of tests and beating original subject lines in 57% of campaigns',
+          'Authored a drop-in Redis→ElastiCache Serverless migration playbook, unlocking five-figure annual savings across the AI & Analytics pillar',
+          'Architected anomaly detection and forecasting workflows to improve data quality and enterprise planning, powered by Athena and Snowflake',
+          'Drove evolution of platform architecture to support extensibility and resilience, spanning EC2, Istio, Docker, DynamoDB, ElastiCache, and Apache Pulsar',
+          'Built and led a high-performing team of engineers and data scientists, mentoring multiple engineers to promotion and leadership roles',
+          'Interviewed 50+ candidates across engineering and product roles; contributed directly to dozens of successful hires across the pillar through hands-on technical interviewing, sourcing, and leveling',
         ],
         technologies: [
           'Go',
@@ -76,23 +79,32 @@ export const resumeData: ResumeData = {
           'Docker',
           'MySQL',
           'DynamoDB',
-          'Pulsar',
+          'Apache Pulsar',
           'Bayesian Optimization',
+          'GenAI',
+          'Machine Learning',
+          'A/B Testing',
         ],
         logo: '/images/logos/klaviyo-logo.jpeg',
       },
       {
-        title: 'Technical Marketing Engineer',
+        title: 'Developer Platform Advocate',
         company: 'LaunchDarkly',
         location: 'Remote',
         duration: '2022 - 2023',
         achievements: [
-          "Served as a technical storyteller and educator, translating LaunchDarkly's platform into real-world use cases engineers could adopt with confidence",
-          'Built full-stack demo applications showcasing feature flags, progressive delivery, and developer-first workflows across AWS Serverless, frontend, and backend stacks',
-          'Delivered high-signal content through webinars, live conference talks, YouTube videos, and blog posts, all focused on making complex systems accessible and actionable',
-          "Spoke at AWS re:Invent, QCon London, and LaunchDarkly's Galaxy roadshow. Presented in 1:1 sessions and live demos, drawing engineers in and making complex capabilities click",
-          "Redesigned LaunchDarkly's architecture page and created enablement content that brought clarity and confidence to technical buyers",
-          'Brought feature management to life for engineers worldwide, using live demos, code, and storytelling to help hundreds of teams across the globe ship faster and safer',
+          'Built full-stack demo applications and architectural reference patterns showcasing feature flags, progressive delivery, and AWS Serverless adoption across modern engineering stacks',
+          'Translated complex platform capabilities into accessible, actionable patterns through system diagrams, live coding, and developer-first storytelling',
+          {
+            main: 'Delivered technical talks on platform resilience, incident response, and modernization strategy to global engineering audiences, reaching thousands through international conferences and online events',
+            sub: [
+              '"Security Incident Monitoring, Mitigation & Metrics Using Feature Flags" at AWS re:Invent, Las Vegas, 2022 (600+ live attendees)',
+              '"Raising the Bar on Resilience: Designing Systems for Resilience at Scale" at QCon, London, 2023',
+              '"Mitigating the Madness of Migration in Modernization" at LaunchDarkly Galaxy, Chicago, 2023',
+              '"Talking Migration with LaunchDarkly: How to Ship Platforms as Features" live webinar',
+            ],
+          },
+          "Redesigned LaunchDarkly's architecture page and created technical enablement content that brought clarity and confidence to engineering leaders and buyers",
         ],
         technologies: [
           'Feature Flags',
@@ -114,9 +126,9 @@ export const resumeData: ResumeData = {
         location: 'McLean, VA',
         duration: '2021 - 2022',
         achievements: [
-          "Led a high-performing team responsible for Capital One Shopping's real-time price comparison engine, serving 50+ million retail price lookups per day and billions of transactions",
-          'Architected and scaled systems using Docker, Node.js, PostgreSQL, Redis, and Cassandra to support millions of active users',
-          'Launched a hotel shopping experience powered by a real-time geospatial search engine built with Docker, Redis, Node.js, React, PostgreSQL, and PostGIS. Cut load times for hotel reference data by 320× (8 hours → 90 seconds), eliminating stale data and weekly downtime',
+          "Led the team of engineers behind Capital One Shopping's real-time price comparison engine, serving 50M+ lookups daily and billions of transactions",
+          'Architected and scaled distributed systems to support millions of daily active users, leveraging Docker, Node.js, PostgreSQL, Redis, and Cassandra',
+          'Launched a real-time hotel shopping experience with geospatial search; cut reference data load times by 320x (8 hours → 90 seconds), eliminating stale data and weekly downtime',
           'Inventor on U.S. Patent 11,562,416, automating digital gift card acquisition and redemption to enable real-time fulfillment and improve reliability, speed, and customer experience at enterprise scale',
         ],
         technologies: [
@@ -132,16 +144,18 @@ export const resumeData: ResumeData = {
         logo: '/images/logos/capitalone-logo.jpeg',
       },
       {
-        title: 'Platform & Cloud Architect (Director Level)',
-        company: 'Liberty Mutual',
+        title: 'Platform Architect (Director level)',
+        company: 'Liberty Mutual Insurance',
         location: 'Boston, MA',
         duration: '2019 - 2021',
         achievements: [
-          "Directed the architecture for a serverless event-driven backbone using API Gateway, DynamoDB, Lambda, EventBridge, SNS, and SQS to unify workflows across Liberty's specialty insurance platform. The system connected no-code underwriting platforms, policy engines, and systems of record, enabling teams to integrate faster and with looser coupling",
-          'Partnered across squads and business stakeholders to align engineering and product priorities and deliver integrations at enterprise scale',
-          'Built internal accelerators with AWS CDK, reusable serverless modules, and CLI plugins that reduced service onboarding from weeks to days and spread serverless adoption across the org',
-          'Shaped data architecture strategy across DynamoDB, MongoDB Atlas, and relational databases, and designed secure APIs with API Gateway, Lambda, and S3 that balanced speed, compliance, and reliability',
-          'Introduced modern automated testing patterns with Playwright, Node.js, and Jest, shrinking test cycles from days to minutes and helping teams evolve from manual QA to continuous delivery',
+          "Directed the architecture for a serverless, event-driven backbone that unified workflows across Liberty's $6B Specialty insurance platform using API Gateway, DynamoDB, Lambda, EventBridge, SNS, and SQS. This involved connecting legacy systems and cloud-native no-code platforms, enabling teams to integrate with looser coupling",
+          'Championed modernization across the organization, bridging policy administration and underwriting with cloud-native, loosely coupled services',
+          'Mentored engineers, tech leads, scrum masters, and product owners across multiple squads; helped managers and directors navigate cloud transformation, system integration, and agile delivery at enterprise scale',
+          'Partnered with business stakeholders to align engineering and product priorities; influenced org-wide strategy for modernization and integration velocity',
+          'Delivered internal accelerators using AWS CDK, reusable serverless modules, and CLI plugins that reduced service onboarding from weeks to days and scaled serverless adoption across the organization',
+          'Shaped the data architecture strategy across DynamoDB and relational databases; designed secure APIs with API Gateway, Lambda, and S3 that balanced responsiveness, delivery speed, and reliability',
+          'Introduced modern automated testing practices with Playwright, Node.js, and Jest, cutting test cycles from days to minutes',
         ],
         technologies: [
           'AWS',

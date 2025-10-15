@@ -5,7 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from '@/components/ui/external-link';
 import { Button } from '@/components/ui/button';
-import { Download, Mail, MapPin, Linkedin, Github } from 'lucide-react';
+import {
+  Download,
+  Mail,
+  MapPin,
+  Linkedin,
+  Github,
+  ArrowRight,
+} from 'lucide-react';
 import Image from 'next/image';
 import { resumeData } from '@/data/resume';
 import { getIconForCard } from '@/lib/career-icons';
@@ -166,10 +173,54 @@ export default function ResumePage() {
                   {job.achievements && job.achievements.length > 0 && (
                     <div className="space-y-3">
                       {job.achievements.map((achievement, achievementIndex) => {
+                        const achievementText =
+                          typeof achievement === 'string'
+                            ? achievement
+                            : achievement.main;
                         const IconComponent = getIconForCard(
                           job.title,
-                          achievementIndex
+                          achievementIndex,
+                          achievementText
                         );
+
+                        // Handle sub-bullets
+                        if (
+                          typeof achievement === 'object' &&
+                          achievement.sub
+                        ) {
+                          return (
+                            <div
+                              key={achievementIndex}
+                              className="group relative"
+                            >
+                              <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
+                                <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
+                                <div className="flex-1">
+                                  <span className="text-sm leading-relaxed group-hover:text-foreground transition-colors duration-200">
+                                    {achievement.main}
+                                  </span>
+                                  <ul className="mt-3 ml-6 space-y-2">
+                                    {achievement.sub.map(
+                                      (subItem, subIndex) => (
+                                        <li
+                                          key={subIndex}
+                                          className="flex items-start gap-3"
+                                        >
+                                          <ArrowRight className="w-3 h-3 text-muted-foreground/60 mt-1.5 flex-shrink-0" />
+                                          <span className="text-sm text-muted-foreground leading-relaxed">
+                                            {subItem}
+                                          </span>
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+
+                        // Handle regular bullets
                         return (
                           <div
                             key={achievementIndex}
@@ -178,7 +229,9 @@ export default function ResumePage() {
                             <div className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-all duration-200">
                               <IconComponent className="inline w-4 h-4 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
                               <span className="text-sm leading-relaxed group-hover:text-foreground transition-colors duration-200">
-                                {achievement}
+                                {typeof achievement === 'string'
+                                  ? achievement
+                                  : achievement.main}
                               </span>
                             </div>
                           </div>
@@ -267,9 +320,14 @@ export default function ResumePage() {
                       <div className="mt-3 space-y-2">
                         {award.achievements.map(
                           (achievement, achievementIndex) => {
+                            const achievementText =
+                              typeof achievement === 'string'
+                                ? achievement
+                                : achievement.main;
                             const IconComponent = getIconForCard(
                               award.title,
-                              achievementIndex
+                              achievementIndex,
+                              achievementText
                             );
                             return (
                               <div
@@ -279,7 +337,9 @@ export default function ResumePage() {
                                 <div className="flex items-start space-x-3 p-1 rounded-lg hover:bg-muted/50 transition-all duration-200">
                                   <IconComponent className="inline w-3 h-3 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
                                   <span className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
-                                    {achievement}
+                                    {typeof achievement === 'string'
+                                      ? achievement
+                                      : achievement.main}
                                   </span>
                                 </div>
                               </div>
@@ -322,9 +382,14 @@ export default function ResumePage() {
                       <div className="mt-3 space-y-2">
                         {patent.achievements.map(
                           (achievement, achievementIndex) => {
+                            const achievementText =
+                              typeof achievement === 'string'
+                                ? achievement
+                                : achievement.main;
                             const IconComponent = getIconForCard(
                               patent.title,
-                              achievementIndex
+                              achievementIndex,
+                              achievementText
                             );
                             return (
                               <div
@@ -334,7 +399,9 @@ export default function ResumePage() {
                                 <div className="flex items-start space-x-3 p-1 rounded-lg hover:bg-muted/50 transition-all duration-200">
                                   <IconComponent className="inline w-3 h-3 text-muted-foreground mt-1 flex-shrink-0 group-hover:text-foreground transition-all duration-200" />
                                   <span className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-200">
-                                    {achievement}
+                                    {typeof achievement === 'string'
+                                      ? achievement
+                                      : achievement.main}
                                   </span>
                                 </div>
                               </div>
@@ -387,7 +454,9 @@ export default function ResumePage() {
                         >
                           <span className="text-primary mt-1">•</span>
                           <span className="text-sm text-muted-foreground">
-                            {achievement}
+                            {typeof achievement === 'string'
+                              ? achievement
+                              : achievement.main}
                           </span>
                         </li>
                       ))}

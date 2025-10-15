@@ -8,6 +8,7 @@ import { TerminalOutput } from './terminal-output';
 import { BootSequence } from './boot-sequence';
 import { MatrixRain } from '@/components/ui/matrix-rain';
 import { useTheme } from '@/contexts/theme-context';
+import { PatchInterventionModal } from '@/components/PatchInterventionModal';
 
 export function Terminal() {
   const { colors, setTheme, currentTheme } = useTheme();
@@ -21,6 +22,7 @@ export function Terminal() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [bootSequenceComplete, setBootSequenceComplete] = useState(false);
   const [matrixConfig, setMatrixConfig] = useState({ speed: 0.125, size: 32 });
+  const [showPatchIntervention, setShowPatchIntervention] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -33,6 +35,10 @@ export function Terminal() {
     }));
   };
 
+  const handleTriggerPatchModal = () => {
+    setShowPatchIntervention(true);
+  };
+
   const processor = new CommandProcessor(
     vfs,
     setCurrentPath,
@@ -40,7 +46,8 @@ export function Terminal() {
     setIsProcessing,
     router,
     setTheme,
-    handleMatrixConfig
+    handleMatrixConfig,
+    handleTriggerPatchModal
   );
 
   useEffect(() => {
@@ -160,6 +167,7 @@ export function Terminal() {
         'vibes',
         'halex',
         'matrix',
+        'rm',
       ];
     }
 
@@ -290,6 +298,12 @@ export function Terminal() {
           </div>
         </div>
       )}
+
+      {/* Patch Intervention Modal */}
+      <PatchInterventionModal
+        isOpen={showPatchIntervention}
+        onClose={() => setShowPatchIntervention(false)}
+      />
     </div>
   );
 }

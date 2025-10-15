@@ -17,7 +17,8 @@ export class CommandProcessor {
     private setMatrixConfig?: (config: {
       speed?: number;
       size?: number;
-    }) => void
+    }) => void,
+    private onTriggerPatchModal?: () => void
   ) {}
 
   async processCommand(command: string, currentPath: string): Promise<void> {
@@ -131,6 +132,10 @@ export class CommandProcessor {
 
       case 'halex':
         this.handleHalexCommand();
+        break;
+
+      case 'rm':
+        this.handleRmCommand(finalArgs);
         break;
 
       default:
@@ -856,5 +861,132 @@ Note: Matrix rain only appears when theme is set to 'matrix'`,
       { type: 'output', content: '' },
       { type: 'output', content: 'STATUS: Ready to dominate. All systems go.' },
     ]);
+  }
+
+  private handleRmCommand(args: string[]): void {
+    // Check if this is the dreaded rm -rf /
+    if (args.length >= 2 && args[0] === '-rf' && args[1] === '/') {
+      this.triggerSystemMeltdown();
+    } else {
+      // Handle other rm commands normally (with a safe message)
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'error',
+          content: 'rm: cannot remove files in this simulated environment',
+        },
+      ]);
+    }
+  }
+
+  private async triggerSystemMeltdown(): Promise<void> {
+    // Create the dramatic meltdown sequence with fixed progress meter
+    const meltdownSteps = [
+      { path: '/usr/local/big-alex-energy', integrity: 80 },
+      { path: '/etc/failure-modes', integrity: 70 },
+      { path: '/opt/hope-and-dreams', integrity: 60 },
+      { path: '/home/onboarding/interns', integrity: 50 },
+      { path: '/usr/share/feature-flags', integrity: 40 },
+      { path: '/var/log/production-incidents', integrity: 30 },
+      { path: '/Applications/Zoom.app', integrity: 20 },
+      { path: '/Users/alex/taxes-v17-FINAL.xlsx', integrity: 1 }, // Stop at 1% for drama!
+    ];
+
+    // Start the meltdown sequence with fixed progress meter
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: '' },
+      { type: 'output', content: '💀 INITIATING RECURSIVE DELETION...' },
+      { type: 'output', content: '' },
+      { type: 'output', content: 'SYSTEM INTEGRITY METER: [▓▓▓▓▓▓▓▓▓▓] 100%' },
+      { type: 'output', content: '' },
+    ]);
+
+    // Process each deletion step with timing
+    for (let i = 0; i < meltdownSteps.length; i++) {
+      const step = meltdownSteps[i];
+
+      await new Promise(resolve => setTimeout(resolve, 800)); // Dramatic pause
+
+      // Update the fixed progress meter and show file deletion
+      this.updateProgressMeter(step.integrity);
+
+      // Show the file being deleted
+      this.setOutput(prev => [
+        ...prev,
+        {
+          type: 'output',
+          content: `[✓] Deleting ${step.path}`,
+        },
+      ]);
+
+      // For the final step, animate the countdown
+      if (step.integrity === 1) {
+        await this.animateFinalCountdown();
+      }
+    }
+
+    // Final kernel panic sequence with "almost" message
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    this.setOutput(prev => [
+      ...prev,
+      { type: 'output', content: '' },
+      { type: 'error', content: '💀 SYSTEM INTEGRITY: 1%' },
+      { type: 'error', content: '💀 CONFIDENCE INDEX: -42' },
+      { type: 'error', content: '💀 REALITY CHECK IN PROGRESS...' },
+      { type: 'output', content: '' },
+      { type: 'error', content: '🔥🔥🔥 KERNEL PANIC 🔥🔥🔥' },
+      { type: 'error', content: "I hope you're happy." },
+      { type: 'error', content: "You almost rm'd all the Big Alex Energy." },
+      { type: 'output', content: '' },
+    ]);
+
+    // Trigger Patch intervention after a short delay
+    setTimeout(() => {
+      if (this.onTriggerPatchModal) {
+        this.onTriggerPatchModal();
+      }
+    }, 2000);
+  }
+
+  private updateProgressMeter(integrity: number): void {
+    const progressBar = this.createProgressBar(integrity);
+
+    // Update the progress meter line (we'll find it by looking for the SYSTEM INTEGRITY METER line)
+    this.setOutput(prev => {
+      const newOutput = [...prev];
+      // Find and update the progress meter line
+      const meterIndex = newOutput.findIndex(
+        item =>
+          item.type === 'output' &&
+          item.content.includes('SYSTEM INTEGRITY METER:')
+      );
+
+      if (meterIndex !== -1) {
+        newOutput[meterIndex] = {
+          type: 'output',
+          content: `SYSTEM INTEGRITY METER: ${progressBar} ${integrity}%`,
+        };
+      }
+
+      return newOutput;
+    });
+  }
+
+  private async animateFinalCountdown(): Promise<void> {
+    // Animate the final countdown from 20% down to 1%
+    for (let integrity = 20; integrity >= 1; integrity -= 1) {
+      this.updateProgressMeter(integrity);
+      await new Promise(resolve => setTimeout(resolve, 150)); // Slower for dramatic effect
+    }
+  }
+
+  private createProgressBar(percentage: number): string {
+    const totalBlocks = 10;
+    const filledBlocks = Math.floor((percentage / 100) * totalBlocks);
+    const emptyBlocks = totalBlocks - filledBlocks;
+
+    return `[${'▓'.repeat(filledBlocks) + '░'.repeat(emptyBlocks)}]`;
   }
 }

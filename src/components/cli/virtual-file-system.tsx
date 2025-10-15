@@ -247,7 +247,7 @@ Contact:
     duration: string;
     location: string;
     description?: string;
-    achievements?: string[];
+    achievements?: (string | { main: string; sub: string[] })[];
     technologies?: string[];
   }): string {
     return `${job.title} - ${job.company}
@@ -261,7 +261,16 @@ ${job.description ? `Description: ${job.description}` : ''}
 ${
   job.achievements
     ? `Key Achievements:
-${job.achievements.map((achievement: string) => `  • ${achievement}`).join('\n')}`
+${job.achievements
+  .map(achievement => {
+    if (typeof achievement === 'string') {
+      return `  • ${achievement}`;
+    } else {
+      const subBullets = achievement.sub.map(sub => `    - ${sub}`).join('\n');
+      return `  • ${achievement.main}\n${subBullets}`;
+    }
+  })
+  .join('\n')}`
     : ''
 }
 

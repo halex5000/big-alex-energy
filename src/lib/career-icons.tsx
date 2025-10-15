@@ -28,10 +28,119 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-export const getIconForCard = (title: string, bulletIndex: number) => {
+export const getIconForCard = (
+  title: string,
+  bulletIndex: number,
+  achievementText?: string
+) => {
+  // Smart icon selection based on content
+  if (achievementText) {
+    const text = achievementText.toLowerCase();
+
+    // Security-related content
+    if (
+      text.includes('security') ||
+      text.includes('incident') ||
+      text.includes('monitoring') ||
+      text.includes('mitigation')
+    ) {
+      return Shield;
+    }
+
+    // Performance/optimization content
+    if (
+      text.includes('performance') ||
+      text.includes('40x') ||
+      text.includes('optimization') ||
+      text.includes('improvement')
+    ) {
+      return Zap;
+    }
+
+    // AI/ML content
+    if (
+      text.includes('genai') ||
+      text.includes('ai') ||
+      text.includes('machine learning') ||
+      text.includes('bayesian')
+    ) {
+      return Bot;
+    }
+
+    // Team/leadership content
+    if (
+      text.includes('team') ||
+      text.includes('mentor') ||
+      text.includes('interview') ||
+      text.includes('hire')
+    ) {
+      return Users;
+    }
+
+    // Architecture/infrastructure content
+    if (
+      text.includes('architecture') ||
+      text.includes('infrastructure') ||
+      text.includes('platform') ||
+      text.includes('stack')
+    ) {
+      return CircuitBoard;
+    }
+
+    // Data/analytics content
+    if (
+      text.includes('data') ||
+      text.includes('analytics') ||
+      text.includes('forecasting') ||
+      text.includes('anomaly')
+    ) {
+      return Database;
+    }
+
+    // Conference/speaking content
+    if (
+      text.includes('re:invent') ||
+      text.includes('qcon') ||
+      text.includes('galaxy') ||
+      text.includes('webinar') ||
+      text.includes('talk')
+    ) {
+      return Mic;
+    }
+
+    // Cost savings content
+    if (
+      text.includes('savings') ||
+      text.includes('cost') ||
+      text.includes('migration') ||
+      text.includes('redis')
+    ) {
+      return PiggyBank;
+    }
+
+    // Testing/experimentation content
+    if (
+      text.includes('testing') ||
+      text.includes('a/b') ||
+      text.includes('experiment') ||
+      text.includes('adoption')
+    ) {
+      return Target;
+    }
+  }
+
   // Head of Experimentation & Optimization
   if (title.includes('Head of Experimentation')) {
-    const icons = [Gauge, Sparkles, Zap, PiggyBank];
+    const icons = [
+      Gauge,
+      Zap,
+      PiggyBank,
+      Users,
+      Target,
+      Database,
+      Bot,
+      TrendingDown,
+    ];
     return icons[bulletIndex % icons.length];
   }
 
@@ -47,9 +156,21 @@ export const getIconForCard = (title: string, bulletIndex: number) => {
     return icons[bulletIndex % icons.length];
   }
 
-  // Technical Marketing Engineer
-  if (title.includes('Technical Marketing Engineer')) {
-    const icons = [Users, Code, Video, Mic, BookOpen, Globe];
+  // Developer Platform Advocate (updated from Technical Marketing Engineer)
+  if (
+    title.includes('Developer Platform Advocate') ||
+    title.includes('Technical Marketing Engineer')
+  ) {
+    const icons = [
+      Code,
+      Video,
+      Mic,
+      BookOpen,
+      Globe,
+      CircuitBoard,
+      Target,
+      Database,
+    ];
     return icons[bulletIndex % icons.length];
   }
 
@@ -81,7 +202,15 @@ export const getIconForCard = (title: string, bulletIndex: number) => {
   }
 
   // Default fallback
-  return Sparkles;
+  const defaultIcons = [
+    CheckCircle,
+    ArrowRight,
+    Lightbulb,
+    Target,
+    Database,
+    Settings,
+  ];
+  return defaultIcons[bulletIndex % defaultIcons.length];
 };
 
 export const getLinkIcon = (iconType: string) => {
